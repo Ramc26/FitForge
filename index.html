@@ -70,10 +70,42 @@
         .brand-logo {
             font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(90deg, #fff, var(--accent-color));
+            /* The multi-color gradient */
+            background: linear-gradient(-45deg,
+
+                    #cb4154,
+                    /* Brick Red */
+                    #eab308,
+                    /* Turmeric Yellow (repeats for a seamless loop) */
+                    #ffffff,
+                    /* White */
+                    #00ff88
+                    /* Green */
+                );
+            /* Make the background 300% wider than the text so it can flow */
+            background-size: 300% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            /* The magic: animate the background position smoothly and infinitely */
+            animation: waveFlow 10s ease-in-out infinite;
             letter-spacing: 1px;
+        }
+
+        /* The Animation Keyframes */
+        @keyframes waveFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .btn-weekly {
@@ -681,7 +713,11 @@
                     if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
 
                     if (savedState.voiceEnabled && 'speechSynthesis' in window) {
-                        let speech = new SpeechSynthesisUtterance("Rest is over. Let's get back to work.");
+                        let speech = new SpeechSynthesisUtterance("Let\'s get back to Next Rep.");
+                        // Attempt to find the specific voice you liked
+                        let voices = window.speechSynthesis.getVoices();
+                        let selectedVoice = voices.find(v => v.name === "Rishi");
+                        if (selectedVoice) speech.voice = selectedVoice;
                         speech.volume = 1; speech.rate = 1.1; speech.pitch = 1;
                         window.speechSynthesis.speak(speech);
                     }
