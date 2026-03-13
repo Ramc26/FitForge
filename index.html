@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitForge | Daily Fitness Protocol</title>
+
+    <meta name="description" content="FitForge: Daily workout tracker and fitness protocol by itsmeramc.">
+    <link rel="icon" type="image/svg+xml" href="Personality.svg">
+    <meta property="og:image" content="Personality.svg">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #161616;
+            --accent-color: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #eab308; /* Turmeric yellow */
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        .brand-font {
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .dashboard-header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            margin-bottom: 25px;
+        }
+
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-weekly {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-main);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-weekly:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent-color);
+        }
+
+        .workout-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid #333;
+            margin-bottom: 15px;
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .form-check-input {
+            width: 1.6em;
+            height: 1.6em;
+            background-color: #2a2a2a;
+            border-color: #555;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .form-check-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding-left: 12px;
+            cursor: pointer;
+            color: var(--text-main);
+            transition: color 0.3s, text-decoration 0.3s;
+            width: 100%;
+        }
+
+        .exercise-done {
+            text-decoration: line-through;
+            color: #777;
+        }
+
+        .anatomy-toggle {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .anatomy-content {
+            display: none;
+            font-size: 0.85rem;
+            color: #cccccc;
+            /* Brightened */
+            margin-top: 8px;
+            padding: 10px;
+            background: rgba(0, 255, 136, 0.05);
+            border-left: 2px solid var(--accent-color);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .machine-alt {
+            font-size: 0.85rem;
+            color: #ffca28;
+            /* Brightened gold */
+            margin-top: 10px;
+            display: block;
+        }
+
+        .progress {
+            height: 8px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: visible;
+        }
+
+        .progress-bar {
+            background-color: var(--accent-color);
+            border-radius: 10px;
+            box-shadow: 0 0 15px var(--accent-glow);
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Fixed Media Cards */
+        .media-card {
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.2s, filter 0.2s;
+            color: #ffffff !important;
+            /* Fixed black text issue */
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+        }
+
+        .media-card:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+            color: #ffffff;
+        }
+
+        .bg-spotify {
+            background: linear-gradient(135deg, #1db954, #128238);
+        }
+
+        .bg-podcast {
+            background: linear-gradient(135deg, #8e44ad, #5e2a75);
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #333;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.85rem;
+            z-index: 1000;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        .footer-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 8px;
+            border: 1px solid var(--accent-color);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid #444;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #444;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #444;
+        }
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        .audio-list-item {
+            background: #222;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            transition: background 0.2s;
+        }
+
+        .audio-list-item:hover {
+            background: #333;
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container max-w-md mx-auto px-3" style="max-width: 600px;">
+
+        <header class="dashboard-header animate__animated animate__fadeInDown">
+            <div class="brand-logo">FITFORGE</div>
+            <div>
+                <button class="btn btn-weekly btn-sm me-2" onclick="shareApp()">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+                <button class="btn btn-weekly btn-sm" data-bs-toggle="modal" data-bs-target="#weeklyModal">
+                    <i class="fa-solid fa-calendar-week me-1"></i> Week
+                </button>
+            </div>
+        </header>
+
+        <div class="text-center mb-4 animate__animated animate__fadeIn">
+            <h6 class="text-uppercase text-muted" style="letter-spacing: 2px; font-size: 0.8rem;">Today is <span
+                    id="currentDay" class="text-white"></span></h6>
+            <h2 class="brand-font mt-1" id="focusArea" style="font-size: 1.4rem;">Loading Protocol...</h2>
+        </div>
+
+        <div class="mb-4 animate__animated animate__fadeIn" id="progressContainer" style="display:none;">
+            <div class="d-flex justify-content-between mb-2 text-muted" style="font-size: 0.8rem; font-weight: 600;">
+                <span>SESSION PROGRESS</span>
+                <span id="progressText" style="color: var(--accent-color);">0%</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" id="workoutProgress" role="progressbar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div id="workoutContent">
+        </div>
+
+        <h5 class="mt-5 mb-3 brand-font text-muted animate__animated animate__fadeIn" style="font-size: 0.9rem;">🎧 In
+            The Zone</h5>
+        <div class="row g-2 mb-4 animate__animated animate__fadeInUp">
+            <div class="col-6">
+                <button class="media-card bg-spotify shadow-sm" onclick="openAudioModal('playlists')">
+                    <i class="fa-brands fa-spotify fa-2x mb-2"></i>
+                    <span>Music</span>
+                </button>
+            </div>
+            <div class="col-6">
+                <button class="media-card bg-podcast shadow-sm" onclick="openAudioModal('podcasts')">
+                    <i class="fa-solid fa-podcast fa-2x mb-2"></i>
+                    <span>Podcasts</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="weeklyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title brand-font fs-6">Complete Protocol</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="weeklyContent" style="font-size: 0.9rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="audioModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header d-flex flex-column align-items-start">
+                    <div class="d-flex justify-content-between w-100 mb-3">
+                        <h5 class="modal-title brand-font fs-6" id="audioModalTitle">Audio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="w-100 p-2 rounded" style="background: rgba(255,255,255,0.05);">
+                        <label class="text-muted" style="font-size: 0.8rem; display:block; margin-bottom:5px;">Open
+                            links using:</label>
+                        <div class="btn-group w-100" role="group" id="deviceToggleGroup">
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnIphone" value="ios"
+                                autocomplete="off" checked>
+                            <label class="btn btn-outline-secondary btn-sm" for="btnIphone"><i
+                                    class="fa-brands fa-apple"></i> iPhone</label>
+
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnAndroid" value="android"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary btn-sm" for="btnAndroid"><i
+                                    class="fa-brands fa-android"></i> Android</label>
+
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnWeb" value="web"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary btn-sm" for="btnWeb"><i
+                                    class="fa-solid fa-globe"></i> Web</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body" id="audioModalList"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container d-flex justify-content-center align-items-center">
+            <img src="Personality.svg" alt="Avatar" class="footer-avatar" onerror="this.style.display='none'">
+            <span>Designed & Coded by <a href="https://bikkina.vercel.app" target="_blank">itsmeramc</a></span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let appData = null;
+        let currentAudioType = 'playlists';
+
+        // 1. Fetch JSON Data
+        $(document).ready(function () {
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    appData = data;
+                    initApp();
+                })
+                .catch(error => {
+                    $('#focusArea').text("Error loading data");
+                    $('#workoutContent').html(`<div class="alert alert-danger">Could not load data.json. Make sure the file exists and you are viewing this via a server (like Vercel).</div>`);
+                    console.error("Fetch error:", error);
+                });
+
+            // Re-render audio links if device toggle changes
+            $('input[name="deviceToggle"]').on('change', function () {
+                if (appData) renderAudioList(currentAudioType);
+            });
+        });
+
+        function initApp() {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const todayName = days[new Date().getDay()];
+            $('#currentDay').text(todayName);
+
+            const todaysPlan = appData.schedule.find(day => day.day_of_week === todayName);
+            $('#focusArea').text(todaysPlan.focus);
+
+            const $content = $('#workoutContent');
+            let totalTasks = 0;
+
+            if (todaysPlan.is_rest_day) {
+                $content.append(`
+                <div class="text-center py-5 animate__animated animate__zoomIn">
+                    <i class="fa-solid fa-battery-half fa-3x mb-3 text-muted"></i>
+                    <h4 class="brand-font text-white">Recovery Day</h4>
+                    <p class="text-muted">${todaysPlan.notes}</p>
+                </div>
+            `);
+            } else {
+                $('#progressContainer').show();
+                todaysPlan.exercises.forEach((ex, index) => {
+                    totalTasks++;
+                    let animDelay = index * 0.15;
+                    $content.append(`
+                <div class="workout-card animate__animated animate__fadeInUp" style="animation-delay: ${animDelay}s">
+                    <div class="form-check d-flex align-items-center mb-1">
+                        <input class="form-check-input task-checkbox" type="checkbox" id="ex${index}">
+                        <label class="form-check-label flex-grow-1" for="ex${index}">
+                            ${ex.name} 
+                            <span class="badge bg-dark border border-secondary float-end text-white">${ex.sets}x${ex.reps}</span>
+                        </label>
+                    </div>
+                    <div class="anatomy-toggle" onclick="$(this).next('.anatomy-content').slideToggle();">
+                        <i class="fa-solid fa-dna"></i> Muscle Science
+                    </div>
+                    <div class="anatomy-content">${ex.anatomy_pov}</div>
+                    <div class="machine-alt"><i class="fa-solid fa-repeat me-1"></i> Alt: ${ex.machine_alternative}</div>
+                </div>
+                `);
+                });
+
+                if (todaysPlan.finisher) {
+                    totalTasks++;
+                    $content.append(`
+                <div class="workout-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s; border-left: 3px solid var(--accent-color);">
+                    <h6 class="text-uppercase text-muted mb-2" style="font-size: 0.75rem; letter-spacing: 1px;">Burnout Finisher</h6>
+                    <div class="form-check d-flex align-items-center mb-1">
+                        <input class="form-check-input task-checkbox" type="checkbox" id="finisher">
+                        <label class="form-check-label flex-grow-1" for="finisher">
+                            ${todaysPlan.finisher.name} 
+                            <span class="badge bg-danger float-end text-white">${todaysPlan.finisher.duration_minutes ? todaysPlan.finisher.duration_minutes + ' Min' : todaysPlan.finisher.sets + 'x' + todaysPlan.finisher.reps}</span>
+                        </label>
+                    </div>
+                    <div class="machine-alt mt-2"><i class="fa-solid fa-repeat me-1"></i> Alt: ${todaysPlan.finisher.machine_alternative}</div>
+                </div>
+                `);
+                }
+            }
+
+            // Render Weekly Modal
+            const $weekly = $('#weeklyContent');
+            appData.schedule.forEach(day => {
+                let dayHtml = `<div class="mb-3 border-bottom border-secondary pb-2">
+                <strong class="d-block text-white">${day.day_of_week} - <span style="color: var(--accent-color);">${day.focus}</span></strong>`;
+                if (day.is_rest_day) {
+                    dayHtml += `<span class="text-muted" style="font-size: 0.8rem;">Recovery / Stretching</span>`;
+                } else {
+                    let exList = day.exercises.map(ex => ex.name).join(', ');
+                    dayHtml += `<span class="text-muted" style="font-size: 0.8rem;">${exList}</span>`;
+                }
+                dayHtml += `</div>`;
+                $weekly.append(dayHtml);
+            });
+
+            // Progress Logic
+            $('.task-checkbox').on('change', function () {
+                $(this).siblings('label').toggleClass('exercise-done');
+                let checkedCount = $('.task-checkbox:checked').length;
+                let percentage = totalTasks === 0 ? 0 : Math.round((checkedCount / totalTasks) * 100);
+                $('#workoutProgress').css('width', percentage + '%');
+                $('#progressText').text(percentage + '%');
+            });
+        }
+
+        // Deep Linking Logic
+        function createDeepLink(webUrl, device) {
+            if (device === 'web') return webUrl;
+
+            try {
+                const urlObj = new URL(webUrl);
+                const pathParts = urlObj.pathname.split('/').filter(p => p);
+                if (pathParts.length >= 2) {
+                    const type = pathParts[0]; // 'playlist', 'show', etc.
+                    const id = pathParts[1];
+
+                    if (device === 'ios') {
+                        return `spotify:${type}:${id}`;
+                    } else if (device === 'android') {
+                        // Android Intent URI for native handling
+                        return `intent://${type}/${id}#Intent;scheme=spotify;package=com.spotify.music;end;`;
+                    }
+                }
+            } catch (e) {
+                console.error("URL parsing error", e);
+            }
+            return webUrl; // Fallback
+        }
+
+        function openAudioModal(type) {
+            currentAudioType = type;
+            $('#audioModalTitle').html(type === 'playlists' ? '<i class="fa-brands fa-spotify text-success me-2"></i> Music Playlists' : '<i class="fa-solid fa-podcast text-purple me-2"></i> Podcasts');
+            renderAudioList(type);
+            var myModal = new bootstrap.Modal(document.getElementById('audioModal'));
+            myModal.show();
+        }
+
+        function renderAudioList(type) {
+            const $list = $('#audioModalList');
+            $list.empty();
+
+            const selectedDevice = $('input[name="deviceToggle"]:checked').val();
+            const items = appData.audio[type];
+
+            items.forEach(item => {
+                const finalUrl = createDeepLink(item.url, selectedDevice);
+                const icon = type === 'playlists' ? 'fa-music' : 'fa-microphone-lines';
+                $list.append(`
+                <a href="${finalUrl}" class="audio-list-item" target="_blank">
+                    <i class="fa-solid ${icon} me-3 text-muted"></i>
+                    <span class="flex-grow-1">${item.name}</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-muted" style="font-size: 0.8rem;"></i>
+                </a>
+            `);
+            });
+        }
+
+        function shareApp() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'FitForge Protocol',
+                    text: 'Check out my custom daily fitness protocol designed by itsmeramc.',
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                alert("Copy this link to share: " + window.location.href);
+            }
+        }
+    </script>
+</body>
+
+</html>

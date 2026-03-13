@@ -1,0 +1,189 @@
+{
+    "audio": {
+        "playlists": [
+            {
+                "name": "Vishwanadamrutham",
+                "url": "https://open.spotify.com/playlist/33Gqi626ZlsplfVagSzFJ7?si=ec6469ce4aab410b"
+            },
+            {
+                "name": "Heart on Shuffle",
+                "url": "https://open.spotify.com/playlist/3EquG5dLeQTke1FsAhvJHZ?si=543a68b977e34c87"
+            }
+        ],
+        "podcasts": [
+            {
+                "name": "Udyoga Parvam",
+                "url": "https://open.spotify.com/show/50l37PMwskUpCk0010VNfY?si=229a493cdbde4415"
+            },
+            {
+                "name": "Bheeshma Parvam",
+                "url": "https://open.spotify.com/show/4YNvKH09aKiu1MPiiAd12x?si=5d8ee53901c54385"
+            }
+        ]
+    },
+    "schedule": [
+        {
+            "day_of_week": "Monday",
+            "focus": "Back & Biceps",
+            "is_rest_day": false,
+            "exercises": [
+                {
+                    "name": "Pull-ups",
+                    "sets": 3,
+                    "reps": "8-10",
+                    "anatomy_pov": "Builds the latissimus dorsi to physically widen your back, creating the essential 'wings' for a V-taper.",
+                    "machine_alternative": "Lat Pulldown"
+                },
+                {
+                    "name": "Dumbbell Rows",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "anatomy_pov": "Engages rhomboids and traps to build mid-back thickness, preventing a 'flat' side profile.",
+                    "machine_alternative": "Seated Cable Row"
+                },
+                {
+                    "name": "Bicep Curls",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "anatomy_pov": "Isolates the biceps after they pre-exhausted during pull exercises, forcing localized hypertrophy.",
+                    "machine_alternative": "Cable Curls"
+                }
+            ],
+            "finisher": {
+                "name": "Jump Rope",
+                "duration_minutes": 5,
+                "machine_alternative": "Stairmaster"
+            }
+        },
+        {
+            "day_of_week": "Tuesday",
+            "focus": "Chest & Triceps",
+            "is_rest_day": false,
+            "exercises": [
+                {
+                    "name": "Bench Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "anatomy_pov": "The ultimate compound push. Works the pectoralis major, anterior deltoids, and triceps for upper body armor.",
+                    "machine_alternative": "Chest Press Machine"
+                },
+                {
+                    "name": "Incline Dumbbell Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "anatomy_pov": "Targets the clavicular head of the pecs, creating a 'shelf' that visually connects the chest to the shoulders.",
+                    "machine_alternative": "Incline Machine Press"
+                },
+                {
+                    "name": "Tricep Extensions",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "anatomy_pov": "Isolates the triceps (which make up 2/3 of your arm mass) to ensure arms look thick even when relaxed.",
+                    "machine_alternative": "Cable Pushdowns"
+                }
+            ],
+            "finisher": {
+                "name": "Planks",
+                "sets": 3,
+                "reps": "45 seconds",
+                "anatomy_pov": "Trains the transverse abdominis, your deep core muscle that acts like an internal weight belt to pull the stomach flat.",
+                "machine_alternative": "Ab Crunch Machine"
+            }
+        },
+        {
+            "day_of_week": "Wednesday",
+            "focus": "Legs",
+            "is_rest_day": false,
+            "exercises": [
+                {
+                    "name": "Squats",
+                    "sets": 4,
+                    "reps": "8-10",
+                    "anatomy_pov": "Requires systemic muscle engagement. Burns massive calories and triggers natural growth hormone release.",
+                    "machine_alternative": "Leg Press"
+                },
+                {
+                    "name": "Leg Curls",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "anatomy_pov": "Isolates the hamstrings to prevent muscle imbalances caused by heavy quad dominance.",
+                    "machine_alternative": "Seated Leg Curl"
+                },
+                {
+                    "name": "Dumbbell Lunges",
+                    "sets": 3,
+                    "reps": "10 per leg",
+                    "anatomy_pov": "Unilateral movement that forces core stabilization while spiking the heart rate.",
+                    "machine_alternative": "Leg Extensions"
+                }
+            ]
+        },
+        {
+            "day_of_week": "Thursday",
+            "focus": "Active Recovery",
+            "is_rest_day": true,
+            "notes": "Focus on mobility work, stretching, and hitting daily protein goals to repair tissue."
+        },
+        {
+            "day_of_week": "Friday",
+            "focus": "Shoulders & Abs",
+            "is_rest_day": false,
+            "exercises": [
+                {
+                    "name": "Overhead Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "anatomy_pov": "Builds overall mass across all three deltoid heads to create broad shoulder caps.",
+                    "machine_alternative": "Shoulder Press Machine"
+                },
+                {
+                    "name": "Lateral Raises",
+                    "sets": 4,
+                    "reps": "12-15",
+                    "anatomy_pov": "Crucial for the V-taper. Explicitly targets the lateral head of the deltoid to widen your frame.",
+                    "machine_alternative": "Cable Lateral Raises"
+                },
+                {
+                    "name": "Russian Twists",
+                    "sets": 3,
+                    "reps": "15-20",
+                    "anatomy_pov": "Strengthens the obliques, tightening up the sides of the waistline where love handles sit.",
+                    "machine_alternative": "Rotary Torso Machine"
+                }
+            ]
+        },
+        {
+            "day_of_week": "Saturday",
+            "focus": "Complete Rest",
+            "is_rest_day": true,
+            "notes": "Let the central nervous system recover. Hydrate heavily."
+        },
+        {
+            "day_of_week": "Sunday",
+            "focus": "Posterior Chain",
+            "is_rest_day": false,
+            "exercises": [
+                {
+                    "name": "Deadlifts",
+                    "sets": 3,
+                    "reps": "6-8",
+                    "anatomy_pov": "Strengthens the entire back of the body, violently improving posture which naturally lifts the chest and slims the waist.",
+                    "machine_alternative": "Cable Pull-throughs"
+                },
+                {
+                    "name": "Lat Pulldowns",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "anatomy_pov": "A secondary weekly volume hit to the lats to force growth and back width.",
+                    "machine_alternative": "Machine Pullovers"
+                }
+            ],
+            "finisher": {
+                "name": "HIIT Cardio",
+                "duration_minutes": 10,
+                "anatomy_pov": "Forces the body to consume heavy oxygen post-workout, maximizing fat oxidation (EPOC).",
+                "machine_alternative": "Stationary Bike (Sprints)"
+            }
+        }
+    ]
+}
