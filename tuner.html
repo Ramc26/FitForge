@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitForge | Voice Tuner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            padding: 40px 20px;
+        }
+
+        .tuner-card {
+            background-color: #161616;
+            border-radius: 16px;
+            border: 1px solid #333;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .accent-text {
+            color: #00ff88;
+        }
+
+        .form-range::-webkit-slider-thumb {
+            background: #00ff88;
+        }
+
+        .form-range::-moz-range-thumb {
+            background: #00ff88;
+        }
+
+        .btn-custom {
+            background-color: #00ff88;
+            color: #000;
+            font-weight: 700;
+            border: none;
+            padding: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-custom:hover {
+            background-color: #00cc6a;
+            transform: scale(1.02);
+        }
+
+        .code-output {
+            background-color: #000;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: monospace;
+            color: #eab308;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+        }
+
+        .form-control,
+        .form-select {
+            background-color: #222;
+            border: 1px solid #444;
+            color: #fff;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background-color: #2a2a2a;
+            border-color: #00ff88;
+            color: #fff;
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="tuner-card">
+        <h3 class="mb-4 text-center text-uppercase fw-bold"><span class="accent-text">Voice</span> Tuner</h3>
+
+        <div class="mb-4">
+            <label class="form-label text-muted">Test Phrase</label>
+            <input type="text" id="phraseInput" class="form-control"
+                value="Rest is over. Let's get back to your next rep.">
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label text-muted">Select Voice (Varies by Device)</label>
+            <select id="voiceSelect" class="form-select"></select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label d-flex justify-content-between">
+                <span>Rate (Speed)</span> <span id="rateVal" class="accent-text">1.1</span>
+            </label>
+            <input type="range" class="form-range" id="rateSlider" min="0.5" max="2" step="0.1" value="1.1">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label d-flex justify-content-between">
+                <span>Pitch</span> <span id="pitchVal" class="accent-text">1.0</span>
+            </label>
+            <input type="range" class="form-range" id="pitchSlider" min="0" max="2" step="0.1" value="1.0">
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label d-flex justify-content-between">
+                <span>Volume</span> <span id="volVal" class="accent-text">1.0</span>
+            </label>
+            <input type="range" class="form-range" id="volSlider" min="0" max="1" step="0.1" value="1.0">
+        </div>
+
+        <button class="btn btn-custom w-100 mb-4" onclick="testVoice()">TEST AUDIO</button>
+
+        <label class="form-label text-muted">Generated Code (Copy to FitForge)</label>
+        <div class="code-output" id="codeOutput"></div>
+    </div>
+
+    <script>
+        let synth = window.speechSynthesis;
+        let voices = [];
+
+        // DOM Elements
+        const voiceSelect = document.getElementById('voiceSelect');
+        const rateSlider = document.getElementById('rateSlider');
+        const pitchSlider = document.getElementById('pitchSlider');
+        const volSlider = document.getElementById('volSlider');
+        const phraseInput = document.getElementById('phraseInput');
+        const codeOutput = document.getElementById('codeOutput');
+
+        // Populate Voices (Different browsers load these differently)
+        function populateVoiceList() {
+            voices = synth.getVoices();
+            voiceSelect.innerHTML = '';
+
+            // Sort voices alphabetically
+            voices.sort((a, b) => a.name.localeCompare(b.name)).forEach((voice, i) => {
+                const option = document.createElement('option');
+                option.textContent = `${voice.name} (${voice.lang})`;
+                option.value = i;
+
+                // Try to set a good default English voice if available
+                if (voice.default) option.selected = true;
+
+                voiceSelect.appendChild(option);
+            });
+            updateCodeSnippet();
+        }
+
+        populateVoiceList();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoiceList;
+        }
+
+        // Update UI numbers and Code Snippet on slider drag
+        const updateUI = () => {
+            document.getElementById('rateVal').innerText = rateSlider.value;
+            document.getElementById('pitchVal').innerText = pitchSlider.value;
+            document.getElementById('volVal').innerText = volSlider.value;
+            updateCodeSnippet();
+        };
+
+        rateSlider.addEventListener('input', updateUI);
+        pitchSlider.addEventListener('input', updateUI);
+        volSlider.addEventListener('input', updateUI);
+        phraseInput.addEventListener('input', updateUI);
+        voiceSelect.addEventListener('change', updateUI);
+
+        // Speak the phrase
+        function testVoice() {
+            if (synth.speaking) {
+                console.error('speechSynthesis.speaking');
+                synth.cancel(); // Stop current speech if button mashed
+            }
+
+            if (phraseInput.value !== '') {
+                const utterThis = new SpeechSynthesisUtterance(phraseInput.value);
+                const selectedOption = voiceSelect.selectedOptions[0].value;
+
+                // Apply settings
+                utterThis.voice = voices[selectedOption];
+                utterThis.pitch = pitchSlider.value;
+                utterThis.rate = rateSlider.value;
+                utterThis.volume = volSlider.value;
+
+                synth.speak(utterThis);
+            }
+        }
+
+        // Generate the exact code for the main app
+        function updateCodeSnippet() {
+            const selectedVoiceIndex = voiceSelect.value;
+            const voiceName = voices.length > 0 ? voices[selectedVoiceIndex].name : '';
+            const phrase = phraseInput.value.replace(/'/g, "\\'"); // escape single quotes
+
+            let code = `if (savedState.voiceEnabled && 'speechSynthesis' in window) {
+    let speech = new SpeechSynthesisUtterance('${phrase}');
+    
+    // Attempt to find the specific voice you liked
+    let voices = window.speechSynthesis.getVoices();
+    let selectedVoice = voices.find(v => v.name === "${voiceName}");
+    if (selectedVoice) speech.voice = selectedVoice;
+
+    speech.volume = ${volSlider.value};
+    speech.rate = ${rateSlider.value};
+    speech.pitch = ${pitchSlider.value};
+    
+    window.speechSynthesis.speak(speech);
+}`;
+            codeOutput.textContent = code;
+        }
+    </script>
+</body>
+
+</html>
