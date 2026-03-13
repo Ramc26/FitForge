@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitForge | Daily Protocol</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="apple-touch-icon" href="Personality.svg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="description" content="FitForge: Daily workout tracker and fitness protocol by itsmeramc.">
+    <link rel="icon" type="image/svg+xml" href="Personality.svg">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #161616;
+            --accent-color: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #eab308;
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            padding-bottom: 90px;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        h1,
+        h2,
+        .brand-font {
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .dashboard-header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222;
+            margin-bottom: 25px;
+            background: rgba(10, 10, 10, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            /* The multi-color gradient */
+            background: linear-gradient(-45deg,
+
+                    #cb4154,
+                    /* Brick Red */
+                    #eab308,
+                    /* Turmeric Yellow (repeats for a seamless loop) */
+                    #ffffff,
+                    /* White */
+                    #00ff88
+                    /* Green */
+                );
+            /* Make the background 300% wider than the text so it can flow */
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            /* The magic: animate the background position smoothly and infinitely */
+            animation: waveFlow 10s ease-in-out infinite;
+            letter-spacing: 1px;
+        }
+
+        /* The Animation Keyframes */
+        @keyframes waveFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .btn-weekly {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-main);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-weekly:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent-color);
+        }
+
+        .workout-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid #222;
+            margin-bottom: 15px;
+            padding: 20px;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s, background-color 0.3s;
+        }
+
+        .workout-card.completed-card {
+            border-color: rgba(0, 255, 136, 0.3);
+            background: rgba(0, 255, 136, 0.02);
+        }
+
+        .ex-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .ex-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .set-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .set-bubble {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #222;
+            color: #888;
+        }
+
+        .set-bubble:hover {
+            border-color: #555;
+        }
+
+        .set-bubble.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-glow);
+            transform: scale(1.1);
+        }
+
+        .finisher-label {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .finisher-checkbox {
+            width: 1.6em;
+            height: 1.6em;
+            background-color: #2a2a2a;
+            border: 1px solid #555;
+            border-radius: 4px;
+            margin-right: 12px;
+            appearance: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .finisher-checkbox:checked {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-glow);
+            position: relative;
+        }
+
+        .finisher-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            color: black;
+            font-size: 1.2rem;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .anatomy-toggle {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+            padding: 6px 10px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .anatomy-toggle:hover {
+            background: rgba(0, 255, 136, 0.2);
+        }
+
+        .anatomy-content {
+            display: none;
+            font-size: 0.85rem;
+            color: #ccc;
+            margin-top: 8px;
+            padding: 12px;
+            background: #111;
+            border-left: 3px solid var(--accent-color);
+            border-radius: 0 8px 8px 0;
+            line-height: 1.5;
+        }
+
+        .machine-alt {
+            font-size: 0.85rem;
+            color: #ffca28;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .progress {
+            height: 10px;
+            background-color: #222;
+            border-radius: 10px;
+            overflow: visible;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .progress-bar {
+            background-color: var(--accent-color);
+            border-radius: 10px;
+            box-shadow: 0 0 15px var(--accent-glow);
+            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .media-card {
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.2s, filter 0.2s;
+            color: #ffffff !important;
+            border: none;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .media-card:active {
+            transform: scale(0.95);
+        }
+
+        .bg-spotify {
+            background: linear-gradient(135deg, #1db954, #128238);
+        }
+
+        .bg-podcast {
+            background: linear-gradient(135deg, #8e44ad, #5e2a75);
+        }
+
+        #floatingTimer {
+            position: fixed;
+            bottom: 85px;
+            left: 50%;
+            transform: translateX(-50%) translateY(200%);
+            background: #222;
+            border: 2px solid var(--accent-color);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px var(--accent-glow);
+            z-index: 999;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        #floatingTimer.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        #floatingTimer.done {
+            background: var(--accent-color);
+            color: #000;
+            border-color: #fff;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.8);
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #222;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.85rem;
+            z-index: 1000;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 8px;
+            border: 1px solid var(--accent-color);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid #444;
+        }
+
+        .modal-header,
+        .modal-footer {
+            border-color: #333;
+        }
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        .audio-list-item {
+            background: #222;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            transition: background 0.2s;
+        }
+
+        #voiceToggle.active i {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mx-auto px-3" style="max-width: 600px;">
+
+        <header class="dashboard-header animate__animated animate__fadeInDown">
+            <div class="brand-logo">FITFORGE</div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-weekly btn-sm" id="voiceToggle" onclick="toggleVoice()"
+                    aria-label="Toggle Voice Cues">
+                    <i class="fa-solid fa-volume-xmark"></i>
+                </button>
+                <button class="btn btn-weekly btn-sm" onclick="shareApp()"><i
+                        class="fa-solid fa-share-nodes"></i></button>
+                <button class="btn btn-weekly btn-sm" data-bs-toggle="modal" data-bs-target="#weeklyModal">Week</button>
+            </div>
+        </header>
+
+        <div class="text-center mb-4 animate__animated animate__fadeIn">
+            <h6 class="text-uppercase text-muted" style="letter-spacing: 2px; font-size: 0.8rem;">Today is <span
+                    id="currentDay" class="text-white"></span></h6>
+            <h2 class="brand-font mt-1" id="focusArea" style="font-size: 1.4rem;">Loading Protocol...</h2>
+        </div>
+
+        <div class="mb-4 animate__animated animate__fadeIn" id="progressContainer" style="display:none;">
+            <div class="d-flex justify-content-between mb-2 text-muted" style="font-size: 0.8rem; font-weight: 600;">
+                <span>SESSION PROGRESS</span>
+                <span id="progressText" style="color: var(--accent-color);">0%</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" id="workoutProgress" role="progressbar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div id="workoutContent"></div>
+
+        <h5 class="mt-5 mb-3 brand-font text-muted animate__animated animate__fadeIn" style="font-size: 0.9rem;">🎧 In
+            The Zone</h5>
+        <div class="row g-2 mb-4 animate__animated animate__fadeInUp">
+            <div class="col-6"><button class="media-card bg-spotify" onclick="openAudioModal('playlists')"><i
+                        class="fa-brands fa-spotify fa-2x mb-2"></i><span>Music</span></button></div>
+            <div class="col-6"><button class="media-card bg-podcast" onclick="openAudioModal('podcasts')"><i
+                        class="fa-solid fa-podcast fa-2x mb-2"></i><span>Podcasts</span></button></div>
+        </div>
+    </div>
+
+    <div id="floatingTimer" onclick="dismissTimer()">
+        <i class="fa-solid fa-stopwatch"></i> <span id="timerDisplay">00:00</span>
+    </div>
+
+    <div class="modal fade" id="weeklyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title brand-font fs-6">Complete Protocol</h5><button type="button"
+                        class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="weeklyContent" style="font-size: 0.9rem;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="audioModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header d-flex flex-column align-items-start">
+                    <div class="d-flex justify-content-between w-100 mb-3">
+                        <h5 class="modal-title brand-font fs-6" id="audioModalTitle">Audio</h5><button type="button"
+                            class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="w-100 p-2 rounded" style="background: rgba(255,255,255,0.05);">
+                        <label class="text-muted" style="font-size: 0.8rem; display:block; margin-bottom:5px;">Open
+                            links using:</label>
+                        <div class="btn-group w-100" role="group" id="deviceToggleGroup">
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnIphone" value="ios"
+                                checked><label class="btn btn-outline-secondary btn-sm" for="btnIphone"><i
+                                    class="fa-brands fa-apple"></i> iOS</label>
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnAndroid"
+                                value="android"><label class="btn btn-outline-secondary btn-sm" for="btnAndroid"><i
+                                    class="fa-brands fa-android"></i> Android</label>
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnWeb" value="web"><label
+                                class="btn btn-outline-secondary btn-sm" for="btnWeb"><i class="fa-solid fa-globe"></i>
+                                Web</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body" id="audioModalList"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container d-flex justify-content-center align-items-center">
+            <img src="Personality.svg" alt="Avatar" class="footer-avatar" onerror="this.style.display='none'">
+            <span>Designed & Coded by <a href="https://bikkina.vercel.app" target="_blank">itsmeramc</a></span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- Register PWA Service Worker ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(err => console.log('SW setup failed')); });
+        }
+
+        let appData = null; let currentAudioType = 'playlists'; let totalTasks = 0; let timerInterval;
+
+        const todayDateStr = new Date().toDateString();
+        let savedState = JSON.parse(localStorage.getItem('fitforge_state')) || {};
+        if (savedState.date !== todayDateStr || !savedState.checkedSets) {
+            let existingVoice = savedState.voiceEnabled || false;
+            savedState = { date: todayDateStr, checkedSets: {}, finisherDone: false, hasCelebrated: false, voiceEnabled: existingVoice };
+            localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+        }
+
+        $(document).ready(function () {
+            if (savedState.voiceEnabled) {
+                $('#voiceToggle').addClass('active').find('i').removeClass('fa-volume-xmark').addClass('fa-volume-high');
+            }
+
+            fetch('data.json').then(res => res.json()).then(data => { appData = data; initApp(); })
+                .catch(err => { $('#workoutContent').html(`<div class="alert alert-danger">Please ensure you are running this on a server (like Vercel) to fetch the data.json correctly.</div>`); });
+
+            $('input[name="deviceToggle"]').on('change', function () { if (appData) renderAudioList(currentAudioType); });
+
+            // Universal event delegation for dynamically added set bubbles (Main & Optional)
+            $(document).on('click', '.set-bubble', function () {
+                let exId = $(this).data('ex'); let setIdx = $(this).data('set'); let restTime = $(this).data('rest');
+                let $card = $(this).closest('.workout-card');
+
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                    savedState.checkedSets[exId] = savedState.checkedSets[exId].filter(s => s !== setIdx);
+                } else {
+                    $(this).addClass('active');
+                    savedState.checkedSets[exId].push(setIdx);
+                    startRestTimer(restTime); // SMART TIMER
+                }
+
+                if (savedState.checkedSets[exId].length === $card.find('.set-bubble').length) {
+                    $card.addClass('completed-card');
+                } else {
+                    $card.removeClass('completed-card');
+                }
+                calculateProgress(true);
+            });
+
+            $(document).on('change', '#finisherToggle', function () {
+                savedState.finisherDone = this.checked;
+                if (this.checked) { $('#card-finisher').addClass('completed-card'); } else { $('#card-finisher').removeClass('completed-card'); }
+                calculateProgress(true);
+            });
+        });
+
+        function toggleVoice() {
+            savedState.voiceEnabled = !savedState.voiceEnabled;
+            localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+            const $icon = $('#voiceToggle i');
+            if (savedState.voiceEnabled) {
+                $('#voiceToggle').addClass('active'); $icon.removeClass('fa-volume-xmark').addClass('fa-volume-high');
+                let speech = new SpeechSynthesisUtterance(""); window.speechSynthesis.speak(speech); // iOS unlock
+            } else {
+                $('#voiceToggle').removeClass('active'); $icon.removeClass('fa-volume-high').addClass('fa-volume-xmark');
+            }
+        }
+
+        // Helper Function for clean rendering
+        function buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, isOptional) {
+            let optBadge = isOptional ? `<span class="badge bg-secondary me-2">Optional</span>` : '';
+            let borderStyle = isOptional ? 'border-left: 2px solid #666;' : '';
+            return `
+                <div class="workout-card animate__animated animate__fadeInUp ${isExComplete ? 'completed-card' : ''}" id="card-${exId}" style="animation-delay: ${index * 0.1}s; ${borderStyle}">
+                    <div class="ex-header"><h3 class="ex-title">${optBadge}${ex.name}</h3><span class="badge bg-dark border border-secondary text-white">${ex.sets} Sets x ${ex.reps}</span></div>
+                    <div class="set-container">${bubblesHtml}</div>
+                    <div class="anatomy-toggle" onclick="$(this).next('.anatomy-content').slideToggle(200);"><i class="fa-solid fa-dna me-2"></i> Muscle Science</div>
+                    <div class="anatomy-content">${ex.anatomy_pov}</div>
+                    <div class="machine-alt"><i class="fa-solid fa-repeat me-1"></i> Alt: ${ex.machine_alternative}</div>
+                </div>
+            `;
+        }
+
+        function initApp() {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const todayName = days[new Date().getDay()];
+            $('#currentDay').text(todayName);
+
+            const todaysPlan = appData.schedule.find(day => day.day_of_week === todayName);
+            $('#focusArea').text(todaysPlan.focus);
+            const $content = $('#workoutContent');
+
+            if (todaysPlan.is_rest_day) {
+                $content.append(`<div class="text-center py-5 animate__animated animate__zoomIn"><i class="fa-solid fa-battery-half fa-3x mb-3" style="color: var(--accent-color);"></i><h4 class="brand-font text-white">Recovery Mode</h4><p class="text-muted mt-2 px-3">${todaysPlan.notes}</p></div>`);
+            } else {
+                $('#progressContainer').show();
+                totalTasks = 0;
+
+                // MAIN Lifts
+                todaysPlan.exercises.forEach((ex, index) => {
+                    let exId = `ex${index}`;
+                    if (!savedState.checkedSets[exId]) savedState.checkedSets[exId] = [];
+                    let isExComplete = savedState.checkedSets[exId].length === ex.sets;
+
+                    let bubblesHtml = '';
+                    for (let s = 0; s < ex.sets; s++) {
+                        totalTasks++; // Increment for main exercises ONLY
+                        let isActive = savedState.checkedSets[exId].includes(s) ? 'active' : '';
+                        bubblesHtml += `<div class="set-bubble ${isActive}" data-ex="${exId}" data-set="${s}" data-rest="${ex.rest_seconds || 60}">${s + 1}</div>`;
+                    }
+                    $content.append(buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, false));
+                });
+
+                // OPTIONAL Lifts (Hidden by default)
+                if (todaysPlan.optional_exercises && todaysPlan.optional_exercises.length > 0) {
+                    $content.append(`
+                        <div class="text-center mt-4 mb-3 animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                            <button class="btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#optionalWorkouts" 
+                                style="background: rgba(255,255,255,0.05); border: 1px solid #333; color: #888; border-radius: 20px; padding: 5px 20px; font-weight: 600;">
+                                Wanna Try These Too? <i class="fa-solid fa-chevron-down ms-1"></i>
+                            </button>
+                        </div>
+                        <div class="collapse" id="optionalWorkouts"></div>
+                    `);
+
+                    const $optionalContainer = $('#optionalWorkouts');
+                    todaysPlan.optional_exercises.forEach((ex, index) => {
+                        let exId = `opt${index}`; // Distinguish ID
+                        if (!savedState.checkedSets[exId]) savedState.checkedSets[exId] = [];
+                        let isExComplete = savedState.checkedSets[exId].length === ex.sets;
+
+                        let bubblesHtml = '';
+                        for (let s = 0; s < ex.sets; s++) {
+                            // Do NOT increment totalTasks here.
+                            let isActive = savedState.checkedSets[exId].includes(s) ? 'active' : '';
+                            bubblesHtml += `<div class="set-bubble ${isActive}" data-ex="${exId}" data-set="${s}" data-rest="${ex.rest_seconds || 60}">${s + 1}</div>`;
+                        }
+                        $optionalContainer.append(buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, true));
+                    });
+                }
+
+                // FINISHER
+                if (todaysPlan.finisher) {
+                    totalTasks++; // Count finisher
+                    let isChecked = savedState.finisherDone ? 'checked' : '';
+                    $content.append(`
+                        <div class="workout-card animate__animated animate__fadeInUp ${savedState.finisherDone ? 'completed-card' : ''} mt-3" id="card-finisher" style="animation-delay: 0.5s; border-left: 3px solid #ff3b30;">
+                            <h6 class="text-uppercase text-muted mb-3" style="font-size: 0.75rem; letter-spacing: 1px;"><i class="fa-solid fa-fire text-danger me-1"></i> Burnout Finisher</h6>
+                            <label class="finisher-label"><input type="checkbox" class="finisher-checkbox" id="finisherToggle" ${isChecked}><span class="flex-grow-1">${todaysPlan.finisher.name}</span><span class="badge bg-danger text-white">${todaysPlan.finisher.duration_minutes ? todaysPlan.finisher.duration_minutes + ' Min' : todaysPlan.finisher.sets + 'x' + todaysPlan.finisher.reps}</span></label>
+                            <div class="machine-alt mt-3"><i class="fa-solid fa-repeat me-1"></i> Alt: ${todaysPlan.finisher.machine_alternative}</div>
+                        </div>
+                    `);
+                }
+
+                calculateProgress(false);
+            }
+
+            // Populate Weekly Modal
+            const $weekly = $('#weeklyContent');
+            appData.schedule.forEach(day => {
+                let isToday = day.day_of_week === todayName ? '<span class="badge bg-success ms-2">Today</span>' : '';
+                let dayHtml = `<div class="mb-3 border-bottom border-secondary pb-2"><strong class="d-block text-white">${day.day_of_week} ${isToday}<br><span style="color: var(--accent-color); font-size: 0.85rem;">${day.focus}</span></strong>`;
+                if (day.is_rest_day) {
+                    dayHtml += `<span class="text-muted" style="font-size: 0.8rem;">Active Recovery</span>`;
+                } else {
+                    let optText = day.optional_exercises ? ` (+${day.optional_exercises.length} Optional)` : '';
+                    dayHtml += `<span class="text-muted" style="font-size: 0.8rem;">${day.exercises.map(ex => ex.name).join(', ')}${optText}</span>`;
+                }
+                $weekly.append(dayHtml + `</div>`);
+            });
+        }
+
+        function calculateProgress(triggerAnimation) {
+            let completedSetsCount = 0;
+            // Count all completed sets across Main and Optional
+            for (const exId in savedState.checkedSets) {
+                completedSetsCount += savedState.checkedSets[exId].length;
+            }
+            if (savedState.finisherDone) completedSetsCount++;
+
+            // Percentage caps at 100
+            let percentage = totalTasks === 0 ? 0 : Math.min(100, Math.round((completedSetsCount / totalTasks) * 100));
+
+            $('#workoutProgress').css('width', percentage + '%');
+
+            if (percentage === 100) {
+                if (triggerAnimation && !savedState.hasCelebrated) { triggerConfetti(); savedState.hasCelebrated = true; }
+                $('#progressText').text("SESSION COMPLETE! 🏆").css('color', '#fff');
+                $('#workoutProgress').css('box-shadow', '0 0 20px #eab308').css('background-color', '#eab308');
+            } else {
+                savedState.hasCelebrated = false;
+                $('#progressText').text(percentage + '%').css('color', 'var(--accent-color)');
+                $('#workoutProgress').css('box-shadow', '0 0 15px var(--accent-glow)').css('background-color', 'var(--accent-color)');
+            }
+            localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+        }
+
+        function startRestTimer(seconds) {
+            clearInterval(timerInterval);
+            const $timer = $('#floatingTimer'); const $display = $('#timerDisplay');
+            $timer.removeClass('done').addClass('show');
+            let timeLeft = seconds;
+
+            let initM = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            let initS = (timeLeft % 60).toString().padStart(2, '0');
+            $display.text(`${initM}:${initS}`);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                let m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+                let s = (timeLeft % 60).toString().padStart(2, '0');
+                $display.text(`${m}:${s}`);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    $timer.addClass('done');
+                    $display.text("TIME TO LIFT!");
+                    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+
+                    if (savedState.voiceEnabled && 'speechSynthesis' in window) {
+                        let speech = new SpeechSynthesisUtterance("Let\'s get back to Next Rep.");
+                        // Attempt to find the specific voice you liked
+                        let voices = window.speechSynthesis.getVoices();
+                        let selectedVoice = voices.find(v => v.name === "Rishi");
+                        if (selectedVoice) speech.voice = selectedVoice;
+                        speech.volume = 1; speech.rate = 1.1; speech.pitch = 1;
+                        window.speechSynthesis.speak(speech);
+                    }
+                    setTimeout(() => $timer.removeClass('show'), 5000);
+                }
+            }, 1000);
+        }
+
+        function dismissTimer() { $('#floatingTimer').removeClass('show'); clearInterval(timerInterval); }
+        function triggerConfetti() { var duration = 3000; var animationEnd = Date.now() + duration; var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 }; function randomInRange(min, max) { return Math.random() * (max - min) + min; } var interval = setInterval(function () { var timeLeft = animationEnd - Date.now(); if (timeLeft <= 0) return clearInterval(interval); var particleCount = 50 * (timeLeft / duration); confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } })); confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } })); }, 250); }
+        function createDeepLink(webUrl, device) { if (device === 'web') return webUrl; try { const urlObj = new URL(webUrl); const pathParts = urlObj.pathname.split('/').filter(p => p); if (pathParts.length >= 2) { const type = pathParts[0]; const id = pathParts[1]; if (device === 'ios') return `spotify:${type}:${id}`; if (device === 'android') return `intent://${type}/${id}#Intent;scheme=spotify;package=com.spotify.music;end;`; } } catch (e) { console.error(e); } return webUrl; }
+        function openAudioModal(type) { currentAudioType = type; $('#audioModalTitle').html(type === 'playlists' ? '<i class="fa-brands fa-spotify text-success me-2"></i> Playlists' : '<i class="fa-solid fa-podcast text-purple me-2"></i> Podcasts'); renderAudioList(type); new bootstrap.Modal(document.getElementById('audioModal')).show(); }
+        function renderAudioList(type) { const $list = $('#audioModalList').empty(); const device = $('input[name="deviceToggle"]:checked').val(); appData.audio[type].forEach(item => { const icon = type === 'playlists' ? 'fa-music' : 'fa-microphone-lines'; $list.append(`<a href="${createDeepLink(item.url, device)}" class="audio-list-item" target="_blank"><i class="fa-solid ${icon} me-3 text-muted"></i><span class="flex-grow-1">${item.name}</span><i class="fa-solid fa-arrow-up-right-from-square text-muted" style="font-size: 0.8rem;"></i></a>`); }); }
+        function shareApp() { if (navigator.share) navigator.share({ title: 'FitForge Protocol', text: 'Check out my custom daily protocol.', url: window.location.href }).catch(console.error); else alert("Copy this link: " + window.location.href); }
+    </script>
+</body>
+
+</html>

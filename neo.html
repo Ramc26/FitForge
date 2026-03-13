@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitForge | Brutal Protocol</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f4f0ea">
+    <link rel="apple-touch-icon" href="Personality.svg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="description" content="FitForge: Daily workout tracker and fitness protocol.">
+    <link rel="icon" type="image/svg+xml" href="Personality.svg">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Space+Mono:wght@400;700&family=Poppins:wght@600;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            /* Neo Brutalism Palette */
+            --bg-color: #f4f0ea;
+            /* Stark cream/off-white */
+            --card-bg: #ffffff;
+            --accent-green: #00e676;
+            --accent-yellow: #ffd600;
+            --accent-blue: #448aff;
+            --accent-red: #ff5252;
+            --text-main: #000000;
+            --border-thick: 4px solid #000;
+            --border-thin: 2px solid #000;
+
+            /* Hard, unblurred shadows */
+            --shadow-hard: 6px 6px 0px #000;
+            --shadow-hard-sm: 4px 4px 0px #000;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            padding-bottom: 90px;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            /* Brutalist background dot pattern */
+            background-image: radial-gradient(#000 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        h1,
+        h2,
+        .brand-font {
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* Brutalist Logo - Hard text shadows instead of gradient */
+        .brand-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #000;
+            text-shadow: 3px 3px 0px var(--accent-green), 6px 6px 0px #000;
+            letter-spacing: 2px;
+            margin-right: 15px;
+        }
+
+        .dashboard-header {
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: #fff;
+            border-bottom: var(--border-thick);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 0 #000;
+        }
+
+        /* Brutalist Buttons */
+        .btn-brutal {
+            background: #fff;
+            border: var(--border-thin);
+            color: #000;
+            border-radius: 4px;
+            padding: 8px 14px;
+            font-weight: 800;
+            box-shadow: var(--shadow-hard-sm);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .btn-brutal:active,
+        #voiceToggle.active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px #000;
+            background: var(--accent-yellow);
+        }
+
+        /* Workout Cards */
+        .workout-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: var(--border-thick);
+            box-shadow: var(--shadow-hard);
+            margin-bottom: 25px;
+            padding: 20px;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .workout-card.completed-card {
+            background-color: var(--accent-green);
+        }
+
+        .ex-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #000;
+            padding-bottom: 10px;
+        }
+
+        .ex-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #000;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .badge.bg-dark {
+            background: #000 !important;
+            color: #fff !important;
+            border-radius: 0;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            padding: 6px 10px;
+            border: 2px solid #000;
+            box-shadow: 2px 2px 0px var(--accent-yellow);
+        }
+
+        /* Brutalist Set Trackers */
+        .set-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .set-bubble {
+            width: 44px;
+            height: 44px;
+            border-radius: 4px;
+            border: var(--border-thin);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background: #fff;
+            color: #000;
+            box-shadow: var(--shadow-hard-sm);
+            transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .set-bubble.active {
+            background: var(--accent-yellow);
+            transform: translate(4px, 4px);
+            box-shadow: 0 0 0 #000;
+        }
+
+        /* Finisher Checkbox */
+        .finisher-label {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .finisher-checkbox {
+            width: 2em;
+            height: 2em;
+            border: var(--border-thin);
+            border-radius: 0;
+            margin-right: 15px;
+            appearance: none;
+            cursor: pointer;
+            background: #fff;
+            box-shadow: var(--shadow-hard-sm);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .finisher-checkbox:checked {
+            background-color: var(--accent-red);
+            transform: translate(4px, 4px);
+            box-shadow: 0 0 0 #000;
+            position: relative;
+        }
+
+        .finisher-checkbox:checked::after {
+            content: 'X';
+            position: absolute;
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 900;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .anatomy-toggle {
+            font-size: 0.85rem;
+            color: #000;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 800;
+            padding: 6px 12px;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 2px 2px 0 #000;
+            text-transform: uppercase;
+        }
+
+        .anatomy-toggle:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0 0 0 #000;
+        }
+
+        .anatomy-content {
+            display: none;
+            font-size: 0.9rem;
+            color: #000;
+            margin-top: 10px;
+            padding: 15px;
+            background: #fff;
+            border: var(--border-thin);
+            font-family: 'Space Mono', monospace;
+            border-left: 8px solid var(--accent-blue);
+        }
+
+        .machine-alt {
+            font-size: 0.85rem;
+            color: #000;
+            margin-top: 15px;
+            display: block;
+            font-weight: 800;
+            background: var(--accent-yellow);
+            padding: 5px 10px;
+            border: 2px solid #000;
+            display: inline-block;
+        }
+
+        /* Brutalist Progress Bar */
+        .progress {
+            height: 24px;
+            border-radius: 0;
+            background: #fff;
+            border: var(--border-thick);
+            box-shadow: var(--shadow-hard-sm);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background-color: var(--accent-green);
+            border-right: var(--border-thick);
+            transition: width 0.4s linear;
+        }
+
+        /* Media Cards */
+        .media-card {
+            border-radius: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            color: #000 !important;
+            border: var(--border-thick);
+            width: 100%;
+            box-shadow: var(--shadow-hard);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .media-card:active {
+            transform: translate(6px, 6px);
+            box-shadow: 0 0 0 #000;
+        }
+
+        .bg-spotify {
+            background: var(--accent-green);
+        }
+
+        .bg-podcast {
+            background: var(--accent-blue);
+        }
+
+        /* Brutal Floating Timer */
+        #floatingTimer {
+            position: fixed;
+            bottom: 85px;
+            left: 50%;
+            transform: translateX(-50%) translateY(200%);
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 10px 40px;
+            border: var(--border-thick);
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 2rem;
+            box-shadow: 8px 8px 0px #000;
+            z-index: 999;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.1s;
+            cursor: pointer;
+        }
+
+        #floatingTimer.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        #floatingTimer.done {
+            background: var(--accent-red);
+            color: #fff;
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(-50%) rotate(0deg);
+            }
+
+            25% {
+                transform: translateX(-52%) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateX(-50%) rotate(0deg);
+            }
+
+            75% {
+                transform: translateX(-48%) rotate(2deg);
+            }
+
+            100% {
+                transform: translateX(-50%) rotate(0deg);
+            }
+        }
+
+        /* Modals */
+        .modal-content {
+            background-color: #fff;
+            border-radius: 0;
+            border: var(--border-thick);
+            box-shadow: 12px 12px 0 #000;
+        }
+
+        .modal-header {
+            border-bottom: var(--border-thick);
+            background: var(--accent-yellow);
+        }
+
+        .audio-list-item {
+            background: #fff;
+            border: 2px solid #000;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #000;
+            box-shadow: 3px 3px 0 #000;
+            font-weight: 800;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .audio-list-item:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0 0 0 #000;
+            background: var(--accent-green);
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #fff;
+            border-top: var(--border-thick);
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 800;
+            z-index: 1000;
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mx-auto px-3" style="max-width: 600px;">
+
+        <header class="dashboard-header animate__animated animate__fadeInDown px-3">
+            <div class="brand-logo">FITFORGE</div>
+            <div class="d-flex gap-2">
+                <button class="btn-brutal" id="voiceToggle" onclick="toggleVoice()"><i
+                        class="fa-solid fa-volume-xmark"></i></button>
+                <button class="btn-brutal" onclick="shareApp()"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="btn-brutal" data-bs-toggle="modal" data-bs-target="#weeklyModal">WEEK</button>
+            </div>
+        </header>
+
+        <div class="mb-4 animate__animated animate__fadeIn px-2"
+            style="border: 4px solid #000; background: #fff; padding: 15px; box-shadow: 6px 6px 0 #000; margin-bottom: 30px !important;">
+            <h6 class="text-uppercase" style="letter-spacing: 2px; font-size: 0.8rem; font-weight: 800; color: #000;">
+                TODAY IS: <span id="currentDay" style="background: #000; color: #fff; padding: 2px 6px;"></span></h6>
+            <h2 class="brand-font mt-2 mb-0" id="focusArea" style="font-size: 1.6rem;">LOADING...</h2>
+        </div>
+
+        <div class="mb-5 animate__animated animate__fadeIn" id="progressContainer" style="display:none;">
+            <div class="d-flex justify-content-between mb-2"
+                style="font-size: 1rem; font-weight: 800; text-transform: uppercase;">
+                <span>PROGRESS</span>
+                <span id="progressText"
+                    style="color: #000; background: var(--accent-yellow); padding: 0 8px; border: 2px solid #000;">0%</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" id="workoutProgress" role="progressbar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div id="workoutContent"></div>
+
+        <h5 class="mt-5 mb-4 brand-font text-center animate__animated animate__fadeIn"
+            style="font-size: 1.2rem; background: #000; color: #fff; padding: 10px; border: 4px solid #000; transform: rotate(-1deg); box-shadow: 6px 6px 0 var(--accent-red);">
+            🎧 THE ZONE</h5>
+        <div class="row g-3 mb-5 pb-4 animate__animated animate__fadeInUp">
+            <div class="col-6"><button class="media-card bg-spotify" onclick="openAudioModal('playlists')"><i
+                        class="fa-brands fa-spotify fa-2x mb-2"></i><span>MUSIC</span></button></div>
+            <div class="col-6"><button class="media-card bg-podcast" onclick="openAudioModal('podcasts')"><i
+                        class="fa-solid fa-podcast fa-2x mb-2"></i><span>PODCASTS</span></button></div>
+        </div>
+    </div>
+
+    <div id="floatingTimer" onclick="dismissTimer()"><i class="fa-solid fa-stopwatch me-2"></i> <span
+            id="timerDisplay">00:00</span></div>
+
+    <div class="modal fade" id="weeklyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title brand-font fs-6">COMPLETE PROTOCOL</h5><button type="button"
+                        class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="weeklyContent"
+                    style="font-size: 0.95rem; line-height: 1.6; font-family: 'Space Mono', monospace;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="audioModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header d-flex flex-column align-items-start">
+                    <div class="d-flex justify-content-between w-100 mb-3">
+                        <h5 class="modal-title brand-font fs-6" id="audioModalTitle">AUDIO</h5><button type="button"
+                            class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="w-100 p-3" style="background: #eee; border: 3px solid #000;">
+                        <label class="mb-2"
+                            style="font-size: 0.9rem; display:block; font-weight: 800; text-transform: uppercase;">OPEN
+                            LINKS USING:</label>
+                        <div class="btn-group w-100" role="group" id="deviceToggleGroup"
+                            style="border: 2px solid #000; background: #fff;">
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnIphone" value="ios"
+                                checked><label class="btn btn-outline-dark font-weight-bold" style="border-radius: 0;"
+                                for="btnIphone"><i class="fa-brands fa-apple"></i></label>
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnAndroid"
+                                value="android"><label class="btn btn-outline-dark font-weight-bold"
+                                style="border-radius: 0; border-left: 2px solid #000; border-right: 2px solid #000;"
+                                for="btnAndroid"><i class="fa-brands fa-android"></i></label>
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnWeb" value="web"><label
+                                class="btn btn-outline-dark font-weight-bold" style="border-radius: 0;" for="btnWeb"><i
+                                    class="fa-solid fa-globe"></i></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body" id="audioModalList" style="background: #f4f0ea;"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container d-flex justify-content-center align-items-center">
+            <span style="background: #000; color: #fff; padding: 4px 10px; font-family: 'Space Mono', monospace;">DEV:
+                <a href="https://bikkina.vercel.app" target="_blank"
+                    style="color: var(--accent-green);">ITSMERAMC</a></span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // PWA Service Worker
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(err => console.log('SW fail')); }); }
+
+        let appData = null; let currentAudioType = 'playlists'; let totalTasks = 0; let timerInterval;
+        const todayDateStr = new Date().toDateString();
+        let savedState = JSON.parse(localStorage.getItem('fitforge_state')) || {};
+
+        if (savedState.date !== todayDateStr || !savedState.checkedSets) {
+            let existingVoice = savedState.voiceEnabled || false;
+            savedState = { date: todayDateStr, checkedSets: {}, finisherDone: false, hasCelebrated: false, voiceEnabled: existingVoice };
+            localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+        }
+
+        $(document).ready(function () {
+            if (savedState.voiceEnabled) { $('#voiceToggle').addClass('active').find('i').removeClass('fa-volume-xmark').addClass('fa-volume-high'); }
+            fetch('data.json').then(res => res.json()).then(data => { appData = data; initApp(); }).catch(err => { $('#workoutContent').html(`<div class="alert alert-danger" style="border:4px solid #000; border-radius:0; box-shadow: 4px 4px 0 #000; font-weight:800; background: #ff5252; color:#fff;">Server/Vercel required to fetch data.json</div>`); });
+            $('input[name="deviceToggle"]').on('change', function () { if (appData) renderAudioList(currentAudioType); });
+
+            $(document).on('click', '.set-bubble', function () {
+                let exId = $(this).data('ex'); let setIdx = $(this).data('set'); let restTime = $(this).data('rest');
+                let $card = $(this).closest('.workout-card');
+
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active'); savedState.checkedSets[exId] = savedState.checkedSets[exId].filter(s => s !== setIdx);
+                } else {
+                    $(this).addClass('active'); savedState.checkedSets[exId].push(setIdx); startRestTimer(restTime);
+                }
+
+                if (savedState.checkedSets[exId].length === $card.find('.set-bubble').length) { $card.addClass('completed-card'); } else { $card.removeClass('completed-card'); }
+                calculateProgress(true);
+            });
+
+            $(document).on('change', '#finisherToggle', function () {
+                savedState.finisherDone = this.checked;
+                if (this.checked) { $('#card-finisher').addClass('completed-card'); } else { $('#card-finisher').removeClass('completed-card'); }
+                calculateProgress(true);
+            });
+        });
+
+        function toggleVoice() {
+            savedState.voiceEnabled = !savedState.voiceEnabled; localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+            const $icon = $('#voiceToggle i');
+            if (savedState.voiceEnabled) {
+                $('#voiceToggle').addClass('active'); $icon.removeClass('fa-volume-xmark').addClass('fa-volume-high');
+                let speech = new SpeechSynthesisUtterance(""); window.speechSynthesis.speak(speech);
+            } else {
+                $('#voiceToggle').removeClass('active'); $icon.removeClass('fa-volume-high').addClass('fa-volume-xmark');
+            }
+        }
+
+        function buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, isOptional) {
+            let optBadge = isOptional ? `<span class="badge bg-dark me-2" style="background:var(--accent-yellow)!important; color:#000!important;">OPT</span>` : '';
+            return `
+                <div class="workout-card animate__animated animate__fadeInUp ${isExComplete ? 'completed-card' : ''}" id="card-${exId}" style="animation-delay: ${index * 0.1}s;">
+                    <div class="ex-header"><h3 class="ex-title">${optBadge}${ex.name}</h3><span class="badge bg-dark">${ex.sets}x${ex.reps}</span></div>
+                    <div class="set-container">${bubblesHtml}</div>
+                    <div class="anatomy-toggle" onclick="$(this).next('.anatomy-content').slideToggle(0);"><i class="fa-solid fa-dna me-2"></i> SCIENCE</div>
+                    <div class="anatomy-content">${ex.anatomy_pov}</div>
+                    <div class="machine-alt">ALT: ${ex.machine_alternative}</div>
+                </div>
+            `;
+        }
+
+        function initApp() {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const todayName = days[new Date().getDay()];
+            $('#currentDay').text(todayName);
+
+            const todaysPlan = appData.schedule.find(day => day.day_of_week === todayName);
+            $('#focusArea').text(todaysPlan.focus);
+            const $content = $('#workoutContent');
+
+            if (todaysPlan.is_rest_day) {
+                $content.append(`<div class="workout-card text-center py-5 animate__animated animate__zoomIn" style="background: var(--accent-blue);"><i class="fa-solid fa-battery-half fa-4x mb-4" style="color: #fff; filter: drop-shadow(4px 4px 0 #000);"></i><h3 class="brand-font text-white mb-3" style="text-shadow: 3px 3px 0 #000;">RECOVERY</h3><p class="px-3 mb-0" style="font-weight: 800; font-family:'Space Mono', monospace; font-size:1.1rem; color:#000;">${todaysPlan.notes}</p></div>`);
+            } else {
+                $('#progressContainer').show();
+                totalTasks = 0;
+
+                todaysPlan.exercises.forEach((ex, index) => {
+                    let exId = `ex${index}`;
+                    if (!savedState.checkedSets[exId]) savedState.checkedSets[exId] = [];
+                    let isExComplete = savedState.checkedSets[exId].length === ex.sets;
+
+                    let bubblesHtml = '';
+                    for (let s = 0; s < ex.sets; s++) {
+                        totalTasks++;
+                        let isActive = savedState.checkedSets[exId].includes(s) ? 'active' : '';
+                        bubblesHtml += `<div class="set-bubble ${isActive}" data-ex="${exId}" data-set="${s}" data-rest="${ex.rest_seconds || 60}">${s + 1}</div>`;
+                    }
+                    $content.append(buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, false));
+                });
+
+                if (todaysPlan.optional_exercises && todaysPlan.optional_exercises.length > 0) {
+                    $content.append(`
+                        <div class="text-center mt-5 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                            <button class="btn-brutal mx-auto" style="font-size: 1.1rem; background: var(--accent-blue); color: #fff;" type="button" data-bs-toggle="collapse" data-bs-target="#optionalWorkouts">
+                                WANNA TRY THESE? <i class="fa-solid fa-chevron-down ms-2"></i>
+                            </button>
+                        </div>
+                        <div class="collapse" id="optionalWorkouts"></div>
+                    `);
+
+                    const $optionalContainer = $('#optionalWorkouts');
+                    todaysPlan.optional_exercises.forEach((ex, index) => {
+                        let exId = `opt${index}`;
+                        if (!savedState.checkedSets[exId]) savedState.checkedSets[exId] = [];
+                        let isExComplete = savedState.checkedSets[exId].length === ex.sets;
+
+                        let bubblesHtml = '';
+                        for (let s = 0; s < ex.sets; s++) {
+                            let isActive = savedState.checkedSets[exId].includes(s) ? 'active' : '';
+                            bubblesHtml += `<div class="set-bubble ${isActive}" data-ex="${exId}" data-set="${s}" data-rest="${ex.rest_seconds || 60}">${s + 1}</div>`;
+                        }
+                        $optionalContainer.append(buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, true));
+                    });
+                }
+
+                if (todaysPlan.finisher) {
+                    totalTasks++;
+                    let isChecked = savedState.finisherDone ? 'checked' : '';
+                    $content.append(`
+                        <div class="workout-card animate__animated animate__fadeInUp ${savedState.finisherDone ? 'completed-card' : ''} mt-4" id="card-finisher" style="animation-delay: 0.5s; border: 6px solid #000; box-shadow: 8px 8px 0 var(--accent-red);">
+                            <h5 class="text-uppercase mb-4" style="font-size: 1.2rem; color: #000; font-weight: 800;"><i class="fa-solid fa-fire me-2" style="color: var(--accent-red);"></i> BURNOUT FINISHER</h5>
+                            <label class="finisher-label"><input type="checkbox" class="finisher-checkbox" id="finisherToggle" ${isChecked}><span class="flex-grow-1">${todaysPlan.finisher.name}</span><span class="badge bg-dark">${todaysPlan.finisher.duration_minutes ? todaysPlan.finisher.duration_minutes + ' MIN' : todaysPlan.finisher.sets + 'x' + todaysPlan.finisher.reps}</span></label>
+                            <div class="machine-alt mt-4">ALT: ${todaysPlan.finisher.machine_alternative}</div>
+                        </div>
+                    `);
+                }
+                calculateProgress(false);
+            }
+
+            const $weekly = $('#weeklyContent');
+            appData.schedule.forEach(day => {
+                let isToday = day.day_of_week === todayName ? '<span style="background:var(--accent-yellow); color:#000; padding:2px 6px; font-size:0.8rem; margin-left:10px; border:2px solid #000;">TODAY</span>' : '';
+                let dayHtml = `<div class="mb-4 pb-3" style="border-bottom: 4px solid #000;"><strong class="d-block text-black mb-2" style="font-size:1.2rem;">${day.day_of_week} ${isToday}<br><span style="color: var(--accent-blue); font-size: 1rem;">${day.focus}</span></strong>`;
+                if (day.is_rest_day) {
+                    dayHtml += `<span style="font-size: 0.9rem; font-weight:700; background:#000; color:#fff; padding:2px 5px;">REST</span>`;
+                } else {
+                    let optText = day.optional_exercises ? ` <span style="color:var(--accent-red);">(+${day.optional_exercises.length} OPT)</span>` : '';
+                    dayHtml += `<span style="font-size: 0.9rem; font-weight:700;">${day.exercises.map(ex => ex.name).join(', ')}${optText}</span>`;
+                }
+                $weekly.append(dayHtml + `</div>`);
+            });
+        }
+
+        function calculateProgress(triggerAnimation) {
+            let completedSetsCount = 0;
+            for (const exId in savedState.checkedSets) { completedSetsCount += savedState.checkedSets[exId].length; }
+            if (savedState.finisherDone) completedSetsCount++;
+            let percentage = totalTasks === 0 ? 0 : Math.min(100, Math.round((completedSetsCount / totalTasks) * 100));
+
+            $('#workoutProgress').css('width', percentage + '%');
+
+            if (percentage === 100) {
+                if (triggerAnimation && !savedState.hasCelebrated) { triggerConfetti(); savedState.hasCelebrated = true; }
+                $('#progressText').text("DONE 🏆").css('background', 'var(--accent-green)');
+                $('#workoutProgress').css('background-color', 'var(--accent-yellow)');
+            } else {
+                savedState.hasCelebrated = false;
+                $('#progressText').text(percentage + '%').css('background', 'var(--accent-yellow)');
+                $('#workoutProgress').css('background-color', 'var(--accent-green)');
+            }
+            localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+        }
+
+        function startRestTimer(seconds) {
+            clearInterval(timerInterval);
+            const $timer = $('#floatingTimer'); const $display = $('#timerDisplay');
+            $timer.removeClass('done').addClass('show');
+            let timeLeft = seconds;
+
+            let initM = Math.floor(timeLeft / 60).toString().padStart(2, '0'); let initS = (timeLeft % 60).toString().padStart(2, '0');
+            $display.text(`${initM}:${initS}`);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                let m = Math.floor(timeLeft / 60).toString().padStart(2, '0'); let s = (timeLeft % 60).toString().padStart(2, '0');
+                $display.text(`${m}:${s}`);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval); $timer.addClass('done'); $display.text("LIFT!");
+                    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+                    if (savedState.voiceEnabled && 'speechSynthesis' in window) {
+                        let speech = new SpeechSynthesisUtterance("Rest is over. Let's get back to your next rep.");
+                        let voices = window.speechSynthesis.getVoices();
+                        let selectedVoice = voices.find(v => v.name === "Rishi");
+                        if (selectedVoice) speech.voice = selectedVoice;
+                        speech.volume = 1; speech.rate = 1.1; speech.pitch = 1; window.speechSynthesis.speak(speech);
+                    }
+                    setTimeout(() => $timer.removeClass('show'), 5000);
+                }
+            }, 1000);
+        }
+
+        function dismissTimer() { $('#floatingTimer').removeClass('show'); clearInterval(timerInterval); }
+        function triggerConfetti() { var duration = 3000; var animationEnd = Date.now() + duration; var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999, colors: ['#000', '#00e676', '#ffd600', '#ff5252', '#448aff'] }; function randomInRange(min, max) { return Math.random() * (max - min) + min; } var interval = setInterval(function () { var timeLeft = animationEnd - Date.now(); if (timeLeft <= 0) return clearInterval(interval); var particleCount = 50 * (timeLeft / duration); confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } })); confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } })); }, 250); }
+        function createDeepLink(webUrl, device) { if (device === 'web') return webUrl; try { const urlObj = new URL(webUrl); const pathParts = urlObj.pathname.split('/').filter(p => p); if (pathParts.length >= 2) { const type = pathParts[0]; const id = pathParts[1]; if (device === 'ios') return `spotify:${type}:${id}`; if (device === 'android') return `intent://${type}/${id}#Intent;scheme=spotify;package=com.spotify.music;end;`; } } catch (e) { console.error(e); } return webUrl; }
+        function openAudioModal(type) { currentAudioType = type; $('#audioModalTitle').html(type === 'playlists' ? '<i class="fa-brands fa-spotify text-success me-2"></i> PLAYLISTS' : '<i class="fa-solid fa-podcast text-primary me-2"></i> PODCASTS'); renderAudioList(type); new bootstrap.Modal(document.getElementById('audioModal')).show(); }
+        function renderAudioList(type) { const $list = $('#audioModalList').empty(); const device = $('input[name="deviceToggle"]:checked').val(); appData.audio[type].forEach(item => { const icon = type === 'playlists' ? 'fa-music' : 'fa-microphone-lines'; $list.append(`<a href="${createDeepLink(item.url, device)}" class="audio-list-item" target="_blank"><i class="fa-solid ${icon} me-3"></i><span class="flex-grow-1">${item.name}</span><i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem;"></i></a>`); }); }
+        function shareApp() { if (navigator.share) navigator.share({ title: 'FitForge Protocol', text: 'Check out my custom daily protocol.', url: window.location.href }).catch(console.error); else alert("Copy this link: " + window.location.href); }
+    </script>
+</body>
+
+</html>
