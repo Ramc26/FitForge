@@ -24,7 +24,6 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* CSS REMAINS EXACTLY THE SAME AS YOUR LAST VERSION */
         :root {
             --bg-color: #0a0a0a;
             --card-bg: #161616;
@@ -358,7 +357,6 @@
             transition: background 0.2s;
         }
 
-        /* Voice Toggle Active State */
         #voiceToggle.active i {
             color: var(--accent-color);
         }
@@ -433,18 +431,20 @@
                         <h5 class="modal-title brand-font fs-6" id="audioModalTitle">Audio</h5><button type="button"
                             class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <div class="w-100 p-2 rounded" style="background: rgba(255,255,255,0.05);"><label class="text-muted"
-                            style="font-size: 0.8rem; display:block; margin-bottom:5px;">Open links using:</label>
-                        <div class="btn-group w-100" role="group" id="deviceToggleGroup"><input type="radio"
-                                class="btn-check" name="deviceToggle" id="btnIphone" value="ios" checked><label
-                                class="btn btn-outline-secondary btn-sm" for="btnIphone"><i
-                                    class="fa-brands fa-apple"></i> iOS</label><input type="radio" class="btn-check"
-                                name="deviceToggle" id="btnAndroid" value="android"><label
-                                class="btn btn-outline-secondary btn-sm" for="btnAndroid"><i
-                                    class="fa-brands fa-android"></i> Android</label><input type="radio"
-                                class="btn-check" name="deviceToggle" id="btnWeb" value="web"><label
+                    <div class="w-100 p-2 rounded" style="background: rgba(255,255,255,0.05);">
+                        <label class="text-muted" style="font-size: 0.8rem; display:block; margin-bottom:5px;">Open
+                            links using:</label>
+                        <div class="btn-group w-100" role="group" id="deviceToggleGroup">
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnIphone" value="ios"
+                                checked><label class="btn btn-outline-secondary btn-sm" for="btnIphone"><i
+                                    class="fa-brands fa-apple"></i> iOS</label>
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnAndroid"
+                                value="android"><label class="btn btn-outline-secondary btn-sm" for="btnAndroid"><i
+                                    class="fa-brands fa-android"></i> Android</label>
+                            <input type="radio" class="btn-check" name="deviceToggle" id="btnWeb" value="web"><label
                                 class="btn btn-outline-secondary btn-sm" for="btnWeb"><i class="fa-solid fa-globe"></i>
-                                Web</label></div>
+                                Web</label>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-body" id="audioModalList"></div>
@@ -465,7 +465,7 @@
     <script>
         // --- Register PWA Service Worker ---
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js'); });
+            window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(err => console.log('SW setup failed')); });
         }
 
         let appData = null; let currentAudioType = 'playlists'; let totalTasks = 0; let timerInterval;
@@ -473,21 +473,48 @@
         const todayDateStr = new Date().toDateString();
         let savedState = JSON.parse(localStorage.getItem('fitforge_state')) || {};
         if (savedState.date !== todayDateStr || !savedState.checkedSets) {
-            // Added voiceEnabled state
             let existingVoice = savedState.voiceEnabled || false;
             savedState = { date: todayDateStr, checkedSets: {}, finisherDone: false, hasCelebrated: false, voiceEnabled: existingVoice };
             localStorage.setItem('fitforge_state', JSON.stringify(savedState));
         }
 
         $(document).ready(function () {
-            // Restore voice UI state
             if (savedState.voiceEnabled) {
                 $('#voiceToggle').addClass('active').find('i').removeClass('fa-volume-xmark').addClass('fa-volume-high');
             }
 
             fetch('data.json').then(res => res.json()).then(data => { appData = data; initApp(); })
-                .catch(err => { $('#workoutContent').html(`<div class="alert alert-danger">Local testing block. Deploy to Vercel to load JSON.</div>`); });
+                .catch(err => { $('#workoutContent').html(`<div class="alert alert-danger">Please ensure you are running this on a server (like Vercel) to fetch the data.json correctly.</div>`); });
+
             $('input[name="deviceToggle"]').on('change', function () { if (appData) renderAudioList(currentAudioType); });
+
+            // Universal event delegation for dynamically added set bubbles (Main & Optional)
+            $(document).on('click', '.set-bubble', function () {
+                let exId = $(this).data('ex'); let setIdx = $(this).data('set'); let restTime = $(this).data('rest');
+                let $card = $(this).closest('.workout-card');
+
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                    savedState.checkedSets[exId] = savedState.checkedSets[exId].filter(s => s !== setIdx);
+                } else {
+                    $(this).addClass('active');
+                    savedState.checkedSets[exId].push(setIdx);
+                    startRestTimer(restTime); // SMART TIMER
+                }
+
+                if (savedState.checkedSets[exId].length === $card.find('.set-bubble').length) {
+                    $card.addClass('completed-card');
+                } else {
+                    $card.removeClass('completed-card');
+                }
+                calculateProgress(true);
+            });
+
+            $(document).on('change', '#finisherToggle', function () {
+                savedState.finisherDone = this.checked;
+                if (this.checked) { $('#card-finisher').addClass('completed-card'); } else { $('#card-finisher').removeClass('completed-card'); }
+                calculateProgress(true);
+            });
         });
 
         function toggleVoice() {
@@ -496,11 +523,25 @@
             const $icon = $('#voiceToggle i');
             if (savedState.voiceEnabled) {
                 $('#voiceToggle').addClass('active'); $icon.removeClass('fa-volume-xmark').addClass('fa-volume-high');
-                // Silent speech payload to unlock iOS audio context
-                let speech = new SpeechSynthesisUtterance(""); window.speechSynthesis.speak(speech);
+                let speech = new SpeechSynthesisUtterance(""); window.speechSynthesis.speak(speech); // iOS unlock
             } else {
                 $('#voiceToggle').removeClass('active'); $icon.removeClass('fa-volume-high').addClass('fa-volume-xmark');
             }
+        }
+
+        // Helper Function for clean rendering
+        function buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, isOptional) {
+            let optBadge = isOptional ? `<span class="badge bg-secondary me-2">Optional</span>` : '';
+            let borderStyle = isOptional ? 'border-left: 2px solid #666;' : '';
+            return `
+                <div class="workout-card animate__animated animate__fadeInUp ${isExComplete ? 'completed-card' : ''}" id="card-${exId}" style="animation-delay: ${index * 0.1}s; ${borderStyle}">
+                    <div class="ex-header"><h3 class="ex-title">${optBadge}${ex.name}</h3><span class="badge bg-dark border border-secondary text-white">${ex.sets} Sets x ${ex.reps}</span></div>
+                    <div class="set-container">${bubblesHtml}</div>
+                    <div class="anatomy-toggle" onclick="$(this).next('.anatomy-content').slideToggle(200);"><i class="fa-solid fa-dna me-2"></i> Muscle Science</div>
+                    <div class="anatomy-content">${ex.anatomy_pov}</div>
+                    <div class="machine-alt"><i class="fa-solid fa-repeat me-1"></i> Alt: ${ex.machine_alternative}</div>
+                </div>
+            `;
         }
 
         function initApp() {
@@ -516,6 +557,9 @@
                 $content.append(`<div class="text-center py-5 animate__animated animate__zoomIn"><i class="fa-solid fa-battery-half fa-3x mb-3" style="color: var(--accent-color);"></i><h4 class="brand-font text-white">Recovery Mode</h4><p class="text-muted mt-2 px-3">${todaysPlan.notes}</p></div>`);
             } else {
                 $('#progressContainer').show();
+                totalTasks = 0;
+
+                // MAIN Lifts
                 todaysPlan.exercises.forEach((ex, index) => {
                     let exId = `ex${index}`;
                     if (!savedState.checkedSets[exId]) savedState.checkedSets[exId] = [];
@@ -523,28 +567,47 @@
 
                     let bubblesHtml = '';
                     for (let s = 0; s < ex.sets; s++) {
-                        totalTasks++;
+                        totalTasks++; // Increment for main exercises ONLY
                         let isActive = savedState.checkedSets[exId].includes(s) ? 'active' : '';
-                        // Passing dynamic rest_seconds to the bubble via data attribute
                         bubblesHtml += `<div class="set-bubble ${isActive}" data-ex="${exId}" data-set="${s}" data-rest="${ex.rest_seconds || 60}">${s + 1}</div>`;
                     }
-
-                    $content.append(`
-                        <div class="workout-card animate__animated animate__fadeInUp ${isExComplete ? 'completed-card' : ''}" id="card-${exId}" style="animation-delay: ${index * 0.1}s">
-                            <div class="ex-header"><h3 class="ex-title">${ex.name}</h3><span class="badge bg-dark border border-secondary text-white">${ex.sets} Sets x ${ex.reps}</span></div>
-                            <div class="set-container">${bubblesHtml}</div>
-                            <div class="anatomy-toggle" onclick="$(this).next('.anatomy-content').slideToggle(200);"><i class="fa-solid fa-dna me-2"></i> Muscle Science</div>
-                            <div class="anatomy-content">${ex.anatomy_pov}</div>
-                            <div class="machine-alt"><i class="fa-solid fa-repeat me-1"></i> Alt: ${ex.machine_alternative}</div>
-                        </div>
-                    `);
+                    $content.append(buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, false));
                 });
 
+                // OPTIONAL Lifts (Hidden by default)
+                if (todaysPlan.optional_exercises && todaysPlan.optional_exercises.length > 0) {
+                    $content.append(`
+                        <div class="text-center mt-4 mb-3 animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                            <button class="btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#optionalWorkouts" 
+                                style="background: rgba(255,255,255,0.05); border: 1px solid #333; color: #888; border-radius: 20px; padding: 5px 20px; font-weight: 600;">
+                                Wanna Try These Too? <i class="fa-solid fa-chevron-down ms-1"></i>
+                            </button>
+                        </div>
+                        <div class="collapse" id="optionalWorkouts"></div>
+                    `);
+
+                    const $optionalContainer = $('#optionalWorkouts');
+                    todaysPlan.optional_exercises.forEach((ex, index) => {
+                        let exId = `opt${index}`; // Distinguish ID
+                        if (!savedState.checkedSets[exId]) savedState.checkedSets[exId] = [];
+                        let isExComplete = savedState.checkedSets[exId].length === ex.sets;
+
+                        let bubblesHtml = '';
+                        for (let s = 0; s < ex.sets; s++) {
+                            // Do NOT increment totalTasks here.
+                            let isActive = savedState.checkedSets[exId].includes(s) ? 'active' : '';
+                            bubblesHtml += `<div class="set-bubble ${isActive}" data-ex="${exId}" data-set="${s}" data-rest="${ex.rest_seconds || 60}">${s + 1}</div>`;
+                        }
+                        $optionalContainer.append(buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, true));
+                    });
+                }
+
+                // FINISHER
                 if (todaysPlan.finisher) {
-                    totalTasks++;
+                    totalTasks++; // Count finisher
                     let isChecked = savedState.finisherDone ? 'checked' : '';
                     $content.append(`
-                        <div class="workout-card animate__animated animate__fadeInUp ${savedState.finisherDone ? 'completed-card' : ''}" id="card-finisher" style="animation-delay: 0.5s; border-left: 3px solid #ff3b30;">
+                        <div class="workout-card animate__animated animate__fadeInUp ${savedState.finisherDone ? 'completed-card' : ''} mt-3" id="card-finisher" style="animation-delay: 0.5s; border-left: 3px solid #ff3b30;">
                             <h6 class="text-uppercase text-muted mb-3" style="font-size: 0.75rem; letter-spacing: 1px;"><i class="fa-solid fa-fire text-danger me-1"></i> Burnout Finisher</h6>
                             <label class="finisher-label"><input type="checkbox" class="finisher-checkbox" id="finisherToggle" ${isChecked}><span class="flex-grow-1">${todaysPlan.finisher.name}</span><span class="badge bg-danger text-white">${todaysPlan.finisher.duration_minutes ? todaysPlan.finisher.duration_minutes + ' Min' : todaysPlan.finisher.sets + 'x' + todaysPlan.finisher.reps}</span></label>
                             <div class="machine-alt mt-3"><i class="fa-solid fa-repeat me-1"></i> Alt: ${todaysPlan.finisher.machine_alternative}</div>
@@ -553,23 +616,6 @@
                 }
 
                 calculateProgress(false);
-
-                $(document).on('click', '.set-bubble', function () {
-                    let exId = $(this).data('ex'); let setIdx = $(this).data('set'); let restTime = $(this).data('rest');
-                    let $card = $(this).closest('.workout-card');
-
-                    if ($(this).hasClass('active')) {
-                        $(this).removeClass('active'); savedState.checkedSets[exId] = savedState.checkedSets[exId].filter(s => s !== setIdx);
-                    } else {
-                        $(this).addClass('active'); savedState.checkedSets[exId].push(setIdx);
-                        startRestTimer(restTime); // SMART TIMER CALLED HERE
-                    }
-
-                    if (savedState.checkedSets[exId].length === $card.find('.set-bubble').length) { $card.addClass('completed-card'); } else { $card.removeClass('completed-card'); }
-                    calculateProgress(true);
-                });
-
-                $('#finisherToggle').on('change', function () { savedState.finisherDone = this.checked; if (this.checked) { $('#card-finisher').addClass('completed-card'); } else { $('#card-finisher').removeClass('completed-card'); } calculateProgress(true); });
             }
 
             // Populate Weekly Modal
@@ -577,24 +623,37 @@
             appData.schedule.forEach(day => {
                 let isToday = day.day_of_week === todayName ? '<span class="badge bg-success ms-2">Today</span>' : '';
                 let dayHtml = `<div class="mb-3 border-bottom border-secondary pb-2"><strong class="d-block text-white">${day.day_of_week} ${isToday}<br><span style="color: var(--accent-color); font-size: 0.85rem;">${day.focus}</span></strong>`;
-                if (day.is_rest_day) { dayHtml += `<span class="text-muted" style="font-size: 0.8rem;">Active Recovery</span>`; } else { dayHtml += `<span class="text-muted" style="font-size: 0.8rem;">${day.exercises.map(ex => ex.name).join(', ')}</span>`; }
+                if (day.is_rest_day) {
+                    dayHtml += `<span class="text-muted" style="font-size: 0.8rem;">Active Recovery</span>`;
+                } else {
+                    let optText = day.optional_exercises ? ` (+${day.optional_exercises.length} Optional)` : '';
+                    dayHtml += `<span class="text-muted" style="font-size: 0.8rem;">${day.exercises.map(ex => ex.name).join(', ')}${optText}</span>`;
+                }
                 $weekly.append(dayHtml + `</div>`);
             });
         }
 
         function calculateProgress(triggerAnimation) {
             let completedSetsCount = 0;
-            for (const exId in savedState.checkedSets) { completedSetsCount += savedState.checkedSets[exId].length; }
+            // Count all completed sets across Main and Optional
+            for (const exId in savedState.checkedSets) {
+                completedSetsCount += savedState.checkedSets[exId].length;
+            }
             if (savedState.finisherDone) completedSetsCount++;
-            let percentage = totalTasks === 0 ? 0 : Math.round((completedSetsCount / totalTasks) * 100);
 
-            $('#workoutProgress').css('width', percentage + '%'); $('#progressText').text(percentage + '%');
+            // Percentage caps at 100
+            let percentage = totalTasks === 0 ? 0 : Math.min(100, Math.round((completedSetsCount / totalTasks) * 100));
+
+            $('#workoutProgress').css('width', percentage + '%');
 
             if (percentage === 100) {
                 if (triggerAnimation && !savedState.hasCelebrated) { triggerConfetti(); savedState.hasCelebrated = true; }
-                $('#progressText').text("SESSION COMPLETE! 🏆").css('color', '#fff'); $('#workoutProgress').css('box-shadow', '0 0 20px #eab308').css('background-color', '#eab308');
+                $('#progressText').text("SESSION COMPLETE! 🏆").css('color', '#fff');
+                $('#workoutProgress').css('box-shadow', '0 0 20px #eab308').css('background-color', '#eab308');
             } else {
-                savedState.hasCelebrated = false; $('#progressText').css('color', 'var(--accent-color)').text(percentage + '%'); $('#workoutProgress').css('box-shadow', '0 0 15px var(--accent-glow)').css('background-color', 'var(--accent-color)');
+                savedState.hasCelebrated = false;
+                $('#progressText').text(percentage + '%').css('color', 'var(--accent-color)');
+                $('#workoutProgress').css('box-shadow', '0 0 15px var(--accent-glow)').css('background-color', 'var(--accent-color)');
             }
             localStorage.setItem('fitforge_state', JSON.stringify(savedState));
         }
@@ -605,7 +664,6 @@
             $timer.removeClass('done').addClass('show');
             let timeLeft = seconds;
 
-            // Format initial display
             let initM = Math.floor(timeLeft / 60).toString().padStart(2, '0');
             let initS = (timeLeft % 60).toString().padStart(2, '0');
             $display.text(`${initM}:${initS}`);
@@ -622,7 +680,6 @@
                     $display.text("TIME TO LIFT!");
                     if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
 
-                    // Trigger Voice Cue if enabled
                     if (savedState.voiceEnabled && 'speechSynthesis' in window) {
                         let speech = new SpeechSynthesisUtterance("Rest is over. Let's get back to work.");
                         speech.volume = 1; speech.rate = 1.1; speech.pitch = 1;

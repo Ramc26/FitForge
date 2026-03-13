@@ -32,7 +32,7 @@
                     "sets": 3,
                     "reps": "8-10",
                     "rest_seconds": 60,
-                    "anatomy_pov": "Builds the latissimus dorsi to physically widen your back, creating the essential 'wings' for a V-taper.",
+                    "anatomy_pov": "Builds the latissimus dorsi to physically widen your back.",
                     "machine_alternative": "Lat Pulldown"
                 },
                 {
@@ -40,7 +40,7 @@
                     "sets": 3,
                     "reps": "8-12",
                     "rest_seconds": 60,
-                    "anatomy_pov": "Engages rhomboids and traps to build mid-back thickness, preventing a 'flat' side profile.",
+                    "anatomy_pov": "Engages rhomboids and traps to build mid-back thickness.",
                     "machine_alternative": "Seated Cable Row"
                 },
                 {
@@ -48,8 +48,26 @@
                     "sets": 3,
                     "reps": "10-12",
                     "rest_seconds": 45,
-                    "anatomy_pov": "Isolates the biceps after they pre-exhausted during pull exercises, forcing localized hypertrophy.",
+                    "anatomy_pov": "Isolates the biceps after they pre-exhausted during pull exercises.",
                     "machine_alternative": "Cable Curls"
+                }
+            ],
+            "optional_exercises": [
+                {
+                    "name": "Hammer Curls",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Targets the brachialis to push the bicep up, making the arm look thicker.",
+                    "machine_alternative": "Rope Hammer Curls"
+                },
+                {
+                    "name": "Dumbbell Shrugs",
+                    "sets": 3,
+                    "reps": "15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Builds the upper traps for a thicker neck base.",
+                    "machine_alternative": "Smith Machine Shrugs"
                 }
             ],
             "finisher": {
@@ -69,7 +87,7 @@
                     "sets": 3,
                     "reps": "8-12",
                     "rest_seconds": 90,
-                    "anatomy_pov": "The ultimate compound push. Works the pectoralis major, anterior deltoids, and triceps for upper body armor.",
+                    "anatomy_pov": "The ultimate compound push for upper body armor.",
                     "machine_alternative": "Chest Press Machine"
                 },
                 {
@@ -77,7 +95,7 @@
                     "sets": 3,
                     "reps": "8-12",
                     "rest_seconds": 60,
-                    "anatomy_pov": "Targets the clavicular head of the pecs, creating a 'shelf' that visually connects the chest to the shoulders.",
+                    "anatomy_pov": "Targets the clavicular head of the pecs, creating a 'shelf'.",
                     "machine_alternative": "Incline Machine Press"
                 },
                 {
@@ -85,8 +103,26 @@
                     "sets": 3,
                     "reps": "10-12",
                     "rest_seconds": 45,
-                    "anatomy_pov": "Isolates the triceps (which make up 2/3 of your arm mass) to ensure arms look thick even when relaxed.",
+                    "anatomy_pov": "Isolates the triceps.",
                     "machine_alternative": "Cable Pushdowns"
+                }
+            ],
+            "optional_exercises": [
+                {
+                    "name": "Cable Crossovers",
+                    "sets": 3,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Constant tension on the pecs for a deep stretch and pump.",
+                    "machine_alternative": "Pec Deck Machine"
+                },
+                {
+                    "name": "Dips",
+                    "sets": 3,
+                    "reps": "To Failure",
+                    "rest_seconds": 60,
+                    "anatomy_pov": "Hits the lower chest and triceps heavily.",
+                    "machine_alternative": "Assisted Dip Machine"
                 }
             ],
             "finisher": {
@@ -94,7 +130,7 @@
                 "sets": 3,
                 "reps": "45 seconds",
                 "rest_seconds": 30,
-                "anatomy_pov": "Trains the transverse abdominis, your deep core muscle that acts like an internal weight belt to pull the stomach flat.",
+                "anatomy_pov": "Trains the transverse abdominis to pull the stomach flat.",
                 "machine_alternative": "Ab Crunch Machine"
             }
         },
@@ -108,7 +144,7 @@
                     "sets": 4,
                     "reps": "8-10",
                     "rest_seconds": 90,
-                    "anatomy_pov": "Requires systemic muscle engagement. Burns massive calories and triggers natural growth hormone release.",
+                    "anatomy_pov": "Requires systemic muscle engagement. Burns massive calories.",
                     "machine_alternative": "Leg Press"
                 },
                 {
@@ -116,7 +152,7 @@
                     "sets": 3,
                     "reps": "10-12",
                     "rest_seconds": 60,
-                    "anatomy_pov": "Isolates the hamstrings to prevent muscle imbalances caused by heavy quad dominance.",
+                    "anatomy_pov": "Isolates the hamstrings to prevent muscle imbalances.",
                     "machine_alternative": "Seated Leg Curl"
                 },
                 {
@@ -124,8 +160,26 @@
                     "sets": 3,
                     "reps": "10 per leg",
                     "rest_seconds": 60,
-                    "anatomy_pov": "Unilateral movement that forces core stabilization while spiking the heart rate.",
+                    "anatomy_pov": "Unilateral movement that forces core stabilization.",
                     "machine_alternative": "Leg Extensions"
+                }
+            ],
+            "optional_exercises": [
+                {
+                    "name": "Calf Raises",
+                    "sets": 4,
+                    "reps": "15-20",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Isolates the gastrocnemius for lower leg development.",
+                    "machine_alternative": "Leg Press Calf Extensions"
+                },
+                {
+                    "name": "Leg Extensions",
+                    "sets": 3,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Pure isolation for the quadriceps, specifically the rectus femoris.",
+                    "machine_alternative": "Sissy Squats"
                 }
             ]
         },
@@ -145,7 +199,7 @@
                     "sets": 3,
                     "reps": "8-12",
                     "rest_seconds": 60,
-                    "anatomy_pov": "Builds overall mass across all three deltoid heads to create broad shoulder caps.",
+                    "anatomy_pov": "Builds overall mass across all three deltoid heads.",
                     "machine_alternative": "Shoulder Press Machine"
                 },
                 {
@@ -153,7 +207,7 @@
                     "sets": 4,
                     "reps": "12-15",
                     "rest_seconds": 45,
-                    "anatomy_pov": "Crucial for the V-taper. Explicitly targets the lateral head of the deltoid to widen your frame.",
+                    "anatomy_pov": "Crucial for the V-taper. Explicitly targets the lateral head.",
                     "machine_alternative": "Cable Lateral Raises"
                 },
                 {
@@ -161,19 +215,31 @@
                     "sets": 3,
                     "reps": "15-20",
                     "rest_seconds": 45,
-                    "anatomy_pov": "Strengthens the obliques, tightening up the sides of the waistline where love handles sit.",
+                    "anatomy_pov": "Strengthens the obliques, tightening up the waistline.",
                     "machine_alternative": "Rotary Torso Machine"
+                }
+            ],
+            "optional_exercises": [
+                {
+                    "name": "Reverse Pec Deck",
+                    "sets": 3,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Targets the rear delts to pull the shoulders back and fix posture.",
+                    "machine_alternative": "Face Pulls"
+                },
+                {
+                    "name": "Front Raises",
+                    "sets": 3,
+                    "reps": "12",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Isolates the anterior deltoid for a rounder shoulder cap.",
+                    "machine_alternative": "Cable Front Raises"
                 }
             ]
         },
         {
             "day_of_week": "Saturday",
-            "focus": "Complete Rest",
-            "is_rest_day": true,
-            "notes": "Let the central nervous system recover. Hydrate heavily."
-        },
-        {
-            "day_of_week": "Sunday",
             "focus": "Posterior Chain",
             "is_rest_day": false,
             "exercises": [
@@ -182,7 +248,7 @@
                     "sets": 3,
                     "reps": "6-8",
                     "rest_seconds": 90,
-                    "anatomy_pov": "Strengthens the entire back of the body, violently improving posture which naturally lifts the chest and slims the waist.",
+                    "anatomy_pov": "Strengthens the entire back of the body, violently improving posture.",
                     "machine_alternative": "Cable Pull-throughs"
                 },
                 {
@@ -190,17 +256,49 @@
                     "sets": 3,
                     "reps": "10-12",
                     "rest_seconds": 60,
-                    "anatomy_pov": "A secondary weekly volume hit to the lats to force growth and back width.",
+                    "anatomy_pov": "A secondary weekly volume hit to the lats.",
                     "machine_alternative": "Machine Pullovers"
+                },
+                {
+                    "name": "T-Bar Rows",
+                    "sets": 3,
+                    "reps": "8-10",
+                    "rest_seconds": 60,
+                    "anatomy_pov": "A heavy compound pull that packs dense muscle onto the mid-back.",
+                    "machine_alternative": "Seated Cable Row"
+                },
+                {
+                    "name": "Face Pulls",
+                    "sets": 3,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Bulletproofs the rotator cuffs and builds the rear delts.",
+                    "machine_alternative": "Rear Delt Flyes"
+                }
+            ],
+            "optional_exercises": [
+                {
+                    "name": "Hyperextensions",
+                    "sets": 3,
+                    "reps": "15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Strengthens the lower back erectors.",
+                    "machine_alternative": "Good Mornings"
                 }
             ],
             "finisher": {
                 "name": "HIIT Cardio",
                 "duration_minutes": 10,
                 "rest_seconds": 0,
-                "anatomy_pov": "Forces the body to consume heavy oxygen post-workout, maximizing fat oxidation (EPOC).",
+                "anatomy_pov": "Forces the body to consume heavy oxygen post-workout.",
                 "machine_alternative": "Stationary Bike (Sprints)"
             }
+        },
+        {
+            "day_of_week": "Sunday",
+            "focus": "Complete Rest",
+            "is_rest_day": true,
+            "notes": "Let the central nervous system recover. Hydrate heavily and prep meals for the week."
         }
     ]
 }
