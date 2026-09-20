@@ -3,11 +3,27 @@
         "playlists": [
             {
                 "name": "Vishwanadamrutham",
+                "description": "Tunes from Kalathapasvi movies",
+                "type": "playlist",
                 "url": "https://open.spotify.com/playlist/33Gqi626ZlsplfVagSzFJ7?si=ec6469ce4aab410b"
             },
             {
                 "name": "Heart on Shuffle",
+                "description": "A playlist for the heart",
+                "type": "playlist",
                 "url": "https://open.spotify.com/playlist/3EquG5dLeQTke1FsAhvJHZ?si=543a68b977e34c87"
+            },
+            {
+                "name": "Srimad Bhagavatam",
+                "description": "Chaganti garu's podcast on the Srimad Bhagavatam",
+                "type": "podcast",
+                "url": "https://open.spotify.com/show/6Ew6XebTvgCQjuFQcDcauh?si=91AaX4TWQOGQYZ3wPMGFJA"
+            },
+            {
+                "name": "Sacred Chants",
+                "description": "A playlist of Sankaracharya compositions",
+                "type": "playlist",
+                "url": "https://open.spotify.com/playlist/2om5b2SVbX9m8MgNO642jU?si=WWOcX6j-SBiMlWM9QerIPA"
             }
         ],
         "podcasts": [
@@ -300,5 +316,646 @@
             "is_rest_day": true,
             "notes": "Let the central nervous system recover. Hydrate heavily and prep meals for the week."
         }
-    ]
+    ],
+    "schedule_2":[
+        {
+            "day_of_week": "Monday",
+            "focus": "Back & Biceps",
+            "is_rest_day": false,
+            "exercises": [
+                {
+                    "name": "Pull-ups",
+                    "sets": 3,
+                    "reps": "8-10",
+                    "rest_seconds": 60,
+                    "anatomy_pov": "The latissimus dorsi originates from your lower spine and iliac crest, inserting at the humerus. Vertical pulling stretches these fibers fully, heavily recruiting the teres major to physically flare your upper back outward for the V-taper.",
+                    "machine_alternative": "Lat Pulldown"
+                },
+                {
+                    "name": "Dumbbell Rows",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "rest_seconds": 60,
+                    "anatomy_pov": "Targets the rhomboids (major and minor) and the middle fibers of the trapezius. Horizontally retracting the scapula thickens the mid-back musculature, pulling your shoulders back and preventing a flat side profile.",
+                    "machine_alternative": "Seated Cable Row"
+                },
+                {
+                    "name": "Straight-Arm Pulldowns",
+                    "sets": 3,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Pure shoulder extension. This isolates the lower lats without engaging the biceps. It forces the serratus anterior to engage, creating those defined 'rib' muscles under your chest.",
+                    "machine_alternative": "Dumbbell Pullovers"
+                },
+                {
+                    "name": "Bicep Curls",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "The biceps brachii has two heads (short and long) originating at the scapula. Because compound pulls pre-exhaust them, this pure elbow flexion forces localized hypertrophy to build the 'peak'.",
+                    "machine_alternative": "Cable Curls"
+                }
+            ],
+            "optional_exercises": [
+                {
+                    "name": "Hammer Curls",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "A neutral grip shifts the load to the brachialis (the muscle underneath the bicep) and the brachioradialis. Growing these literally pushes the bicep up, making the arm look 3D.",
+                    "machine_alternative": "Rope Hammer Curls"
+                },
+                {
+                    "name": "Dumbbell Shrugs",
+                    "sets": 3,
+                    "reps": "15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Isolates the descending (upper) fibers of the trapezius muscle, creating a thick, muscular transition from the shoulders to the neck.",
+                    "machine_alternative": "Smith Machine Shrugs"
+                }
+            ],
+            "finisher": {
+                "name": "Mountain Climbers",
+                "duration_minutes": 3,
+                "rest_seconds": 0,
+                "anatomy_pov": "A dynamic plank that spikes the heart rate. Driving the knees engages the lower rectus abdominis, while stabilizing the shifting weight heavily taxes the internal and external obliques.",
+                "machine_alternative": "High Knees Sprint"
+            }
+        },
+        {
+            "day_of_week": "Tuesday",
+            "focus": "Chest & Triceps",
+            "is_rest_day": false,
+            "exercises": [
+                {
+                    "name": "Bench Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "rest_seconds": 90,
+                    "anatomy_pov": "The pec major has two main heads. Flat pressing primarily loads the massive sternocostal head (originating at the sternum), dragging the humerus horizontally to build overall chest density.",
+                    "machine_alternative": "Chest Press Machine"
+                },
+                {
+                    "name": "Incline Dumbbell Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "rest_seconds": 60,
+                    "anatomy_pov": "The incline shifts tension to the clavicular (upper) head of the pec, which originates at the collarbone. Fleshing this out creates a thick 'shelf' that visually connects the chest to the front shoulders.",
+                    "machine_alternative": "Incline Machine Press"
+                },
+                {
+                    "name": "High-to-Low Cable Crossovers",
+                    "sets": 3,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Takes the chest through its full range of motion. The downward angle explicitly targets the lower (abdominal) fibers of the pec major, creating that sharp, defined line at the bottom of the chest.",
+                    "machine_alternative": "Decline Dumbbell Press"
+                },
+                {
+                    "name": "Tricep Extensions",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "The triceps make up 2/3 of upper arm mass. Pushing downward isolates the lateral and medial heads through pure elbow extension without shoulder involvement.",
+                    "machine_alternative": "Cable Pushdowns"
+                }
+            ],
+            "optional_exercises": [
+                {
+                    "name": "Pec Deck Flyes",
+                    "sets": 3,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "A strict isolation movement. Because the arms stay slightly bent, the chest is forced to do 100% of the horizontal adduction, stretching the muscle fibers maximally at the bottom.",
+                    "machine_alternative": "Dumbbell Flyes"
+                },
+                {
+                    "name": "Dips",
+                    "sets": 3,
+                    "reps": "To Failure",
+                    "rest_seconds": 60,
+                    "anatomy_pov": "A heavy compound bodyweight push that simultaneously hits the lower pecs, the front delts, and all three heads of the triceps.",
+                    "machine_alternative": "Assisted Dip Machine"
+                }
+            ],
+            "finisher": {
+                "name": "Bicycle Crunches",
+                "sets": 3,
+                "reps": "20 per side",
+                "rest_seconds": 30,
+                "anatomy_pov": "The rotational movement explicitly targets the external obliques. Compressing the sides of your waist forces the muscle to tighten, acting directly against love handles.",
+                "machine_alternative": "Machine Crunch"
+            }
+        },
+        {
+            "day_of_week": "Wednesday",
+            "focus": "Legs",
+            "is_rest_day": false,
+            "exercises": [
+                {
+                    "name": "Squats",
+                    "sets": 4,
+                    "reps": "8-10",
+                    "rest_seconds": 90,
+                    "anatomy_pov": "Systemic CNS engagement. The descent loads the gluteus maximus and hamstrings, while the concentric push relies heavily on all 4 heads of the quadriceps to extend the knee and hip simultaneously.",
+                    "machine_alternative": "Leg Press"
+                },
+                {
+                    "name": "Romanian Deadlifts (RDLs)",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "rest_seconds": 90,
+                    "anatomy_pov": "A pure hip-hinge. By keeping the knees slightly bent but fixed, it places extreme stretch-mediated tension on the biceps femoris and semitendinosus (hamstrings), forcing massive growth.",
+                    "machine_alternative": "Glute-Ham Raise"
+                },
+                {
+                    "name": "Leg Curls",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "rest_seconds": 60,
+                    "anatomy_pov": "Whereas RDLs work the hamstrings at the hip, leg curls isolate them at the knee joint. This dual-joint training prevents muscle imbalances caused by quad-heavy pressing.",
+                    "machine_alternative": "Seated Leg Curl"
+                },
+                {
+                    "name": "Dumbbell Lunges",
+                    "sets": 3,
+                    "reps": "10 per leg",
+                    "rest_seconds": 60,
+                    "anatomy_pov": "Unilateral hip extension. Forces the gluteus medius and minimus to fire aggressively just to keep you balanced, while deeply stretching the trailing leg's hip flexors.",
+                    "machine_alternative": "Leg Extensions"
+                }
+            ],
+            "optional_exercises": [
+                {
+                    "name": "Calf Raises",
+                    "sets": 4,
+                    "reps": "15-20",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Standing calf raises lock the knee, perfectly isolating the gastrocnemius (the upper, visible diamond-shaped calf muscle) through plantar flexion.",
+                    "machine_alternative": "Leg Press Calf Extensions"
+                },
+                {
+                    "name": "Leg Extensions",
+                    "sets": 3,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Pure isolation for the quadriceps. Specifically targets the rectus femoris, which crosses both the hip and the knee, creating deep cuts in the front of the thigh.",
+                    "machine_alternative": "Sissy Squats"
+                }
+            ],
+            "finisher": {
+                "name": "Side Plank Hip Dips",
+                "sets": 3,
+                "reps": "15 per side",
+                "rest_seconds": 30,
+                "anatomy_pov": "Isometrically loads the quadratus lumborum and the obliques. Lowering and raising the hips creates massive tension on the lateral core wall, shrinking the love handle silhouette.",
+                "machine_alternative": "Standing Dumbbell Side Bends"
+            }
+        },
+        {
+            "day_of_week": "Thursday",
+            "focus": "Active Recovery",
+            "is_rest_day": true,
+            "notes": "Focus on mobility work, stretching, and hitting daily protein goals to repair tissue."
+        },
+        {
+            "day_of_week": "Friday",
+            "focus": "Shoulders & Abs",
+            "is_rest_day": false,
+            "exercises": [
+                {
+                    "name": "Overhead Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "rest_seconds": 90,
+                    "anatomy_pov": "The deltoid has 3 heads. Vertical pressing heavily taxes the anterior (front) head originating from the clavicle, and the lateral (side) head, building raw boulder-shoulder mass.",
+                    "machine_alternative": "Shoulder Press Machine"
+                },
+                {
+                    "name": "Lateral Raises",
+                    "sets": 4,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Because the front and rear heads are mechanically disadvantaged here, the lateral (side) head takes 100% of the load. This is the single most important exercise for widening your V-taper frame.",
+                    "machine_alternative": "Cable Lateral Raises"
+                },
+                {
+                    "name": "Reverse Pec Deck",
+                    "sets": 3,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Isolates the posterior (rear) head of the deltoid originating on the spine of the scapula. Growing this pulls your shoulders backward, fixing posture and completing the 3D shoulder look.",
+                    "machine_alternative": "Dumbbell Rear Delt Flyes"
+                },
+                {
+                    "name": "Russian Twists",
+                    "sets": 3,
+                    "reps": "15-20",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "The transverse abdominis holds the torso steady while the internal and external obliques execute spinal rotation, actively tightening the muscular sheath around the waistline.",
+                    "machine_alternative": "Rotary Torso Machine"
+                }
+            ],
+            "optional_exercises": [
+                {
+                    "name": "Upright Rows",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "A compound pull that recruits the lateral deltoids and the upper trapezius simultaneously, bridging the gap between shoulder and neck musculature.",
+                    "machine_alternative": "Cable Upright Rows"
+                },
+                {
+                    "name": "Front Raises",
+                    "sets": 3,
+                    "reps": "12",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Strict isolation for the anterior deltoid. Fleshing this out makes the shoulder pop from a side-profile view.",
+                    "machine_alternative": "Cable Front Raises"
+                }
+            ],
+            "finisher": {
+                "name": "Heel Touches (Penguin Crunches)",
+                "sets": 3,
+                "reps": "25 per side",
+                "rest_seconds": 30,
+                "anatomy_pov": "Creates lateral flexion of the spine. By reaching side to side, you force the obliques into a hard concentric contraction, literally squeezing the fat stores at the love handles.",
+                "machine_alternative": "Cable Woodchoppers"
+            }
+        },
+        {
+            "day_of_week": "Saturday",
+            "focus": "Posterior Chain",
+            "is_rest_day": false,
+            "exercises": [
+                {
+                    "name": "Deadlifts",
+                    "sets": 3,
+                    "reps": "6-8",
+                    "rest_seconds": 120,
+                    "anatomy_pov": "The ultimate posterior hinge. The erector spinae (lower back) stabilizes the spine, while the gluteus maximus and hamstrings fire to lock out the hips. The isometric grip taxes the lats and traps.",
+                    "machine_alternative": "Cable Pull-throughs"
+                },
+                {
+                    "name": "Lat Pulldowns",
+                    "sets": 3,
+                    "reps": "10-12",
+                    "rest_seconds": 60,
+                    "anatomy_pov": "A secondary weekly volume hit to the lats. Using a wider grip specifically isolates the upper/outer sweeping fibers of the latissimus dorsi.",
+                    "machine_alternative": "Machine Pullovers"
+                },
+                {
+                    "name": "T-Bar Rows",
+                    "sets": 3,
+                    "reps": "8-10",
+                    "rest_seconds": 60,
+                    "anatomy_pov": "A heavy horizontal pull. The neutral grip allows for maximal scapular retraction, packing dense, thick muscle onto the middle/lower traps and rhomboids.",
+                    "machine_alternative": "Seated Cable Row"
+                },
+                {
+                    "name": "Face Pulls",
+                    "sets": 3,
+                    "reps": "12-15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Targets the often-neglected external rotators of the rotator cuff (infraspinatus and teres minor) alongside the rear delts, bulletproofing the shoulders against bench-press injuries.",
+                    "machine_alternative": "High Cable Rope Rows"
+                }
+            ],
+            "optional_exercises": [
+                {
+                    "name": "Hyperextensions",
+                    "sets": 3,
+                    "reps": "15",
+                    "rest_seconds": 45,
+                    "anatomy_pov": "Isolates the erector spinae. Strengthening the lower back muscles prevents rounding during heavy squats and deadlifts, keeping your spine safe.",
+                    "machine_alternative": "Good Mornings"
+                }
+            ],
+            "finisher": {
+                "name": "Cable Woodchoppers",
+                "sets": 3,
+                "reps": "12 per side",
+                "rest_seconds": 30,
+                "anatomy_pov": "A transverse-plane movement that mimics athletic rotation. It diagonally loads the obliques under heavy resistance, carving deep V-lines into the lower abdomen.",
+                "machine_alternative": "Dumbbell Woodchoppers"
+            }
+        },
+        {
+            "day_of_week": "Sunday",
+            "focus": "Complete Rest",
+            "is_rest_day": true,
+            "notes": "Let the central nervous system recover. Hydrate heavily and prep meals for the week."
+        }
+    ],
+    "schedule_3":[
+        {
+          "day_of_week": "Monday",
+          "focus": "Push + Core",
+          "is_rest_day": false,
+          "exercises": [
+            {
+              "name": "Barbell Bench Press",
+              "sets": 3,
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "anatomy_pov": "Primary horizontal pressing movement for the chest, with strong contribution from the anterior deltoids and triceps. Builds overall chest thickness and pressing strength.",
+              "machine_alternative": "Chest Press Machine"
+            },
+            {
+              "name": "Incline Dumbbell Press",
+              "sets": 3,
+              "reps": "8-12",
+              "rest_seconds": 60,
+              "anatomy_pov": "Places greater emphasis on the upper chest while also training the anterior deltoids and triceps.",
+              "machine_alternative": "Incline Machine Press"
+            },
+            {
+              "name": "Dumbbell Shoulder Press",
+              "sets": 3,
+              "reps": "8-12",
+              "rest_seconds": 60,
+              "anatomy_pov": "Vertical pressing movement primarily training the anterior and lateral deltoids with assistance from the triceps.",
+              "machine_alternative": "Shoulder Press Machine"
+            },
+            {
+              "name": "Dumbbell Lateral Raises",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_seconds": 45,
+              "anatomy_pov": "Directly targets the lateral deltoids, helping increase shoulder width and the visual V-taper.",
+              "machine_alternative": "Cable Lateral Raises"
+            },
+            {
+              "name": "Triceps Pushdowns",
+              "sets": 3,
+              "reps": "10-15",
+              "rest_seconds": 45,
+              "anatomy_pov": "Isolates the triceps through elbow extension, adding direct arm volume after pressing movements.",
+              "machine_alternative": "Dumbbell Overhead Triceps Extension"
+            }
+          ],
+          "optional_exercises": [],
+          "finisher": {
+            "name": "Reverse Crunches",
+            "sets": 3,
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "anatomy_pov": "Controlled abdominal movement emphasizing posterior pelvic movement and lower abdominal strength.",
+            "machine_alternative": "Captain's Chair Knee Raises"
+          }
+        },
+        {
+          "day_of_week": "Tuesday",
+          "focus": "Pull + Core",
+          "is_rest_day": false,
+          "exercises": [
+            {
+              "name": "Lat Pulldown",
+              "sets": 4,
+              "reps": "8-12",
+              "rest_seconds": 60,
+              "anatomy_pov": "Vertical pulling movement that heavily trains the latissimus dorsi and develops upper-back width for the V-taper.",
+              "machine_alternative": "Assisted Pull-ups"
+            },
+            {
+              "name": "Barbell Row",
+              "sets": 3,
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "anatomy_pov": "Heavy horizontal pulling movement targeting the middle back, rhomboids, trapezius and lats.",
+              "machine_alternative": "Seated Cable Row"
+            },
+            {
+              "name": "Seated Cable Row",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_seconds": 60,
+              "anatomy_pov": "Controlled horizontal pulling movement that develops back thickness through the lats, rhomboids and middle trapezius.",
+              "machine_alternative": "Dumbbell Rows"
+            },
+            {
+              "name": "Face Pulls",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_seconds": 45,
+              "anatomy_pov": "Targets the rear deltoids and external rotators while strengthening the upper back and supporting shoulder balance.",
+              "machine_alternative": "Dumbbell Rear Delt Fly"
+            },
+            {
+              "name": "Dumbbell Bicep Curls",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_seconds": 45,
+              "anatomy_pov": "Direct elbow-flexion movement for the biceps brachii, providing focused hypertrophy work after compound pulls.",
+              "machine_alternative": "Cable Curls"
+            },
+            {
+              "name": "Hammer Curls",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_seconds": 45,
+              "anatomy_pov": "Neutral-grip curl emphasizing the brachialis and brachioradialis while also training the biceps.",
+              "machine_alternative": "Rope Hammer Curls"
+            }
+          ],
+          "optional_exercises": [],
+          "finisher": {
+            "name": "Russian Twists",
+            "sets": 3,
+            "reps": "12-20 per side",
+            "rest_seconds": 30,
+            "anatomy_pov": "Trains the trunk through controlled rotation with involvement from the internal and external obliques.",
+            "machine_alternative": "Cable Woodchoppers"
+          }
+        },
+        {
+          "day_of_week": "Wednesday",
+          "focus": "Rest / Active Recovery",
+          "is_rest_day": true,
+          "notes": "Full recovery day. Optional 30-45 minutes of easy brisk walking, mobility work or stretching. Focus on sleep, hydration and protein intake."
+        },
+        {
+          "day_of_week": "Thursday",
+          "focus": "Legs + Core",
+          "is_rest_day": false,
+          "exercises": [
+            {
+              "name": "Squats",
+              "sets": 3,
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "anatomy_pov": "Compound lower-body movement training the quadriceps, glutes and supporting posterior-chain musculature.",
+              "machine_alternative": "Leg Press"
+            },
+            {
+              "name": "Leg Press",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_seconds": 90,
+              "anatomy_pov": "With a shoulder-width stance and feet around the middle of the platform, provides balanced emphasis on the quadriceps and glutes.",
+              "machine_alternative": "Goblet Squats"
+            },
+            {
+              "name": "Romanian Deadlifts",
+              "sets": 3,
+              "reps": "8-12",
+              "rest_seconds": 90,
+              "anatomy_pov": "Hip-hinge movement emphasizing the hamstrings and glutes through controlled lengthened loading.",
+              "machine_alternative": "Cable Pull-throughs"
+            },
+            {
+              "name": "Leg Extensions",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_seconds": 45,
+              "anatomy_pov": "Isolation movement for the quadriceps through knee extension.",
+              "machine_alternative": "Bodyweight Sissy Squats"
+            },
+            {
+              "name": "Leg Curls",
+              "sets": 3,
+              "reps": "10-15",
+              "rest_seconds": 60,
+              "anatomy_pov": "Directly trains the hamstrings through knee flexion, complementing Romanian deadlifts.",
+              "machine_alternative": "Stability Ball Leg Curls"
+            },
+            {
+              "name": "Calf Raises",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_seconds": 45,
+              "anatomy_pov": "Trains the gastrocnemius and soleus through plantar flexion.",
+              "machine_alternative": "Leg Press Calf Raises"
+            }
+          ],
+          "optional_exercises": [],
+          "finisher": {
+            "name": "Reverse Crunches",
+            "sets": 3,
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "anatomy_pov": "Controlled abdominal movement emphasizing posterior pelvic movement and lower abdominal strength.",
+            "machine_alternative": "Captain's Chair Knee Raises"
+          }
+        },
+        {
+          "day_of_week": "Friday",
+          "focus": "Upper Body / V-Taper",
+          "is_rest_day": false,
+          "exercises": [
+            {
+              "name": "Lat Pulldown",
+              "sets": 3,
+              "reps": "8-12",
+              "rest_seconds": 60,
+              "anatomy_pov": "Provides additional weekly vertical pulling volume for the lats and upper-back width.",
+              "machine_alternative": "Assisted Pull-ups"
+            },
+            {
+              "name": "Incline Dumbbell Press",
+              "sets": 3,
+              "reps": "8-12",
+              "rest_seconds": 60,
+              "anatomy_pov": "Targets the upper chest while training the anterior deltoids and triceps.",
+              "machine_alternative": "Incline Machine Press"
+            },
+            {
+              "name": "Seated Cable Row",
+              "sets": 3,
+              "reps": "8-12",
+              "rest_seconds": 60,
+              "anatomy_pov": "Horizontal pulling movement that adds back thickness and balances the pressing volume.",
+              "machine_alternative": "Dumbbell Rows"
+            },
+            {
+              "name": "Dumbbell Lateral Raises",
+              "sets": 4,
+              "reps": "12-15",
+              "rest_seconds": 45,
+              "anatomy_pov": "Direct lateral-delt work to maximize shoulder width and enhance the V-taper.",
+              "machine_alternative": "Cable Lateral Raises"
+            },
+            {
+              "name": "Rear Delt Fly",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_seconds": 45,
+              "anatomy_pov": "Directly trains the posterior deltoids for balanced three-dimensional shoulder development.",
+              "machine_alternative": "Reverse Pec Deck"
+            },
+            {
+              "name": "Dumbbell Bicep Curls",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_seconds": 45,
+              "anatomy_pov": "Provides additional direct biceps volume to support arm growth.",
+              "machine_alternative": "Cable Curls"
+            },
+            {
+              "name": "Triceps Pushdowns",
+              "sets": 3,
+              "reps": "10-15",
+              "rest_seconds": 45,
+              "anatomy_pov": "Direct triceps isolation following the upper-body compound movements.",
+              "machine_alternative": "Dumbbell Triceps Extensions"
+            }
+          ],
+          "optional_exercises": [],
+          "finisher": {
+            "name": "Plank",
+            "sets": 2,
+            "reps": "45-60 seconds",
+            "rest_seconds": 30,
+            "anatomy_pov": "Isometric core exercise requiring the abdominal and surrounding trunk musculature to stabilize the spine and pelvis.",
+            "machine_alternative": "Dead Bug"
+          }
+        },
+        {
+          "day_of_week": "Saturday",
+          "focus": "Optional Cardio + Core",
+          "is_rest_day": false,
+          "exercises": [
+            {
+              "name": "Incline Treadmill Walk",
+              "sets": 1,
+              "reps": "30-40 minutes",
+              "rest_seconds": 0,
+              "anatomy_pov": "Low-impact cardiovascular work that increases energy expenditure while keeping recovery demands relatively low.",
+              "machine_alternative": "Brisk Outdoor Walk"
+            }
+          ],
+          "optional_exercises": [
+            {
+              "name": "Reverse Crunches",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_seconds": 30,
+              "anatomy_pov": "Controlled abdominal movement emphasizing posterior pelvic movement and lower abdominal strength.",
+              "machine_alternative": "Captain's Chair Knee Raises"
+            },
+            {
+              "name": "Plank",
+              "sets": 3,
+              "reps": "45-60 seconds",
+              "rest_seconds": 30,
+              "anatomy_pov": "Builds core endurance through isometric stabilization of the trunk and pelvis.",
+              "machine_alternative": "Dead Bug"
+            }
+          ],
+          "finisher": {
+            "name": "Easy Cooldown Walk",
+            "sets": 1,
+            "reps": "5-10 minutes",
+            "rest_seconds": 0,
+            "anatomy_pov": "Low-intensity movement used to gradually reduce exercise intensity.",
+            "machine_alternative": "Easy Outdoor Walk"
+          }
+        },
+        {
+          "day_of_week": "Sunday",
+          "focus": "Complete Rest",
+          "is_rest_day": true,
+          "notes": "Complete rest day. No scheduled workout or cardio. Focus on recovery, sleep, hydration, protein intake and meal preparation for the upcoming week."
+        }
+      ]
 }

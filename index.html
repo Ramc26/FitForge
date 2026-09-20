@@ -8,11 +8,14 @@
 
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0a0a0a" id="themeColorMeta">
-    <link rel="apple-touch-icon" href="Personality.svg">
+    <link rel="apple-touch-icon" href="forge-icon-180.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FitForge">
     <meta name="description" content="FitForge: Daily workout tracker and fitness protocol.">
-    <link rel="icon" type="image/svg+xml" href="Personality.svg">
+    <link rel="icon" type="image/svg+xml" href="forge-icon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="forge-icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="forge-icon-512.png">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Poppins:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap"
@@ -63,7 +66,7 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: var(--font-primary);
-            padding-bottom: 90px;
+            padding-bottom: 32px;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
             transition: background-color 0.3s, color 0.3s;
@@ -83,10 +86,13 @@
 
         /* Generic Layout Classes */
         .dashboard-header {
-            padding: 15px 0;
-            display: flex;
-            justify-content: space-between;
+            padding: 12px 0;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-rows: auto auto;
             align-items: center;
+            column-gap: 10px;
+            row-gap: 0;
             margin-bottom: 25px;
             background: var(--header-bg);
             position: sticky;
@@ -95,6 +101,336 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s;
             border-bottom: var(--border-card);
+        }
+
+        .brand-lockup {
+            grid-column: 1;
+            grid-row: 1;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-width: 0;
+            max-width: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-mark-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .brand-mark {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: var(--border-card);
+            background: var(--card-bg);
+            box-shadow: var(--shadow-btn), 0 0 24px rgba(0, 255, 136, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-mark-fire {
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(40, 18, 8, 0.35) 100%);
+        }
+
+        .brand-emoji {
+            font-size: 1.65rem;
+            line-height: 1;
+            display: block;
+            user-select: none;
+        }
+
+        .brand-mark-wrap::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            border: 1px solid rgba(0, 255, 136, 0.35);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .brand-text {
+            min-width: 0;
+            line-height: 1.05;
+            overflow: hidden;
+        }
+
+        .brand-title {
+            font-family: var(--font-header);
+            font-size: 1.15rem;
+            letter-spacing: 0.1em;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .brand-tagline {
+            display: block;
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent-main);
+            margin-top: 3px;
+            opacity: 0.95;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header-menu-btn {
+            grid-column: 2;
+            grid-row: 1;
+            display: none;
+            justify-self: end;
+        }
+
+        .header-toolbar {
+            grid-column: 2;
+            grid-row: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            flex-wrap: nowrap;
+            max-width: 100%;
+        }
+
+        .header-toolbar-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        .header-toolbar-label {
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .header-drawer-inner {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-drawer-block {
+            display: contents;
+        }
+
+        .header-drawer-heading {
+            display: none;
+        }
+
+        .device-toggle-group label .device-name {
+            display: none;
+        }
+
+        .header-action-label {
+            display: none;
+        }
+
+        @media (max-width: 620px) {
+            .header-menu-btn {
+                display: flex;
+            }
+
+            .dashboard-header.menu-open {
+                padding-bottom: 14px;
+            }
+
+            .header-toolbar {
+                display: none;
+                grid-column: 1 / -1;
+                grid-row: 2;
+                flex-direction: column;
+                align-items: stretch;
+                margin-top: 12px;
+                padding: 0;
+                border: none;
+            }
+
+            .dashboard-header.menu-open .header-toolbar {
+                display: flex;
+                animation: headerPanelIn 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
+            }
+
+            .header-drawer-inner {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                width: 100%;
+                padding: 16px;
+                border-radius: var(--radius-card);
+                border: var(--border-card);
+                background: var(--card-bg);
+                box-shadow: var(--shadow-card);
+            }
+
+            .header-drawer-block {
+                display: block;
+            }
+
+            .header-drawer-heading {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.62rem;
+                font-weight: 800;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                margin: 0 0 10px;
+            }
+
+            .header-drawer-heading i {
+                color: var(--accent-main);
+            }
+
+            .header-drawer-spotify .device-toggle-group {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                width: 100%;
+                border-radius: var(--radius-btn);
+            }
+
+            .header-drawer-spotify .device-toggle-group label {
+                flex-direction: column;
+                gap: 5px;
+                padding: 10px 6px;
+                min-width: 0;
+                border-right: var(--border-card);
+                font-size: 0.7rem;
+            }
+
+            .header-drawer-spotify .device-toggle-group label:last-child {
+                border-right: none;
+            }
+
+            .device-toggle-group label .device-name {
+                display: block;
+                font-size: 0.58rem;
+                font-weight: 800;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            .header-action-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+                width: 100%;
+            }
+
+            .header-action-grid .btn-action,
+            .header-action-grid .dropdown .btn-action {
+                width: 100%;
+                min-height: 56px;
+                flex-direction: column;
+                gap: 6px;
+                padding: 10px 6px;
+                font-size: 0.85rem;
+            }
+
+            .header-action-grid .dropdown {
+                width: 100%;
+            }
+
+            .header-action-label {
+                display: block;
+                font-size: 0.55rem;
+                font-weight: 800;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                line-height: 1.1;
+                opacity: 0.85;
+            }
+
+            .header-toolbar-section {
+                width: 100%;
+            }
+
+            .header-tool-row {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 621px) {
+            .header-action-grid {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+
+        @media (min-width: 621px) and (max-width: 700px) {
+            .header-toolbar {
+                gap: 6px;
+            }
+
+            .header-toolbar-label {
+                display: none !important;
+            }
+
+            .btn-action {
+                padding: 6px 9px;
+            }
+        }
+
+        @keyframes headerPanelIn {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 380px) {
+            .brand-title {
+                font-size: 1.02rem;
+                letter-spacing: 0.08em;
+            }
+
+            .brand-mark {
+                width: 38px;
+                height: 38px;
+            }
+
+            .brand-emoji {
+                font-size: 1.45rem;
+            }
+
+            .brand-tagline {
+                letter-spacing: 0.16em;
+                font-size: 0.52rem;
+            }
+        }
+
+        @keyframes waveFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .btn-action {
@@ -259,7 +595,7 @@
 
         #floatingTimer {
             position: fixed;
-            bottom: 85px;
+            bottom: 24px;
             left: 50%;
             transform: translateX(-50%) translateY(200%);
             padding: 12px 30px;
@@ -293,25 +629,139 @@
 
         .audio-list-item {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             text-decoration: none;
             padding: 15px;
             margin-bottom: 12px;
             border-radius: var(--radius-btn);
             transition: all 0.2s;
+            gap: 12px;
+        }
+
+        .audio-list-item .audio-item-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .audio-list-item .audio-item-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            line-height: 1.3;
+        }
+
+        .audio-list-item .audio-item-desc {
+            font-size: 0.8rem;
+            opacity: 0.75;
+            margin-top: 4px;
+            line-height: 1.45;
+            font-weight: 400;
+            text-transform: none;
+        }
+
+        .audio-category-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin: 18px 0 10px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .audio-category-label:first-child {
+            margin-top: 0;
+        }
+
+        .device-toggle-group {
+            display: inline-flex;
+            flex-shrink: 0;
+            border-radius: var(--radius-btn);
+            overflow: hidden;
+            border: var(--border-card);
+            box-shadow: var(--shadow-btn);
+        }
+
+        .device-toggle-group input {
+            display: none;
+        }
+
+        .device-toggle-group label {
+            margin: 0;
+            padding: 6px 9px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            background: var(--card-bg);
+            color: var(--text-muted);
+            border-right: var(--border-card);
+            transition: all 0.2s;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+        }
+
+        .device-toggle-group label:last-child {
+            border-right: none;
+        }
+
+        .device-toggle-group input:checked + label {
+            background: var(--accent-main);
+            color: #000;
+        }
+
+        [data-theme=""] .device-toggle-group input:checked + label,
+        body:not([data-theme]) .device-toggle-group input:checked + label {
+            color: #000;
+        }
+
+        [data-theme="minimal"] .device-toggle-group input:checked + label,
+        [data-theme="brutal"] .device-toggle-group input:checked + label {
+            color: #000;
+        }
+
+        .plan-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: var(--border-card);
+            background: var(--card-bg);
+            color: var(--accent-main);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .plan-badge:hover {
+            border-color: var(--accent-main);
         }
 
         footer {
-            position: fixed;
-            bottom: 0;
             width: 100%;
-            padding: 15px 0;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 28px 12px 36px;
             text-align: center;
-            font-size: 0.85rem;
-            z-index: 1000;
-            background: var(--header-bg);
-            border-top: var(--border-card);
-            backdrop-filter: blur(10px);
+            font-size: 0.78rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            pointer-events: none;
+            color: var(--text-muted);
+        }
+
+        footer.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
 
         .footer-avatar {
@@ -341,12 +791,14 @@
         /* =========================================
            2. THEME: FLAT DARK (Default Overrides)
            ========================================= */
-        .brand-logo {
+        .brand-title.brand-logo {
             background: linear-gradient(-45deg, #cb4154, #eab308, #ffffff, #00ff88);
             background-size: 300% auto;
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: waveFlow 8s ease infinite;
+            filter: drop-shadow(0 0 12px rgba(0, 255, 136, 0.25));
         }
 
         .btn-action:hover,
@@ -508,12 +960,17 @@
             --shadow-bubble: var(--clay-out), var(--clay-in);
         }
 
-        [data-theme="clay"] .brand-logo {
+        [data-theme="clay"] .brand-title.brand-logo {
             background: linear-gradient(-45deg, #eab308, #3498db, #00c853, #cb4154);
             background-size: 300% auto;
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(2px 2px 3px rgba(163, 177, 198, 0.5));
+        }
+
+        [data-theme="clay"] .brand-mark-wrap::after {
+            border-color: rgba(0, 200, 83, 0.45);
         }
 
         [data-theme="clay"] .btn-action:active,
@@ -702,13 +1159,32 @@
             background-size: 20px 20px;
         }
 
-        [data-theme="brutal"] .brand-logo {
+        [data-theme="brutal"] .brand-title.brand-logo {
             background: none;
             color: #000;
             text-shadow: 3px 3px 0px var(--accent-main), 6px 6px 0px #000;
             -webkit-text-fill-color: #000;
             animation: none;
             filter: none;
+        }
+
+        [data-theme="brutal"] .brand-mark {
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0 #000;
+            border-radius: 0;
+            background: #fff;
+        }
+
+        [data-theme="brutal"] .brand-mark-wrap::after {
+            display: none;
+        }
+
+        [data-theme="brutal"] .brand-tagline {
+            color: #000;
+            background: var(--accent-secondary);
+            display: inline-block;
+            padding: 2px 6px;
+            border: 2px solid #000;
         }
 
         [data-theme="brutal"] .btn-action {
@@ -960,13 +1436,27 @@
             letter-spacing: -0.5px;
         }
 
-        [data-theme="minimal"] .brand-logo {
+        [data-theme="minimal"] .brand-title.brand-logo {
             background: none;
             color: #000;
             -webkit-text-fill-color: #000;
             animation: none;
             filter: none;
             letter-spacing: 2px;
+        }
+
+        [data-theme="minimal"] .brand-mark-wrap::after {
+            display: none;
+        }
+
+        [data-theme="minimal"] .brand-mark {
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        [data-theme="minimal"] .brand-tagline {
+            color: #000;
+            letter-spacing: 0.2em;
         }
 
         [data-theme="minimal"] .btn-action {
@@ -1134,6 +1624,35 @@
         [data-theme="minimal"] .dropdown-item.active {
             background: #f0f0f0;
         }
+
+        [data-theme="clay"] .device-toggle-group input:checked + label {
+            color: #fff;
+        }
+
+        [data-theme="brutal"] .device-toggle-group {
+            border: 2px solid #000;
+            box-shadow: 3px 3px 0 #000;
+        }
+
+        [data-theme="brutal"] .device-toggle-group label {
+            border-right: 2px solid #000;
+            color: #000;
+        }
+
+        [data-theme="brutal"] .device-toggle-group input:checked + label {
+            background: var(--accent-secondary);
+            color: #000;
+        }
+
+        .media-card.spotify small {
+            color: inherit;
+            font-weight: 600;
+        }
+
+        .audio-list-item:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
     </style>
 </head>
 
@@ -1141,35 +1660,97 @@
 
     <div class="container mx-auto px-3" style="max-width: 600px;">
 
-        <header class="dashboard-header animate__animated animate__fadeInDown">
-            <div class="brand-logo">FITFORGE</div>
-            <div class="d-flex gap-2 align-items-center">
-
-                <div class="dropdown">
-                    <button class="btn-action dropdown-toggle" type="button" id="themeDropdown"
-                        data-bs-toggle="dropdown" aria-expanded="false" aria-label="Select Theme">
-                        <i class="fa-solid fa-swatchbook"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="themeDropdown">
-                        <li><a class="dropdown-item theme-select" href="#" data-theme-val="flat">Flat Dark</a></li>
-                        <li><a class="dropdown-item theme-select" href="#" data-theme-val="clay">White Clay</a></li>
-                        <li><a class="dropdown-item theme-select" href="#" data-theme-val="brutal">Neo Brutal</a></li>
-                        <li><a class="dropdown-item theme-select" href="#" data-theme-val="minimal">Minimal</a></li>
-                    </ul>
+        <header class="dashboard-header animate__animated animate__fadeInDown" id="dashboardHeader">
+            <a class="brand-lockup" href="#" onclick="return false;" aria-label="FitForge home">
+                <div class="brand-mark-wrap">
+                    <div class="brand-mark brand-mark-fire" aria-hidden="true">
+                        <span class="brand-emoji">🔥</span>
+                    </div>
                 </div>
+                <div class="brand-text">
+                    <h1 class="brand-title brand-logo mb-0">FITFORGE</h1>
+                    <span class="brand-tagline">Forge Your Body</span>
+                </div>
+            </a>
 
-                <button class="btn-action" id="voiceToggle" onclick="toggleVoice()" aria-label="Toggle Voice Cues"><i
-                        class="fa-solid fa-volume-xmark"></i></button>
-                <button class="btn-action" onclick="shareApp()"><i class="fa-solid fa-share-nodes"></i></button>
-                <button class="btn-action" data-bs-toggle="modal" data-bs-target="#weeklyModal"><i
-                        class="fa-solid fa-calendar-week"></i></button>
+            <button type="button" class="btn-action header-menu-btn" id="headerMenuBtn" aria-expanded="false"
+                aria-controls="headerToolbar" aria-label="Open menu">
+                <i class="fa-solid fa-bars" id="headerMenuIcon"></i>
+            </button>
+
+            <div class="header-toolbar" id="headerToolbar">
+                <div class="header-drawer-inner">
+                    <section class="header-drawer-block header-drawer-spotify">
+                        <h2 class="header-drawer-heading"><i class="fa-brands fa-spotify"></i> Open Spotify in</h2>
+                        <div class="header-toolbar-section">
+                            <!-- <span class="header-toolbar-label d-none d-sm-inline">Spotify</span> -->
+                            <div class="device-toggle-group" id="deviceToggleGroup" role="group"
+                                aria-label="Spotify open target">
+                                <input type="radio" name="deviceToggle" id="btnIphone" value="ios" checked>
+                                <label for="btnIphone" title="Spotify — iOS" aria-label="Spotify iOS"><i
+                                        class="fa-brands fa-apple"></i><span class="device-name">iOS</span></label>
+                                <input type="radio" name="deviceToggle" id="btnAndroid" value="android">
+                                <label for="btnAndroid" title="Spotify — Android" aria-label="Spotify Android"><i
+                                        class="fa-brands fa-android"></i><span class="device-name">Android</span></label>
+                                <input type="radio" name="deviceToggle" id="btnWeb" value="web">
+                                <label for="btnWeb" title="Spotify — Web" aria-label="Spotify Web"><i
+                                        class="fa-solid fa-globe"></i><span class="device-name">Web</span></label>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="header-drawer-block header-drawer-actions">
+                        <h2 class="header-drawer-heading"><i class="fa-solid fa-bolt"></i> Quick tools</h2>
+                        <div class="header-toolbar-section header-tool-row header-action-grid">
+                            <div class="dropdown">
+                                <button class="btn-action dropdown-toggle" type="button" id="themeDropdown"
+                                    data-bs-toggle="dropdown" aria-expanded="false" aria-label="Select Theme">
+                                    <i class="fa-solid fa-swatchbook"></i>
+                                    <span class="header-action-label">Theme</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="themeDropdown">
+                                    <li><a class="dropdown-item theme-select" href="#" data-theme-val="flat">Flat Dark</a></li>
+                                    <li><a class="dropdown-item theme-select" href="#" data-theme-val="clay">White Clay</a></li>
+                                    <li><a class="dropdown-item theme-select" href="#" data-theme-val="brutal">Neo Brutal</a></li>
+                                    <li><a class="dropdown-item theme-select" href="#" data-theme-val="minimal">Minimal</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn-action" id="voiceToggle" onclick="toggleVoice()"
+                                aria-label="Toggle Voice Cues">
+                                <i class="fa-solid fa-volume-xmark"></i>
+                                <span class="header-action-label">Voice</span>
+                            </button>
+                            <button class="btn-action" onclick="shareApp()" aria-label="Share app">
+                                <i class="fa-solid fa-share-nodes"></i>
+                                <span class="header-action-label">Share</span>
+                            </button>
+                            <button class="btn-action" data-bs-toggle="modal" data-bs-target="#weeklyModal"
+                                aria-label="Weekly overview">
+                                <i class="fa-solid fa-calendar-week"></i>
+                                <span class="header-action-label">Week</span>
+                            </button>
+                        </div>
+                    </section>
+                </div>
             </div>
         </header>
 
         <div class="mb-4 animate__animated animate__fadeIn">
-            <h6 class="text-uppercase text-muted" style="letter-spacing: 2px; font-size: 0.8rem; font-weight: 700;">//
-                <span id="currentDay"></span>
-            </h6>
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                <h6 class="text-uppercase text-muted mb-0" style="letter-spacing: 2px; font-size: 0.8rem; font-weight: 700;">//
+                    <span id="currentDay"></span>
+                </h6>
+                <div class="dropdown">
+                    <button class="plan-badge dropdown-toggle border-0" type="button" id="planDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-layer-group"></i> <span id="currentPlanLabel">Classic Split</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="planDropdown">
+                        <li><a class="dropdown-item plan-select" href="#" data-plan-key="schedule">Classic Split</a></li>
+                        <li><a class="dropdown-item plan-select" href="#" data-plan-key="schedule_2">Enhanced Split</a></li>
+                        <li><a class="dropdown-item plan-select" href="#" data-plan-key="schedule_3">V-Tapper</a></li>
+                    </ul>
+                </div>
+            </div>
             <h2 class="brand-font mt-1" id="focusArea" style="font-size: 1.6rem; color: var(--text-main);">LOADING...
             </h2>
         </div>
@@ -1189,12 +1770,16 @@
 
         <h5 class="mt-5 mb-4 brand-font text-center text-muted animate__animated animate__fadeIn"
             style="font-size: 1rem; letter-spacing: 2px;">THE ZONE</h5>
-        <div class="row g-2 mb-5 pb-4 animate__animated animate__fadeInUp">
-            <div class="col-6"><button class="media-card spotify" onclick="openAudioModal('playlists')"><i
-                        class="fa-brands fa-spotify fa-2x mb-2"></i><span>Music</span></button></div>
-            <div class="col-6"><button class="media-card podcast" onclick="openAudioModal('podcasts')"><i
-                        class="fa-solid fa-podcast fa-2x mb-2"></i><span>Podcasts</span></button></div>
+        <div class="row g-2 mb-4 animate__animated animate__fadeInUp">
+            <div class="col-12"><button class="media-card spotify" type="button" onclick="openAudioModal('all')"><i
+                        class="fa-brands fa-spotify fa-2x mb-2"></i><span>Spotify</span><small
+                        class="mt-1 opacity-75" style="font-size:0.65rem; letter-spacing:1px;">PLAYLISTS &amp;
+                        PODCASTS</small></button></div>
         </div>
+
+        <footer>
+            <span>Forged by <a href="https://rambuilds.in" target="_blank" rel="noopener">RamBikkina</a></span>
+        </footer>
     </div>
 
     <div id="floatingTimer" onclick="dismissTimer()"><i class="fa-solid fa-stopwatch"></i> <span
@@ -1215,40 +1800,15 @@
     <div class="modal fade" id="audioModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header d-flex flex-column align-items-start">
-                    <div class="d-flex justify-content-between w-100 mb-3">
-                        <h5 class="modal-title brand-font fs-6" id="audioModalTitle">AUDIO</h5><button type="button"
-                            class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="w-100 p-2 rounded"
-                        style="background: rgba(128,128,128,0.1); border: var(--border-card);">
-                        <div class="btn-group w-100" role="group" id="deviceToggleGroup">
-                            <input type="radio" class="btn-check" name="deviceToggle" id="btnIphone" value="ios"
-                                checked><label class="btn btn-outline-secondary btn-sm"
-                                style="border-radius: var(--radius-btn) 0 0 var(--radius-btn);" for="btnIphone"><i
-                                    class="fa-brands fa-apple"></i> iOS</label>
-                            <input type="radio" class="btn-check" name="deviceToggle" id="btnAndroid"
-                                value="android"><label class="btn btn-outline-secondary btn-sm"
-                                style="border-radius: 0;" for="btnAndroid"><i class="fa-brands fa-android"></i>
-                                Android</label>
-                            <input type="radio" class="btn-check" name="deviceToggle" id="btnWeb" value="web"><label
-                                class="btn btn-outline-secondary btn-sm"
-                                style="border-radius: 0 var(--radius-btn) var(--radius-btn) 0;" for="btnWeb"><i
-                                    class="fa-solid fa-globe"></i> Web</label>
-                        </div>
-                    </div>
+                <div class="modal-header">
+                    <h5 class="modal-title brand-font fs-6" id="audioModalTitle"><i
+                            class="fa-brands fa-spotify me-2"></i> SPOTIFY</h5><button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" id="audioModalList"></div>
             </div>
         </div>
     </div>
-
-    <footer>
-        <div class="container d-flex justify-content-center align-items-center">
-            <img src="Personality.svg" alt="Avatar" class="footer-avatar" onerror="this.style.display='none'">
-            <span>DESIGNED BY <a href="https://bikkina.vercel.app" target="_blank">ITSMERAMC</a></span>
-        </div>
-    </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1283,37 +1843,173 @@
         // --- 2. CORE APP LOGIC ---
         if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(err => console.log('SW fail')); }); }
 
-        let appData = null; let currentAudioType = 'playlists'; let totalTasks = 0; let timerInterval;
+        const WORKOUT_PLANS = {
+            schedule: { label: 'Classic Split' },
+            schedule_2: { label: 'Enhanced Split' },
+            schedule_3: { label: 'V-Tapper' }
+        };
+
+        let appData = null;
+        let currentAudioFilter = 'all';
+        let totalTasks = 0;
+        let timerInterval;
         const todayDateStr = new Date().toDateString();
         let savedState = JSON.parse(localStorage.getItem('fitforge_state')) || {};
+        let currentPlanKey = localStorage.getItem('fitforge_plan') || 'schedule';
+        if (!WORKOUT_PLANS[currentPlanKey]) currentPlanKey = 'schedule';
 
-        if (savedState.date !== todayDateStr || !savedState.checkedSets) {
-            let existingVoice = savedState.voiceEnabled || false;
-            savedState = { date: todayDateStr, checkedSets: {}, finisherDone: false, hasCelebrated: false, voiceEnabled: existingVoice };
+        function emptyPlanProgress() {
+            return { checkedSets: {}, finisherDone: false, hasCelebrated: false };
+        }
+
+        function migrateSavedState() {
+            const voiceEnabled = savedState.voiceEnabled || false;
+            if (savedState.date !== todayDateStr) {
+                savedState = {
+                    date: todayDateStr,
+                    voiceEnabled,
+                    activePlan: currentPlanKey,
+                    plans: {}
+                };
+                WORKOUT_PLANS && Object.keys(WORKOUT_PLANS).forEach(k => { savedState.plans[k] = emptyPlanProgress(); });
+                localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+                return;
+            }
+            if (!savedState.plans) {
+                const legacy = {
+                    checkedSets: savedState.checkedSets || {},
+                    finisherDone: !!savedState.finisherDone,
+                    hasCelebrated: !!savedState.hasCelebrated
+                };
+                savedState = {
+                    date: todayDateStr,
+                    voiceEnabled,
+                    activePlan: currentPlanKey,
+                    plans: {}
+                };
+                Object.keys(WORKOUT_PLANS).forEach(k => {
+                    savedState.plans[k] = k === currentPlanKey ? legacy : emptyPlanProgress();
+                });
+                localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+            }
+            savedState.activePlan = currentPlanKey;
+            Object.keys(WORKOUT_PLANS).forEach(k => {
+                if (!savedState.plans[k]) savedState.plans[k] = emptyPlanProgress();
+            });
+        }
+
+        migrateSavedState();
+
+        function getPlanProgress() {
+            if (!savedState.plans[currentPlanKey]) savedState.plans[currentPlanKey] = emptyPlanProgress();
+            return savedState.plans[currentPlanKey];
+        }
+
+        function getActiveSchedule() {
+            if (!appData) return [];
+            return appData[currentPlanKey] || appData.schedule || [];
+        }
+
+        function applyPlanSelection(planKey) {
+            if (!WORKOUT_PLANS[planKey] || !appData || !appData[planKey]) return;
+            currentPlanKey = planKey;
+            savedState.activePlan = planKey;
+            localStorage.setItem('fitforge_plan', planKey);
             localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+            $('#currentPlanLabel').text(WORKOUT_PLANS[planKey].label);
+            $('.plan-select').removeClass('active');
+            $(`.plan-select[data-plan-key="${planKey}"]`).addClass('active');
+            renderTodayWorkout();
+            renderWeeklyOverview();
+        }
+
+        function initDeviceToggle() {
+            const device = localStorage.getItem('fitforge_device') || 'ios';
+            const $input = $(`input[name="deviceToggle"][value="${device}"]`);
+            if ($input.length) $input.prop('checked', true);
+            else $('#btnIphone').prop('checked', true);
+        }
+
+        function updateFooterVisibility() {
+            const $footer = $('footer');
+            if (!$footer.length) return;
+            const docHeight = document.documentElement.scrollHeight;
+            const viewHeight = window.innerHeight;
+            const scrollY = window.scrollY;
+            const nearBottom = scrollY + viewHeight >= docHeight - 72;
+            const fitsViewport = docHeight <= viewHeight + 16;
+            $footer.toggleClass('is-visible', nearBottom || fitsViewport);
+        }
+
+        function closeHeaderMenu() {
+            const $header = $('#dashboardHeader');
+            $header.removeClass('menu-open');
+            $('#headerMenuBtn').attr('aria-expanded', 'false');
+            $('#headerMenuIcon').removeClass('fa-xmark').addClass('fa-bars');
+        }
+
+        function toggleHeaderMenu() {
+            const $header = $('#dashboardHeader');
+            const open = !$header.hasClass('menu-open');
+            $header.toggleClass('menu-open', open);
+            $('#headerMenuBtn').attr('aria-expanded', open ? 'true' : 'false');
+            $('#headerMenuIcon').toggleClass('fa-bars', !open).toggleClass('fa-xmark', open);
         }
 
         $(document).ready(function () {
+            initDeviceToggle();
+            $('#currentPlanLabel').text(WORKOUT_PLANS[currentPlanKey].label);
+            $('.plan-select').removeClass('active');
+            $(`.plan-select[data-plan-key="${currentPlanKey}"]`).addClass('active');
+
             if (savedState.voiceEnabled) { $('#voiceToggle').addClass('active').find('i').removeClass('fa-volume-xmark').addClass('fa-volume-high'); }
             fetch('data.json').then(res => res.json()).then(data => { appData = data; initApp(); }).catch(err => { $('#workoutContent').html(`<div class="alert alert-danger" style="border-radius:0;">Server/Vercel required to fetch data.json</div>`); });
-            $('input[name="deviceToggle"]').on('change', function () { if (appData) renderAudioList(currentAudioType); });
+            $('input[name="deviceToggle"]').on('change', function () {
+                localStorage.setItem('fitforge_device', this.value);
+                if ($('#audioModal').hasClass('show') && appData) renderAudioList(currentAudioFilter);
+            });
+
+            $('.plan-select').on('click', function (e) {
+                e.preventDefault();
+                applyPlanSelection($(this).data('plan-key'));
+            });
+
+            $(window).on('scroll resize', updateFooterVisibility);
+            updateFooterVisibility();
+
+            $('#headerMenuBtn').on('click', toggleHeaderMenu);
+            $(document).on('click', '[data-bs-target="#weeklyModal"]', closeHeaderMenu);
+            $('.theme-select').on('click', closeHeaderMenu);
+            $(window).on('resize', function () {
+                if (window.innerWidth > 620) closeHeaderMenu();
+            });
+            $(document).on('click', function (e) {
+                const $header = $('#dashboardHeader');
+                if (!$header.hasClass('menu-open')) return;
+                if ($(e.target).closest('#dashboardHeader').length) return;
+                closeHeaderMenu();
+            });
 
             $(document).on('click', '.set-bubble', function () {
                 let exId = $(this).data('ex'); let setIdx = $(this).data('set'); let restTime = $(this).data('rest');
                 let $card = $(this).closest('.workout-card');
 
+                const planProgress = getPlanProgress();
                 if ($(this).hasClass('active')) {
-                    $(this).removeClass('active'); savedState.checkedSets[exId] = savedState.checkedSets[exId].filter(s => s !== setIdx);
+                    $(this).removeClass('active');
+                    planProgress.checkedSets[exId] = planProgress.checkedSets[exId].filter(s => s !== setIdx);
                 } else {
-                    $(this).addClass('active'); savedState.checkedSets[exId].push(setIdx); startRestTimer(restTime);
+                    $(this).addClass('active');
+                    planProgress.checkedSets[exId].push(setIdx);
+                    startRestTimer(restTime);
                 }
 
-                if (savedState.checkedSets[exId].length === $card.find('.set-bubble').length) { $card.addClass('completed-card'); } else { $card.removeClass('completed-card'); }
+                if (planProgress.checkedSets[exId].length === $card.find('.set-bubble').length) { $card.addClass('completed-card'); } else { $card.removeClass('completed-card'); }
                 calculateProgress(true);
             });
 
             $(document).on('change', '#finisherToggle', function () {
-                savedState.finisherDone = this.checked;
+                getPlanProgress().finisherDone = this.checked;
                 if (this.checked) { $('#card-finisher').addClass('completed-card'); } else { $('#card-finisher').removeClass('completed-card'); }
                 calculateProgress(true);
             });
@@ -1343,37 +2039,60 @@
             `;
         }
 
-        function initApp() {
+        function getTodayName() {
             const daysProper = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const todayName = daysProper[new Date().getDay()];
-            $('#currentDay').text(todayName);
+            return daysProper[new Date().getDay()];
+        }
 
-            const todaysPlan = appData.schedule.find(day => day.day_of_week === todayName);
+        function formatFinisherBadge(finisher) {
+            if (!finisher) return '';
+            if (finisher.duration_minutes) return `${finisher.duration_minutes} MIN`;
+            if (finisher.sets && finisher.reps) return `${finisher.sets}x${finisher.reps}`;
+            if (finisher.reps) return String(finisher.reps);
+            return '1 SET';
+        }
+
+        function renderTodayWorkout() {
+            const todayName = getTodayName();
+            const schedule = getActiveSchedule();
+            const todaysPlan = schedule.find(day => day.day_of_week === todayName);
+            const planProgress = getPlanProgress();
+            const $content = $('#workoutContent').empty();
+
+            if (!todaysPlan) {
+                $('#focusArea').text('NO SESSION');
+                $('#progressContainer').hide();
+                $content.append(`<div class="workout-card text-center py-5"><p class="text-muted mb-0">No workout found for today in this plan.</p></div>`);
+                return;
+            }
+
             $('#focusArea').text(todaysPlan.focus);
-            const $content = $('#workoutContent');
 
             if (todaysPlan.is_rest_day) {
-                $content.append(`<div class="workout-card text-center py-5 animate__animated animate__zoomIn"><i class="fa-solid fa-battery-half fa-3x mb-4 text-muted"></i><h3 class="brand-font mb-3">RECOVERY</h3><p class="px-3 mb-0 text-muted" style="line-height:1.6;">${todaysPlan.notes}</p></div>`);
-            } else {
-                $('#progressContainer').show();
-                totalTasks = 0;
+                $('#progressContainer').hide();
+                $content.append(`<div class="workout-card text-center py-5 animate__animated animate__zoomIn"><i class="fa-solid fa-battery-half fa-3x mb-4 text-muted"></i><h3 class="brand-font mb-3">RECOVERY</h3><p class="px-3 mb-0 text-muted" style="line-height:1.6;">${todaysPlan.notes || 'Rest and recover.'}</p></div>`);
+                return;
+            }
 
-                todaysPlan.exercises.forEach((ex, index) => {
-                    let exId = `ex${index}`;
-                    if (!savedState.checkedSets[exId]) savedState.checkedSets[exId] = [];
-                    let isExComplete = savedState.checkedSets[exId].length === ex.sets;
+            $('#progressContainer').show();
+            totalTasks = 0;
 
-                    let bubblesHtml = '';
-                    for (let s = 0; s < ex.sets; s++) {
-                        totalTasks++;
-                        let isActive = savedState.checkedSets[exId].includes(s) ? 'active' : '';
-                        bubblesHtml += `<div class="set-bubble ${isActive}" data-ex="${exId}" data-set="${s}" data-rest="${ex.rest_seconds || 60}">${s + 1}</div>`;
-                    }
-                    $content.append(buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, false));
-                });
+            todaysPlan.exercises.forEach((ex, index) => {
+                let exId = `ex${index}`;
+                if (!planProgress.checkedSets[exId]) planProgress.checkedSets[exId] = [];
+                let isExComplete = planProgress.checkedSets[exId].length === ex.sets;
 
-                if (todaysPlan.optional_exercises && todaysPlan.optional_exercises.length > 0) {
-                    $content.append(`
+                let bubblesHtml = '';
+                for (let s = 0; s < ex.sets; s++) {
+                    totalTasks++;
+                    let isActive = planProgress.checkedSets[exId].includes(s) ? 'active' : '';
+                    bubblesHtml += `<div class="set-bubble ${isActive}" data-ex="${exId}" data-set="${s}" data-rest="${ex.rest_seconds || 60}">${s + 1}</div>`;
+                }
+                $content.append(buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, false));
+            });
+
+            if (todaysPlan.optional_exercises && todaysPlan.optional_exercises.length > 0) {
+                $content.append(`
                         <div class="text-center mt-4 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
                             <button class="btn-action mx-auto" style="border-radius: 20px; padding: 8px 20px; font-weight:600;" type="button" data-bs-toggle="collapse" data-bs-target="#optionalWorkouts">
                                 OPTIONAL VOLUME <i class="fa-solid fa-chevron-down ms-2"></i>
@@ -1382,64 +2101,86 @@
                         <div class="collapse" id="optionalWorkouts"></div>
                     `);
 
-                    const $optionalContainer = $('#optionalWorkouts');
-                    todaysPlan.optional_exercises.forEach((ex, index) => {
-                        let exId = `opt${index}`;
-                        if (!savedState.checkedSets[exId]) savedState.checkedSets[exId] = [];
-                        let isExComplete = savedState.checkedSets[exId].length === ex.sets;
+                const $optionalContainer = $('#optionalWorkouts');
+                todaysPlan.optional_exercises.forEach((ex, index) => {
+                    let exId = `opt${index}`;
+                    if (!planProgress.checkedSets[exId]) planProgress.checkedSets[exId] = [];
+                    let isExComplete = planProgress.checkedSets[exId].length === ex.sets;
 
-                        let bubblesHtml = '';
-                        for (let s = 0; s < ex.sets; s++) {
-                            let isActive = savedState.checkedSets[exId].includes(s) ? 'active' : '';
-                            bubblesHtml += `<div class="set-bubble ${isActive}" data-ex="${exId}" data-set="${s}" data-rest="${ex.rest_seconds || 60}">${s + 1}</div>`;
-                        }
-                        $optionalContainer.append(buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, true));
-                    });
-                }
-
-                if (todaysPlan.finisher) {
-                    totalTasks++;
-                    let isChecked = savedState.finisherDone ? 'checked' : '';
-                    $content.append(`
-                        <div class="workout-card animate__animated animate__fadeInUp ${savedState.finisherDone ? 'completed-card' : ''} mt-4" id="card-finisher" style="animation-delay: 0.5s;">
-                            <h6 class="text-uppercase mb-4" style="font-size: 0.9rem; letter-spacing: 1px; font-weight: 700;"><i class="fa-solid fa-fire me-2"></i> BURNOUT FINISHER</h6>
-                            <label class="finisher-label"><input type="checkbox" class="finisher-checkbox" id="finisherToggle" ${isChecked}><span class="flex-grow-1">${todaysPlan.finisher.name}</span><span class="badge bg-dark">${todaysPlan.finisher.duration_minutes ? todaysPlan.finisher.duration_minutes + ' MIN' : todaysPlan.finisher.sets + 'x' + todaysPlan.finisher.reps}</span></label>
-                            <div class="machine-alt mt-4"><i class="fa-solid fa-repeat me-1"></i> ALT: ${todaysPlan.finisher.machine_alternative}</div>
-                        </div>
-                    `);
-                }
-
-                calculateProgress(false);
+                    let bubblesHtml = '';
+                    for (let s = 0; s < ex.sets; s++) {
+                        let isActive = planProgress.checkedSets[exId].includes(s) ? 'active' : '';
+                        bubblesHtml += `<div class="set-bubble ${isActive}" data-ex="${exId}" data-set="${s}" data-rest="${ex.rest_seconds || 60}">${s + 1}</div>`;
+                    }
+                    $optionalContainer.append(buildCardHTML(ex, exId, index, bubblesHtml, isExComplete, true));
+                });
             }
 
-            const $weekly = $('#weeklyContent');
-            appData.schedule.forEach(day => {
+            if (todaysPlan.finisher) {
+                totalTasks++;
+                let isChecked = planProgress.finisherDone ? 'checked' : '';
+                const finisherAlt = todaysPlan.finisher.machine_alternative
+                    ? `<div class="machine-alt mt-4"><i class="fa-solid fa-repeat me-1"></i> ALT: ${todaysPlan.finisher.machine_alternative}</div>`
+                    : '';
+                const finisherScience = todaysPlan.finisher.anatomy_pov
+                    ? `<div class="anatomy-toggle mt-3" onclick="$(this).next('.anatomy-content').slideToggle(200);"><i class="fa-solid fa-dna me-2"></i> SCIENCE</div><div class="anatomy-content">${todaysPlan.finisher.anatomy_pov}</div>`
+                    : '';
+                $content.append(`
+                        <div class="workout-card animate__animated animate__fadeInUp ${planProgress.finisherDone ? 'completed-card' : ''} mt-4" id="card-finisher" style="animation-delay: 0.5s;">
+                            <h6 class="text-uppercase mb-4" style="font-size: 0.9rem; letter-spacing: 1px; font-weight: 700;"><i class="fa-solid fa-fire me-2"></i> BURNOUT FINISHER</h6>
+                            <label class="finisher-label"><input type="checkbox" class="finisher-checkbox" id="finisherToggle" ${isChecked}><span class="flex-grow-1">${todaysPlan.finisher.name}</span><span class="badge bg-dark">${formatFinisherBadge(todaysPlan.finisher)}</span></label>
+                            ${finisherScience}
+                            ${finisherAlt}
+                        </div>
+                    `);
+            }
+
+            calculateProgress(false);
+            requestAnimationFrame(updateFooterVisibility);
+        }
+
+        function renderWeeklyOverview() {
+            const todayName = getTodayName();
+            const schedule = getActiveSchedule();
+            const $weekly = $('#weeklyContent').empty();
+            const planLabel = WORKOUT_PLANS[currentPlanKey].label;
+
+            $weekly.append(`<p class="text-muted mb-4" style="font-size:0.8rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;"><i class="fa-solid fa-layer-group me-2"></i>${planLabel}</p>`);
+
+            schedule.forEach(day => {
                 let isToday = day.day_of_week === todayName ? '<span class="badge bg-dark ms-2" style="font-size:0.6rem;">TODAY</span>' : '';
                 let dayHtml = `<div class="mb-4 pb-3" style="border-bottom: var(--border-card);"><strong class="d-block mb-2" style="font-size:1.1rem; text-transform:uppercase;">${day.day_of_week} ${isToday}<br><span style="color: var(--text-muted); font-size: 0.85rem; font-weight:600;">${day.focus}</span></strong>`;
                 if (day.is_rest_day) {
-                    dayHtml += `<span style="font-size: 0.85rem; font-family: var(--font-secondary);">Active Recovery</span>`;
-                } else {
-                    let optText = day.optional_exercises ? ` <span style="color:var(--text-muted);">(+${day.optional_exercises.length} OPT)</span>` : '';
+                    dayHtml += `<span style="font-size: 0.85rem; font-family: var(--font-secondary);">${day.notes || 'Active Recovery'}</span>`;
+                } else if (day.exercises && day.exercises.length) {
+                    let optText = day.optional_exercises && day.optional_exercises.length ? ` <span style="color:var(--text-muted);">(+${day.optional_exercises.length} OPT)</span>` : '';
                     dayHtml += `<span style="font-size: 0.85rem; font-family: var(--font-secondary);">${day.exercises.map(ex => ex.name).join(', ')}${optText}</span>`;
                 }
                 $weekly.append(dayHtml + `</div>`);
             });
         }
 
+        function initApp() {
+            $('#currentDay').text(getTodayName());
+            renderTodayWorkout();
+            renderWeeklyOverview();
+        }
+
         function calculateProgress(triggerAnimation) {
+            const planProgress = getPlanProgress();
             let completedSetsCount = 0;
-            for (const exId in savedState.checkedSets) { completedSetsCount += savedState.checkedSets[exId].length; }
-            if (savedState.finisherDone) completedSetsCount++;
+            for (const exId in planProgress.checkedSets) { completedSetsCount += planProgress.checkedSets[exId].length; }
+            if (planProgress.finisherDone) completedSetsCount++;
             let percentage = totalTasks === 0 ? 0 : Math.min(100, Math.round((completedSetsCount / totalTasks) * 100));
 
             $('#workoutProgress').css('width', percentage + '%');
 
             if (percentage === 100) {
-                if (triggerAnimation && !savedState.hasCelebrated) { triggerConfetti(); savedState.hasCelebrated = true; }
+                if (triggerAnimation && !planProgress.hasCelebrated) { triggerConfetti(); planProgress.hasCelebrated = true; }
                 $('#progressText').text("COMPLETE");
                 $('.progress-wrapper').addClass('is-complete');
             } else {
-                savedState.hasCelebrated = false;
+                planProgress.hasCelebrated = false;
                 $('#progressText').text(percentage + '%');
                 $('.progress-wrapper').removeClass('is-complete');
             }
@@ -1485,8 +2226,76 @@
         }
 
         function createDeepLink(webUrl, device) { if (device === 'web') return webUrl; try { const urlObj = new URL(webUrl); const pathParts = urlObj.pathname.split('/').filter(p => p); if (pathParts.length >= 2) { const type = pathParts[0]; const id = pathParts[1]; if (device === 'ios') return `spotify:${type}:${id}`; if (device === 'android') return `intent://${type}/${id}#Intent;scheme=spotify;package=com.spotify.music;end;`; } } catch (e) { console.error(e); } return webUrl; }
-        function openAudioModal(type) { currentAudioType = type; $('#audioModalTitle').html(type === 'playlists' ? 'PLAYLISTS' : 'PODCASTS'); renderAudioList(type); new bootstrap.Modal(document.getElementById('audioModal')).show(); }
-        function renderAudioList(type) { const $list = $('#audioModalList').empty(); const device = $('input[name="deviceToggle"]:checked').val(); appData.audio[type].forEach(item => { const icon = type === 'playlists' ? 'fa-music' : 'fa-microphone-lines'; $list.append(`<a href="${createDeepLink(item.url, device)}" class="audio-list-item" target="_blank"><i class="fa-solid ${icon} me-3 text-muted"></i><span class="flex-grow-1">${item.name}</span><i class="fa-solid fa-arrow-up-right-from-square text-muted" style="font-size: 0.8rem;"></i></a>`); }); }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function getSpotifyCatalog() {
+            if (!appData || !appData.audio) return [];
+            const items = (appData.audio.playlists || []).map(item => ({
+                name: item.name,
+                url: item.url,
+                description: item.description || '',
+                type: (item.type || 'playlist').toLowerCase()
+            }));
+            (appData.audio.podcasts || []).forEach(item => {
+                const exists = items.some(i => i.url === item.url || i.name === item.name);
+                if (!exists) {
+                    items.push({
+                        name: item.name,
+                        url: item.url,
+                        description: item.description || '',
+                        type: 'podcast'
+                    });
+                }
+            });
+            return items;
+        }
+
+        function openAudioModal(filter) {
+            currentAudioFilter = filter || 'all';
+            renderAudioList(currentAudioFilter);
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('audioModal')).show();
+        }
+
+        function renderAudioList(filter) {
+            const $list = $('#audioModalList').empty();
+            const device = $('input[name="deviceToggle"]:checked').val() || 'ios';
+            const catalog = getSpotifyCatalog();
+            const categories = [
+                { key: 'playlist', label: 'Playlists', icon: 'fa-music' },
+                { key: 'podcast', label: 'Podcasts', icon: 'fa-microphone-lines' }
+            ];
+
+            let hasAny = false;
+            categories.forEach(cat => {
+                if (filter !== 'all' && filter !== cat.key) return;
+                const catItems = catalog.filter(i => i.type === cat.key);
+                if (!catItems.length) return;
+                hasAny = true;
+                $list.append(`<div class="audio-category-label"><i class="fa-solid ${cat.icon}"></i> ${cat.label}</div>`);
+                catItems.forEach(item => {
+                    const desc = item.description
+                        ? `<div class="audio-item-desc">${escapeHtml(item.description)}</div>`
+                        : '';
+                    $list.append(`
+                        <a href="${createDeepLink(item.url, device)}" class="audio-list-item" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid ${cat.icon} text-muted mt-1"></i>
+                            <div class="audio-item-body">
+                                <div class="audio-item-title">${escapeHtml(item.name)}</div>
+                                ${desc}
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-muted" style="font-size: 0.8rem; margin-top: 4px;"></i>
+                        </a>
+                    `);
+                });
+            });
+
+            if (!hasAny) {
+                $list.append('<p class="text-muted mb-0" style="font-size:0.9rem;">No Spotify items in data.json yet.</p>');
+            }
+        }
         function shareApp() { if (navigator.share) navigator.share({ title: 'FitForge Protocol', text: 'Check out my custom daily protocol.', url: window.location.href }).catch(console.error); else alert("Copy this link: " + window.location.href); }
     </script>
 </body>
