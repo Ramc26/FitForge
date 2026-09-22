@@ -561,9 +561,6 @@
             text-transform: uppercase;
         }
 
-        .progress-wrapper {
-            margin-bottom: 30px;
-        }
 
         .progress {
             height: 12px;
@@ -598,21 +595,61 @@
             bottom: 24px;
             left: 50%;
             transform: translateX(-50%) translateY(200%);
-            padding: 12px 30px;
-            border-radius: 30px;
+            padding: 12px 16px 10px;
+            border-radius: 20px;
             font-weight: 700;
             font-size: 1.5rem;
             z-index: 999;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: stretch;
             gap: 10px;
-            cursor: pointer;
             font-family: var(--font-secondary);
+            min-width: 200px;
         }
 
         #floatingTimer.show {
             transform: translateX(-50%) translateY(0);
+        }
+
+        .timer-main-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .timer-extend-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .timer-add-btn,
+        .timer-dismiss-btn {
+            border: var(--border-card);
+            background: rgba(255, 255, 255, 0.06);
+            color: inherit;
+            border-radius: var(--radius-btn);
+            padding: 5px 10px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            font-family: var(--font-secondary);
+            transition: all 0.2s;
+        }
+
+        .timer-add-btn:hover {
+            background: var(--accent-main);
+            color: #000;
+            border-color: var(--accent-main);
+        }
+
+        .timer-dismiss-btn {
+            padding: 5px 9px;
         }
 
         .modal-content {
@@ -744,15 +781,45 @@
             border-color: var(--accent-main);
         }
 
-        .day-picker-wrap {
+        .session-panel {
             margin-bottom: 12px;
+        }
+
+        .session-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .session-focus {
+            font-size: 1.15rem;
+            line-height: 1.15;
+            margin: 0;
+            min-width: 0;
+        }
+
+        .session-top-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .btn-today-jump {
+            font-size: 0.58rem;
+            padding: 5px 8px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .day-picker {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             overflow-x: auto;
-            padding: 2px 2px 6px;
+            padding: 0 0 2px;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
         }
@@ -766,19 +833,19 @@
             border: var(--border-card);
             background: var(--card-bg);
             color: var(--text-muted);
-            border-radius: 20px;
-            padding: 7px 11px;
-            font-size: 0.68rem;
+            border-radius: 8px;
+            padding: 5px 7px;
+            font-size: 0.58rem;
             font-weight: 800;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.2s;
             line-height: 1;
         }
 
-        .day-chip.is-calendar-today {
-            box-shadow: inset 0 0 0 1px var(--accent-main);
+        .day-chip.is-calendar-today:not(.is-selected) {
+            color: var(--accent-main);
         }
 
         .day-chip.is-selected {
@@ -787,23 +854,113 @@
             color: #000;
         }
 
-        .day-chip.is-selected.is-calendar-today {
-            box-shadow: 0 0 12px rgba(0, 255, 136, 0.35);
+        .day-chip-inner {
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 4px;
+            line-height: 1;
         }
 
-        .day-view-hint {
-            font-size: 0.72rem;
+        .day-chip-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: transparent;
+            flex-shrink: 0;
+        }
+
+        .day-chip.has-progress .day-chip-dot {
+            background: var(--accent-secondary);
+        }
+
+        .day-chip.is-day-complete .day-chip-dot {
+            background: var(--accent-main);
+        }
+
+        .day-chip.is-selected.has-progress .day-chip-dot,
+        .day-chip.is-selected.is-day-complete .day-chip-dot {
+            background: #000;
+        }
+
+        .session-hint {
+            font-size: 0.65rem;
             font-weight: 600;
-            letter-spacing: 0.04em;
+            color: var(--text-muted);
+            margin: 6px 0 0;
+            letter-spacing: 0.02em;
         }
 
-        .catchup-banner {
-            font-size: 0.75rem;
-            font-weight: 700;
+        .progress-wrapper {
+            margin-bottom: 18px;
+        }
+
+        .progress-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            min-height: 28px;
+        }
+
+        .progress-toolbar-label {
+            font-size: 0.62rem;
+            font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--accent-secondary);
-            margin-bottom: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .progress-toolbar-spacer {
+            flex: 1;
+            min-width: 4px;
+        }
+
+        .rest-bonus-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            border: var(--border-card);
+            border-radius: 8px;
+            padding: 2px;
+            background: var(--card-bg);
+        }
+
+        .rest-bonus-chip {
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: 6px;
+            padding: 3px 7px;
+            font-size: 0.58rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            line-height: 1.2;
+        }
+
+        .rest-bonus-chip.is-active {
+            background: var(--accent-main);
+            color: #000;
+        }
+
+        .btn-reset-day {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .btn-reset-day:hover {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.4);
+        }
+
+        .progress-wrapper .progress {
+            height: 6px;
         }
 
         footer {
@@ -1796,36 +1953,42 @@
             </div>
         </header>
 
-        <div class="mb-4 animate__animated animate__fadeIn">
-            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
-                <h6 class="text-uppercase text-muted mb-0" style="letter-spacing: 2px; font-size: 0.8rem; font-weight: 700;">//
-                    <span id="currentDay"></span>
-                </h6>
-                <div class="dropdown">
-                    <button class="plan-badge dropdown-toggle border-0" type="button" id="planDropdown"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-layer-group"></i> <span id="currentPlanLabel">Classic Split</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="planDropdown">
-                        <li><a class="dropdown-item plan-select" href="#" data-plan-key="schedule">Classic Split</a></li>
-                        <li><a class="dropdown-item plan-select" href="#" data-plan-key="schedule_2">Enhanced Split</a></li>
-                        <li><a class="dropdown-item plan-select" href="#" data-plan-key="schedule_3">V-Tapper</a></li>
-                    </ul>
+        <section class="session-panel animate__animated animate__fadeIn">
+            <div class="session-top">
+                <h2 class="brand-font session-focus" id="focusArea">LOADING...</h2>
+                <div class="session-top-right">
+                    <button type="button" class="btn-action btn-today-jump" id="backToTodayBtn" style="display: none;"
+                        title="Back to calendar today">Today</button>
+                    <div class="dropdown">
+                        <button class="plan-badge dropdown-toggle border-0" type="button" id="planDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-layer-group"></i> <span id="currentPlanLabel">Classic Split</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="planDropdown">
+                            <li><a class="dropdown-item plan-select" href="#" data-plan-key="schedule">Classic Split</a></li>
+                            <li><a class="dropdown-item plan-select" href="#" data-plan-key="schedule_2">Enhanced Split</a></li>
+                            <li><a class="dropdown-item plan-select" href="#" data-plan-key="schedule_3">V-Tapper</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="day-picker-wrap">
-                <div class="day-picker" id="dayPicker" role="tablist" aria-label="Select workout day"></div>
-                <p class="day-view-hint mt-2 mb-0" id="dayViewHint" style="display: none;"></p>
-            </div>
-            <h2 class="brand-font mt-1" id="focusArea" style="font-size: 1.6rem; color: var(--text-main);">LOADING...
-            </h2>
-        </div>
+            <div class="day-picker" id="dayPicker" role="tablist" aria-label="Select workout day"></div>
+            <p class="session-hint mb-0" id="dayViewHint" style="display: none;"></p>
+        </section>
 
         <div class="progress-wrapper animate__animated animate__fadeIn" id="progressContainer" style="display:none;">
-            <div class="d-flex justify-content-between mb-2 text-muted"
-                style="font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">
-                <span>PROGRESS</span>
-                <span id="progressText">0%</span>
+            <div class="progress-toolbar">
+                <span class="progress-toolbar-label"><span id="progressText">0%</span></span>
+                <span class="progress-toolbar-spacer"></span>
+                <div class="rest-bonus-wrap" title="Extra rest seconds on every set">
+                    <button type="button" class="rest-bonus-chip" data-bonus="0">+0</button>
+                    <button type="button" class="rest-bonus-chip" data-bonus="15">+15</button>
+                    <button type="button" class="rest-bonus-chip" data-bonus="30">+30</button>
+                </div>
+                <button type="button" class="btn-action btn-reset-day" id="resetDayBtn"
+                    title="Reset this day's progress" aria-label="Reset this day">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
             </div>
             <div class="progress">
                 <div class="progress-bar" id="workoutProgress" role="progressbar" style="width: 0%"></div>
@@ -1848,8 +2011,15 @@
         </footer>
     </div>
 
-    <div id="floatingTimer" onclick="dismissTimer()"><i class="fa-solid fa-stopwatch"></i> <span
-            id="timerDisplay">00:00</span></div>
+    <div id="floatingTimer">
+        <div class="timer-main-row"><i class="fa-solid fa-stopwatch"></i> <span id="timerDisplay">00:00</span></div>
+        <div class="timer-extend-row">
+            <button type="button" class="timer-add-btn" data-add="15">+15s</button>
+            <button type="button" class="timer-add-btn" data-add="30">+30s</button>
+            <button type="button" class="timer-dismiss-btn" aria-label="Dismiss rest timer"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+    </div>
 
     <div class="modal fade" id="weeklyModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -1922,7 +2092,10 @@
         let currentAudioFilter = 'all';
         let totalTasks = 0;
         let timerInterval;
+        let timerTimeLeft = 0;
         let selectedViewDay = null;
+        let restBonusDefault = parseInt(localStorage.getItem('fitforge_rest_extra') || '0', 10);
+        if (![0, 15, 30].includes(restBonusDefault)) restBonusDefault = 0;
         const todayDateStr = new Date().toDateString();
         let savedState = JSON.parse(localStorage.getItem('fitforge_state')) || {};
         let currentPlanKey = localStorage.getItem('fitforge_plan') || 'schedule';
@@ -2024,6 +2197,7 @@
             $(`.plan-select[data-plan-key="${planKey}"]`).addClass('active');
             renderTodayWorkout();
             renderWeeklyOverview();
+            updateDayPickerUI();
         }
 
         function initDeviceToggle() {
@@ -2085,6 +2259,35 @@
                 renderTodayWorkout();
             });
 
+            $('#backToTodayBtn').on('click', function () {
+                selectedViewDay = getTodayName();
+                updateDayPickerUI();
+                updateDayHeader();
+                renderTodayWorkout();
+            });
+
+            $('#resetDayBtn').on('click', function () {
+                resetViewDayProgress();
+            });
+
+            $(document).on('click', '.rest-bonus-chip', function () {
+                restBonusDefault = parseInt($(this).data('bonus'), 10);
+                localStorage.setItem('fitforge_rest_extra', String(restBonusDefault));
+                syncRestBonusUI();
+            });
+
+            $(document).on('click', '.timer-add-btn', function (e) {
+                e.stopPropagation();
+                addRestTime(parseInt($(this).data('add'), 10));
+            });
+
+            $(document).on('click', '.timer-dismiss-btn', function (e) {
+                e.stopPropagation();
+                dismissTimer();
+            });
+
+            syncRestBonusUI();
+
             $(window).on('scroll resize', updateFooterVisibility);
             updateFooterVisibility();
 
@@ -2112,17 +2315,19 @@
                 } else {
                     $(this).addClass('active');
                     planProgress.checkedSets[exId].push(setIdx);
-                    startRestTimer(restTime);
+                    startRestTimer(restTime + restBonusDefault);
                 }
 
                 if (planProgress.checkedSets[exId].length === $card.find('.set-bubble').length) { $card.addClass('completed-card'); } else { $card.removeClass('completed-card'); }
                 calculateProgress(true);
+                updateDayPickerUI();
             });
 
             $(document).on('change', '#finisherToggle', function () {
                 getPlanProgress().finisherDone = this.checked;
                 if (this.checked) { $('#card-finisher').addClass('completed-card'); } else { $('#card-finisher').removeClass('completed-card'); }
                 calculateProgress(true);
+                updateDayPickerUI();
             });
         });
 
@@ -2167,8 +2372,41 @@
             const $picker = $('#dayPicker');
             if ($picker.children().length) return;
             WEEK_DAYS.forEach(day => {
-                $picker.append(`<button type="button" class="day-chip" data-day="${day}" role="tab" aria-selected="false">${DAY_ABBR[day]}</button>`);
+                $picker.append(`<button type="button" class="day-chip" data-day="${day}" role="tab" aria-selected="false"><span class="day-chip-inner"><span class="day-chip-label">${DAY_ABBR[day]}</span><span class="day-chip-dot" aria-hidden="true"></span></span></button>`);
             });
+        }
+
+        function computeTotalTasks(dayPlan) {
+            if (!dayPlan || dayPlan.is_rest_day) return 0;
+            let total = 0;
+            (dayPlan.exercises || []).forEach(ex => { total += ex.sets; });
+            if (dayPlan.finisher) total++;
+            return total;
+        }
+
+        function computeCompletedCount(dayPlan, progress) {
+            if (!dayPlan || dayPlan.is_rest_day || !progress) return 0;
+            let completed = 0;
+            (dayPlan.exercises || []).forEach((ex, index) => {
+                const exId = `ex${index}`;
+                completed += (progress.checkedSets[exId] || []).length;
+            });
+            if (dayPlan.finisher && progress.finisherDone) completed++;
+            return completed;
+        }
+
+        function getDayStatus(dayName) {
+            const schedule = getActiveSchedule();
+            const dayPlan = schedule.find(d => d.day_of_week === dayName);
+            if (!dayPlan) return 'none';
+            if (dayPlan.is_rest_day) return 'rest';
+            const progress = getDayProgress(dayName);
+            const total = computeTotalTasks(dayPlan);
+            if (total === 0) return 'none';
+            const completed = computeCompletedCount(dayPlan, progress);
+            if (completed >= total) return 'complete';
+            if (completed > 0) return 'progress';
+            return 'none';
         }
 
         function updateDayPickerUI() {
@@ -2177,20 +2415,46 @@
             $('.day-chip').each(function () {
                 const day = $(this).data('day');
                 const isSelected = day === viewDay;
+                const status = getDayStatus(day);
                 $(this).toggleClass('is-selected', isSelected).toggleClass('is-calendar-today', day === calendarToday);
+                $(this).toggleClass('has-progress', status === 'progress').toggleClass('is-day-complete', status === 'complete');
                 $(this).attr('aria-selected', isSelected ? 'true' : 'false');
+                const statusLabel = status === 'complete' ? ', complete' : status === 'progress' ? ', in progress' : '';
+                $(this).attr('title', `${day}${statusLabel}`);
             });
         }
 
         function updateDayHeader() {
             const viewDay = getViewDayName();
             const calendarToday = getTodayName();
-            $('#currentDay').text(viewDay);
             if (viewDay !== calendarToday) {
-                $('#dayViewHint').text(`Catch-up mode · calendar today is ${calendarToday}`).show();
+                $('#dayViewHint').text(`Viewing ${viewDay} · today is ${calendarToday}`).show();
+                $('#backToTodayBtn').show();
             } else {
                 $('#dayViewHint').hide();
+                $('#backToTodayBtn').hide();
             }
+        }
+
+        function syncRestBonusUI() {
+            $('.rest-bonus-chip').removeClass('is-active');
+            $(`.rest-bonus-chip[data-bonus="${restBonusDefault}"]`).addClass('is-active');
+        }
+
+        function resetViewDayProgress() {
+            const day = getViewDayName();
+            const dayPlan = getActiveSchedule().find(d => d.day_of_week === day);
+            if (dayPlan && dayPlan.is_rest_day) {
+                return;
+            }
+            if (!confirm(`Reset all progress for ${day}? This cannot be undone.`)) return;
+            const prog = getDayProgress(day);
+            prog.checkedSets = {};
+            prog.finisherDone = false;
+            prog.hasCelebrated = false;
+            localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+            renderTodayWorkout();
+            updateDayPickerUI();
         }
 
         function renderTodayWorkout() {
@@ -2217,10 +2481,6 @@
                     : '';
                 $content.append(`<div class="workout-card text-center py-5 animate__animated animate__zoomIn"><i class="fa-solid fa-battery-half fa-3x mb-4 text-muted"></i><h3 class="brand-font mb-3">RECOVERY</h3><p class="px-3 mb-0 text-muted" style="line-height:1.6;">${todaysPlan.notes || 'Rest and recover.'}</p>${catchUpHint}</div>`);
                 return;
-            }
-
-            if (viewDayName !== calendarToday) {
-                $content.append(`<p class="catchup-banner animate__animated animate__fadeIn"><i class="fa-solid fa-clock-rotate-left me-2"></i>${viewDayName} catch-up session</p>`);
             }
 
             $('#progressContainer').show();
@@ -2337,35 +2597,55 @@
                 $('.progress-wrapper').removeClass('is-complete');
             }
             localStorage.setItem('fitforge_state', JSON.stringify(savedState));
+            updateDayPickerUI();
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(Math.max(0, timerTimeLeft) / 60).toString().padStart(2, '0');
+            const s = (Math.max(0, timerTimeLeft) % 60).toString().padStart(2, '0');
+            $('#timerDisplay').text(`${m}:${s}`);
+        }
+
+        function addRestTime(seconds) {
+            const $timer = $('#floatingTimer');
+            if (!$timer.hasClass('show') || $timer.hasClass('done')) return;
+            timerTimeLeft += seconds;
+            updateTimerDisplay();
+            if (navigator.vibrate) navigator.vibrate(40);
         }
 
         function startRestTimer(seconds) {
             clearInterval(timerInterval);
-            const $timer = $('#floatingTimer'); const $display = $('#timerDisplay');
+            const $timer = $('#floatingTimer');
             $timer.removeClass('done').addClass('show');
-            let timeLeft = seconds;
-
-            let initM = Math.floor(timeLeft / 60).toString().padStart(2, '0'); let initS = (timeLeft % 60).toString().padStart(2, '0');
-            $display.text(`${initM}:${initS}`);
+            timerTimeLeft = Math.max(0, seconds);
+            updateTimerDisplay();
 
             timerInterval = setInterval(() => {
-                timeLeft--;
-                let m = Math.floor(timeLeft / 60).toString().padStart(2, '0'); let s = (timeLeft % 60).toString().padStart(2, '0');
-                $display.text(`${m}:${s}`);
+                timerTimeLeft--;
+                updateTimerDisplay();
 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval); $timer.addClass('done'); $display.text("LIFT");
+                if (timerTimeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    $timer.addClass('done');
+                    $('#timerDisplay').text('LIFT');
                     if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
                     if (savedState.voiceEnabled && 'speechSynthesis' in window) {
-                        let speech = new SpeechSynthesisUtterance("Rest over.");
-                        speech.volume = 1; speech.rate = 1.1; speech.pitch = 1; window.speechSynthesis.speak(speech);
+                        let speech = new SpeechSynthesisUtterance('Rest over.');
+                        speech.volume = 1;
+                        speech.rate = 1.1;
+                        speech.pitch = 1;
+                        window.speechSynthesis.speak(speech);
                     }
-                    setTimeout(() => $timer.removeClass('show'), 5000);
+                    setTimeout(() => $timer.removeClass('show done'), 5000);
                 }
             }, 1000);
         }
 
-        function dismissTimer() { $('#floatingTimer').removeClass('show'); clearInterval(timerInterval); }
+        function dismissTimer() {
+            $('#floatingTimer').removeClass('show done');
+            clearInterval(timerInterval);
+        }
 
         function triggerConfetti() {
             let cColors = ['#00ff88', '#ffffff', '#eab308'];

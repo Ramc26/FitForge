@@ -14,7 +14,9 @@ A personal, data-driven workout tracker and daily training protocol. FitForge lo
   - **Enhanced Split** (`schedule_2`) — same weekly layout with extra exercises, core-focused finishers, and deeper anatomy notes
   - **V-Tapper** (`schedule_3`) — push/pull/legs + V-taper emphasis, mid-week rest, optional cardio day
 - **Set tracking** — tap set bubbles to mark complete; optional exercises in a collapsible section
-- **Rest timer** — floating countdown after each set; vibration and optional voice cue when rest ends
+- **Rest timer** — floating countdown after each set; **+15s / +30s** while running; default **Rest +0/15/30** bonus on every set; vibration and optional voice cue when rest ends
+- **Reset day** — clear checkmarks for the viewed weekday (current calendar date)
+- **Day picker badges** — dot shows in-progress (gold) or complete (green); **Today** jumps back from catch-up mode
 - **Workout completion** — progress bar and confetti at 100%
 - **Weekly overview** — calendar modal for the active plan
 - **Spotify hub** — playlists and podcasts from `data.json`, grouped by type with names and descriptions; open in **iOS**, **Android**, or **Web** (device choice in the top bar, default iOS)
