@@ -744,6 +744,68 @@
             border-color: var(--accent-main);
         }
 
+        .day-picker-wrap {
+            margin-bottom: 12px;
+        }
+
+        .day-picker {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 2px 2px 6px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .day-picker::-webkit-scrollbar {
+            display: none;
+        }
+
+        .day-chip {
+            flex-shrink: 0;
+            border: var(--border-card);
+            background: var(--card-bg);
+            color: var(--text-muted);
+            border-radius: 20px;
+            padding: 7px 11px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            line-height: 1;
+        }
+
+        .day-chip.is-calendar-today {
+            box-shadow: inset 0 0 0 1px var(--accent-main);
+        }
+
+        .day-chip.is-selected {
+            background: var(--accent-main);
+            border-color: var(--accent-main);
+            color: #000;
+        }
+
+        .day-chip.is-selected.is-calendar-today {
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.35);
+        }
+
+        .day-view-hint {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .catchup-banner {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-secondary);
+            margin-bottom: 12px;
+        }
+
         footer {
             width: 100%;
             max-width: 600px;
@@ -1751,6 +1813,10 @@
                     </ul>
                 </div>
             </div>
+            <div class="day-picker-wrap">
+                <div class="day-picker" id="dayPicker" role="tablist" aria-label="Select workout day"></div>
+                <p class="day-view-hint mt-2 mb-0" id="dayViewHint" style="display: none;"></p>
+            </div>
             <h2 class="brand-font mt-1" id="focusArea" style="font-size: 1.6rem; color: var(--text-main);">LOADING...
             </h2>
         </div>
@@ -1849,21 +1915,44 @@
             schedule_3: { label: 'V-Tapper' }
         };
 
+        const WEEK_DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const DAY_ABBR = { Sunday: 'Sun', Monday: 'Mon', Tuesday: 'Tue', Wednesday: 'Wed', Thursday: 'Thu', Friday: 'Fri', Saturday: 'Sat' };
+
         let appData = null;
         let currentAudioFilter = 'all';
         let totalTasks = 0;
         let timerInterval;
+        let selectedViewDay = null;
         const todayDateStr = new Date().toDateString();
         let savedState = JSON.parse(localStorage.getItem('fitforge_state')) || {};
         let currentPlanKey = localStorage.getItem('fitforge_plan') || 'schedule';
         if (!WORKOUT_PLANS[currentPlanKey]) currentPlanKey = 'schedule';
 
-        function emptyPlanProgress() {
+        function emptyDayProgress() {
             return { checkedSets: {}, finisherDone: false, hasCelebrated: false };
+        }
+
+        function emptyPlanProgress() {
+            const days = {};
+            WEEK_DAYS.forEach(d => { days[d] = emptyDayProgress(); });
+            return { days };
+        }
+
+        function normalizePlanProgress(plan, carryDayName) {
+            if (plan && plan.days) return plan;
+            const legacy = {
+                checkedSets: (plan && plan.checkedSets) || {},
+                finisherDone: !!(plan && plan.finisherDone),
+                hasCelebrated: !!(plan && plan.hasCelebrated)
+            };
+            const normalized = emptyPlanProgress();
+            if (carryDayName) normalized.days[carryDayName] = legacy;
+            return normalized;
         }
 
         function migrateSavedState() {
             const voiceEnabled = savedState.voiceEnabled || false;
+            const calendarToday = getTodayName();
             if (savedState.date !== todayDateStr) {
                 savedState = {
                     date: todayDateStr,
@@ -1871,7 +1960,7 @@
                     activePlan: currentPlanKey,
                     plans: {}
                 };
-                WORKOUT_PLANS && Object.keys(WORKOUT_PLANS).forEach(k => { savedState.plans[k] = emptyPlanProgress(); });
+                Object.keys(WORKOUT_PLANS).forEach(k => { savedState.plans[k] = emptyPlanProgress(); });
                 localStorage.setItem('fitforge_state', JSON.stringify(savedState));
                 return;
             }
@@ -1888,21 +1977,35 @@
                     plans: {}
                 };
                 Object.keys(WORKOUT_PLANS).forEach(k => {
-                    savedState.plans[k] = k === currentPlanKey ? legacy : emptyPlanProgress();
+                    const base = emptyPlanProgress();
+                    if (k === currentPlanKey) base.days[calendarToday] = legacy;
+                    savedState.plans[k] = base;
                 });
                 localStorage.setItem('fitforge_state', JSON.stringify(savedState));
             }
             savedState.activePlan = currentPlanKey;
             Object.keys(WORKOUT_PLANS).forEach(k => {
                 if (!savedState.plans[k]) savedState.plans[k] = emptyPlanProgress();
+                else savedState.plans[k] = normalizePlanProgress(savedState.plans[k], calendarToday);
             });
         }
 
         migrateSavedState();
 
-        function getPlanProgress() {
+        function getViewDayName() {
+            return selectedViewDay || getTodayName();
+        }
+
+        function getDayProgress(dayName) {
             if (!savedState.plans[currentPlanKey]) savedState.plans[currentPlanKey] = emptyPlanProgress();
-            return savedState.plans[currentPlanKey];
+            const plan = savedState.plans[currentPlanKey];
+            if (!plan.days) plan.days = emptyPlanProgress().days;
+            if (!plan.days[dayName]) plan.days[dayName] = emptyDayProgress();
+            return plan.days[dayName];
+        }
+
+        function getPlanProgress() {
+            return getDayProgress(getViewDayName());
         }
 
         function getActiveSchedule() {
@@ -1972,6 +2075,14 @@
             $('.plan-select').on('click', function (e) {
                 e.preventDefault();
                 applyPlanSelection($(this).data('plan-key'));
+            });
+
+            buildDayPicker();
+            $(document).on('click', '.day-chip', function () {
+                selectedViewDay = $(this).data('day');
+                updateDayPickerUI();
+                updateDayHeader();
+                renderTodayWorkout();
             });
 
             $(window).on('scroll resize', updateFooterVisibility);
@@ -2052,17 +2163,48 @@
             return '1 SET';
         }
 
+        function buildDayPicker() {
+            const $picker = $('#dayPicker');
+            if ($picker.children().length) return;
+            WEEK_DAYS.forEach(day => {
+                $picker.append(`<button type="button" class="day-chip" data-day="${day}" role="tab" aria-selected="false">${DAY_ABBR[day]}</button>`);
+            });
+        }
+
+        function updateDayPickerUI() {
+            const viewDay = getViewDayName();
+            const calendarToday = getTodayName();
+            $('.day-chip').each(function () {
+                const day = $(this).data('day');
+                const isSelected = day === viewDay;
+                $(this).toggleClass('is-selected', isSelected).toggleClass('is-calendar-today', day === calendarToday);
+                $(this).attr('aria-selected', isSelected ? 'true' : 'false');
+            });
+        }
+
+        function updateDayHeader() {
+            const viewDay = getViewDayName();
+            const calendarToday = getTodayName();
+            $('#currentDay').text(viewDay);
+            if (viewDay !== calendarToday) {
+                $('#dayViewHint').text(`Catch-up mode · calendar today is ${calendarToday}`).show();
+            } else {
+                $('#dayViewHint').hide();
+            }
+        }
+
         function renderTodayWorkout() {
-            const todayName = getTodayName();
+            const viewDayName = getViewDayName();
+            const calendarToday = getTodayName();
             const schedule = getActiveSchedule();
-            const todaysPlan = schedule.find(day => day.day_of_week === todayName);
+            const todaysPlan = schedule.find(day => day.day_of_week === viewDayName);
             const planProgress = getPlanProgress();
             const $content = $('#workoutContent').empty();
 
             if (!todaysPlan) {
                 $('#focusArea').text('NO SESSION');
                 $('#progressContainer').hide();
-                $content.append(`<div class="workout-card text-center py-5"><p class="text-muted mb-0">No workout found for today in this plan.</p></div>`);
+                $content.append(`<div class="workout-card text-center py-5"><p class="text-muted mb-0">No workout found for ${viewDayName} in this plan.</p></div>`);
                 return;
             }
 
@@ -2070,8 +2212,15 @@
 
             if (todaysPlan.is_rest_day) {
                 $('#progressContainer').hide();
-                $content.append(`<div class="workout-card text-center py-5 animate__animated animate__zoomIn"><i class="fa-solid fa-battery-half fa-3x mb-4 text-muted"></i><h3 class="brand-font mb-3">RECOVERY</h3><p class="px-3 mb-0 text-muted" style="line-height:1.6;">${todaysPlan.notes || 'Rest and recover.'}</p></div>`);
+                let catchUpHint = calendarToday === viewDayName
+                    ? `<p class="px-3 mt-3 mb-0 text-muted" style="line-height:1.6; font-size:0.85rem;">Use the day picker above to run a missed session.</p>`
+                    : '';
+                $content.append(`<div class="workout-card text-center py-5 animate__animated animate__zoomIn"><i class="fa-solid fa-battery-half fa-3x mb-4 text-muted"></i><h3 class="brand-font mb-3">RECOVERY</h3><p class="px-3 mb-0 text-muted" style="line-height:1.6;">${todaysPlan.notes || 'Rest and recover.'}</p>${catchUpHint}</div>`);
                 return;
+            }
+
+            if (viewDayName !== calendarToday) {
+                $content.append(`<p class="catchup-banner animate__animated animate__fadeIn"><i class="fa-solid fa-clock-rotate-left me-2"></i>${viewDayName} catch-up session</p>`);
             }
 
             $('#progressContainer').show();
@@ -2161,7 +2310,10 @@
         }
 
         function initApp() {
-            $('#currentDay').text(getTodayName());
+            selectedViewDay = getTodayName();
+            buildDayPicker();
+            updateDayPickerUI();
+            updateDayHeader();
             renderTodayWorkout();
             renderWeeklyOverview();
         }

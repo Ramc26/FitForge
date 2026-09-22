@@ -8,7 +8,8 @@ A personal, data-driven workout tracker and daily training protocol. FitForge lo
 
 ## Features
 
-- **Three training plans** — switch anytime; progress is saved **per plan** for the current day
+- **Three training plans** — switch anytime; progress is saved **per plan** and **per day of week** for the current calendar day
+- **Day picker** — page load always shows **today’s** session; tap another weekday to run a **catch-up** workout (e.g. on a rest day)
   - **Classic Split** (`schedule`) — body-part split with optional volume and finishers
   - **Enhanced Split** (`schedule_2`) — same weekly layout with extra exercises, core-focused finishers, and deeper anatomy notes
   - **V-Tapper** (`schedule_3`) — push/pull/legs + V-taper emphasis, mid-week rest, optional cardio day
