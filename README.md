@@ -160,7 +160,7 @@ Set these environment variables on the project (Production, and Preview if you u
 | `CORS_ORIGINS` | No. The phone calls the same origin. |
 | `FITFORGE_USER_ID` | No. Defaults to `ram`. |
 
-`vercel.json` gives the function 120 seconds, which covers a cold start plus a Hanu reply. Hobby allows up to 300 seconds.
+`vercel.json` sends every `/api/...` request to that function and gives it 120 seconds, enough for a cold start plus a Hanu reply. Hobby allows up to 300 seconds. The page itself stays a static file.
 
 Push the repo, or from this folder:
 
