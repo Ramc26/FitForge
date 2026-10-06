@@ -143,7 +143,7 @@ Pytest covers today's workout, equipment rejection (cable rows, barbell squats),
 
 ## Deployment
 
-FastAPI serves the page and the API from one origin. `app.py` is the Vercel entrypoint. It loads the app in `backend/` without moving that code.
+FastAPI serves the page and the API from one origin. `api/index.py` is the Vercel entrypoint. It loads the app in `backend/` without moving that code.
 
 ### Vercel
 
