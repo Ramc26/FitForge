@@ -1,0 +1,25 @@
+[project]
+name = "fitforge"
+version = "0.1.0"
+description = "Personal fitness app with Hanu, an AI gym coach."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.142.2",
+    "google-api-python-client>=2.201.0",
+    "google-auth>=2.60.0",
+    "httpx>=0.28.1",
+    "langgraph>=1.2.13",
+    "openai>=3.24.0",
+    "pytest>=9.1.1",
+    "python-dotenv>=1.2.4",
+    "requests>=2.34.2",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[tool.vercel]
+entrypoint = "app:app"
+
+[tool.pytest.ini_options]
+pythonpath = ["backend"]
+testpaths = ["tests"]

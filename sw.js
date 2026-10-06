@@ -1,32 +1,61 @@
-const CACHE_NAME = 'fitforge-v4';
+const CACHE_NAME = 'fitforge-v13';
 const ASSETS = [
     '/',
     '/index.html',
+    '/css/app.css',
+    '/js/api.js',
+    '/js/app.js',
     '/data.json',
     '/manifest.json',
-    '/forge-icon.svg',
-    '/forge-icon-180.png',
-    '/forge-icon-192.png',
-    '/forge-icon-512.png',
+    '/images/fitnesscoach.png',
+    '/images/forge-icon.svg',
+    '/images/forge-icon-180.png',
+    '/images/forge-icon-192.png',
+    '/images/forge-icon-512.png',
 ];
 
-self.addEventListener('install', (e) => {
-    e.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+self.addEventListener('install', (event) => {
+    self.skipWaiting();
+    event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS.map((url) => new Request(url, { cache: 'reload' })))));
 });
 
-self.addEventListener('fetch', (e) => {
-    const url = new URL(e.request.url);
-    if (url.pathname.endsWith('data.json')) {
-        e.respondWith(
-            fetch(e.request)
-                .then((response) => {
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
-                    return response;
-                })
-                .catch(() => caches.match(e.request))
-        );
+self.addEventListener('activate', (event) => {
+    event.waitUntil((async () => {
+        const keys = await caches.keys();
+        await Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)));
+        await self.clients.claim();
+    })());
+});
+
+async function networkFirst(request) {
+    try {
+        const response = await fetch(request, { cache: 'no-cache' });
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        return response;
+    } catch (err) {
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        throw err;
+    }
+}
+
+self.addEventListener('fetch', (event) => {
+    const url = new URL(event.request.url);
+    if (event.request.method !== 'GET') return;
+    if (url.origin !== self.location.origin) return;
+    if (url.pathname.startsWith('/api/')) return;
+
+    const fresh = event.request.mode === 'navigate'
+        || url.pathname === '/'
+        || url.pathname.endsWith('.html')
+        || url.pathname.endsWith('.css')
+        || url.pathname.endsWith('.js')
+        || url.pathname.endsWith('data.json')
+        || url.pathname.endsWith('sw.js');
+    if (fresh) {
+        event.respondWith(networkFirst(event.request));
         return;
     }
-    e.respondWith(caches.match(e.request).then((res) => res || fetch(e.request)));
+    event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
 });

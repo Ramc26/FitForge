@@ -1,26 +1,26 @@
 {
     "name": "FitForge",
     "short_name": "FitForge",
-    "start_url": "https://fitforgeweb.vercel.app",
+    "start_url": "/",
     "display": "standalone",
-    "background_color": "#0a0a0a",
-    "theme_color": "#0a0a0a",
-    "description": "Daily Fitness Protocol by itsmeramc",
+    "background_color": "#0d0b12",
+    "theme_color": "#0d0b12",
+    "description": "FitForge — train with Hanu, your gym coach",
     "icons": [
         {
-            "src": "forge-icon-192.png",
+            "src": "images/forge-icon-192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "forge-icon-512.png",
+            "src": "images/forge-icon-512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "forge-icon-512.png",
+            "src": "images/forge-icon-512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"

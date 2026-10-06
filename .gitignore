@@ -1,0 +1,12 @@
+.env
+backend/.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.DS_Store
+
+# Google service-account keys. data.json must stay tracked.
+sam-agent-*.json
+*service-account*.json
+secrets/

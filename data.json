@@ -647,315 +647,256 @@
             "notes": "Let the central nervous system recover. Hydrate heavily and prep meals for the week."
         }
     ],
-    "schedule_3":[
-        {
-          "day_of_week": "Monday",
-          "focus": "Push + Core",
-          "is_rest_day": false,
-          "exercises": [
-            {
-              "name": "Barbell Bench Press",
-              "sets": 3,
-              "reps": "8-10",
-              "rest_seconds": 90,
-              "anatomy_pov": "Primary horizontal pressing movement for the chest, with strong contribution from the anterior deltoids and triceps. Builds overall chest thickness and pressing strength.",
-              "machine_alternative": "Chest Press Machine"
-            },
-            {
-              "name": "Incline Dumbbell Press",
-              "sets": 3,
-              "reps": "8-12",
-              "rest_seconds": 60,
-              "anatomy_pov": "Places greater emphasis on the upper chest while also training the anterior deltoids and triceps.",
-              "machine_alternative": "Incline Machine Press"
-            },
-            {
-              "name": "Dumbbell Shoulder Press",
-              "sets": 3,
-              "reps": "8-12",
-              "rest_seconds": 60,
-              "anatomy_pov": "Vertical pressing movement primarily training the anterior and lateral deltoids with assistance from the triceps.",
-              "machine_alternative": "Shoulder Press Machine"
-            },
-            {
-              "name": "Dumbbell Lateral Raises",
-              "sets": 3,
-              "reps": "12-15",
-              "rest_seconds": 45,
-              "anatomy_pov": "Directly targets the lateral deltoids, helping increase shoulder width and the visual V-taper.",
-              "machine_alternative": "Cable Lateral Raises"
-            },
-            {
-              "name": "Triceps Pushdowns",
-              "sets": 3,
-              "reps": "10-15",
-              "rest_seconds": 45,
-              "anatomy_pov": "Isolates the triceps through elbow extension, adding direct arm volume after pressing movements.",
-              "machine_alternative": "Dumbbell Overhead Triceps Extension"
-            }
-          ],
-          "optional_exercises": [],
-          "finisher": {
-            "name": "Reverse Crunches",
-            "sets": 3,
-            "reps": "12-15",
-            "rest_seconds": 30,
-            "anatomy_pov": "Controlled abdominal movement emphasizing posterior pelvic movement and lower abdominal strength.",
-            "machine_alternative": "Captain's Chair Knee Raises"
-          }
-        },
-        {
-          "day_of_week": "Tuesday",
-          "focus": "Pull + Core",
-          "is_rest_day": false,
-          "exercises": [
-            {
-              "name": "Lat Pulldown",
-              "sets": 4,
-              "reps": "8-12",
-              "rest_seconds": 60,
-              "anatomy_pov": "Vertical pulling movement that heavily trains the latissimus dorsi and develops upper-back width for the V-taper.",
-              "machine_alternative": "Assisted Pull-ups"
-            },
-            {
-              "name": "Barbell Row",
-              "sets": 3,
-              "reps": "8-10",
-              "rest_seconds": 90,
-              "anatomy_pov": "Heavy horizontal pulling movement targeting the middle back, rhomboids, trapezius and lats.",
-              "machine_alternative": "Seated Cable Row"
-            },
-            {
-              "name": "Seated Cable Row",
-              "sets": 3,
-              "reps": "10-12",
-              "rest_seconds": 60,
-              "anatomy_pov": "Controlled horizontal pulling movement that develops back thickness through the lats, rhomboids and middle trapezius.",
-              "machine_alternative": "Dumbbell Rows"
-            },
-            {
-              "name": "Face Pulls",
-              "sets": 3,
-              "reps": "12-15",
-              "rest_seconds": 45,
-              "anatomy_pov": "Targets the rear deltoids and external rotators while strengthening the upper back and supporting shoulder balance.",
-              "machine_alternative": "Dumbbell Rear Delt Fly"
-            },
-            {
-              "name": "Dumbbell Bicep Curls",
-              "sets": 3,
-              "reps": "10-12",
-              "rest_seconds": 45,
-              "anatomy_pov": "Direct elbow-flexion movement for the biceps brachii, providing focused hypertrophy work after compound pulls.",
-              "machine_alternative": "Cable Curls"
-            },
-            {
-              "name": "Hammer Curls",
-              "sets": 3,
-              "reps": "10-12",
-              "rest_seconds": 45,
-              "anatomy_pov": "Neutral-grip curl emphasizing the brachialis and brachioradialis while also training the biceps.",
-              "machine_alternative": "Rope Hammer Curls"
-            }
-          ],
-          "optional_exercises": [],
-          "finisher": {
-            "name": "Russian Twists",
-            "sets": 3,
-            "reps": "12-20 per side",
-            "rest_seconds": 30,
-            "anatomy_pov": "Trains the trunk through controlled rotation with involvement from the internal and external obliques.",
-            "machine_alternative": "Cable Woodchoppers"
-          }
-        },
-        {
-          "day_of_week": "Wednesday",
-          "focus": "Rest / Active Recovery",
-          "is_rest_day": true,
-          "notes": "Full recovery day. Optional 30-45 minutes of easy brisk walking, mobility work or stretching. Focus on sleep, hydration and protein intake."
-        },
-        {
-          "day_of_week": "Thursday",
-          "focus": "Legs + Core",
-          "is_rest_day": false,
-          "exercises": [
-            {
-              "name": "Squats",
-              "sets": 3,
-              "reps": "8-10",
-              "rest_seconds": 90,
-              "anatomy_pov": "Compound lower-body movement training the quadriceps, glutes and supporting posterior-chain musculature.",
-              "machine_alternative": "Leg Press"
-            },
-            {
-              "name": "Leg Press",
-              "sets": 3,
-              "reps": "10-12",
-              "rest_seconds": 90,
-              "anatomy_pov": "With a shoulder-width stance and feet around the middle of the platform, provides balanced emphasis on the quadriceps and glutes.",
-              "machine_alternative": "Goblet Squats"
-            },
-            {
-              "name": "Romanian Deadlifts",
-              "sets": 3,
-              "reps": "8-12",
-              "rest_seconds": 90,
-              "anatomy_pov": "Hip-hinge movement emphasizing the hamstrings and glutes through controlled lengthened loading.",
-              "machine_alternative": "Cable Pull-throughs"
-            },
-            {
-              "name": "Leg Extensions",
-              "sets": 3,
-              "reps": "12-15",
-              "rest_seconds": 45,
-              "anatomy_pov": "Isolation movement for the quadriceps through knee extension.",
-              "machine_alternative": "Bodyweight Sissy Squats"
-            },
-            {
-              "name": "Leg Curls",
-              "sets": 3,
-              "reps": "10-15",
-              "rest_seconds": 60,
-              "anatomy_pov": "Directly trains the hamstrings through knee flexion, complementing Romanian deadlifts.",
-              "machine_alternative": "Stability Ball Leg Curls"
-            },
-            {
-              "name": "Calf Raises",
-              "sets": 3,
-              "reps": "12-15",
-              "rest_seconds": 45,
-              "anatomy_pov": "Trains the gastrocnemius and soleus through plantar flexion.",
-              "machine_alternative": "Leg Press Calf Raises"
-            }
-          ],
-          "optional_exercises": [],
-          "finisher": {
-            "name": "Reverse Crunches",
-            "sets": 3,
-            "reps": "12-15",
-            "rest_seconds": 30,
-            "anatomy_pov": "Controlled abdominal movement emphasizing posterior pelvic movement and lower abdominal strength.",
-            "machine_alternative": "Captain's Chair Knee Raises"
-          }
-        },
-        {
-          "day_of_week": "Friday",
-          "focus": "Upper Body / V-Taper",
-          "is_rest_day": false,
-          "exercises": [
-            {
-              "name": "Lat Pulldown",
-              "sets": 3,
-              "reps": "8-12",
-              "rest_seconds": 60,
-              "anatomy_pov": "Provides additional weekly vertical pulling volume for the lats and upper-back width.",
-              "machine_alternative": "Assisted Pull-ups"
-            },
-            {
-              "name": "Incline Dumbbell Press",
-              "sets": 3,
-              "reps": "8-12",
-              "rest_seconds": 60,
-              "anatomy_pov": "Targets the upper chest while training the anterior deltoids and triceps.",
-              "machine_alternative": "Incline Machine Press"
-            },
-            {
-              "name": "Seated Cable Row",
-              "sets": 3,
-              "reps": "8-12",
-              "rest_seconds": 60,
-              "anatomy_pov": "Horizontal pulling movement that adds back thickness and balances the pressing volume.",
-              "machine_alternative": "Dumbbell Rows"
-            },
-            {
-              "name": "Dumbbell Lateral Raises",
-              "sets": 4,
-              "reps": "12-15",
-              "rest_seconds": 45,
-              "anatomy_pov": "Direct lateral-delt work to maximize shoulder width and enhance the V-taper.",
-              "machine_alternative": "Cable Lateral Raises"
-            },
-            {
-              "name": "Rear Delt Fly",
-              "sets": 3,
-              "reps": "12-15",
-              "rest_seconds": 45,
-              "anatomy_pov": "Directly trains the posterior deltoids for balanced three-dimensional shoulder development.",
-              "machine_alternative": "Reverse Pec Deck"
-            },
-            {
-              "name": "Dumbbell Bicep Curls",
-              "sets": 3,
-              "reps": "10-12",
-              "rest_seconds": 45,
-              "anatomy_pov": "Provides additional direct biceps volume to support arm growth.",
-              "machine_alternative": "Cable Curls"
-            },
-            {
-              "name": "Triceps Pushdowns",
-              "sets": 3,
-              "reps": "10-15",
-              "rest_seconds": 45,
-              "anatomy_pov": "Direct triceps isolation following the upper-body compound movements.",
-              "machine_alternative": "Dumbbell Triceps Extensions"
-            }
-          ],
-          "optional_exercises": [],
-          "finisher": {
-            "name": "Plank",
-            "sets": 2,
-            "reps": "45-60 seconds",
-            "rest_seconds": 30,
-            "anatomy_pov": "Isometric core exercise requiring the abdominal and surrounding trunk musculature to stabilize the spine and pelvis.",
-            "machine_alternative": "Dead Bug"
-          }
-        },
-        {
-          "day_of_week": "Saturday",
-          "focus": "Optional Cardio + Core",
-          "is_rest_day": false,
-          "exercises": [
-            {
-              "name": "Incline Treadmill Walk",
-              "sets": 1,
-              "reps": "30-40 minutes",
-              "rest_seconds": 0,
-              "anatomy_pov": "Low-impact cardiovascular work that increases energy expenditure while keeping recovery demands relatively low.",
-              "machine_alternative": "Brisk Outdoor Walk"
-            }
-          ],
-          "optional_exercises": [
-            {
+        "schedule_3": [
+          {
+            "day_of_week": "Monday",
+            "focus": "Push + Core",
+            "is_rest_day": false,
+            "exercises": [
+              {
+                "name": "Barbell Bench Press",
+                "sets": 3,
+                "reps": "6-10",
+                "rest_seconds": 90,
+                "anatomy_pov": "Main chest exercise. It also works your front shoulders and triceps. Good for building overall chest size and strength.",
+                "form": "Keep your feet flat and shoulder blades pulled back. Hold the bar a little wider than shoulder width. Lower it slowly to the middle of your chest, then push it back up. Keep your elbows slightly tucked.",
+                "machine_alternative": "Dumbbell Bench Press"
+              },
+              {
+                "name": "Incline Dumbbell Press",
+                "sets": 3,
+                "reps": "8-12",
+                "rest_seconds": 75,
+                "anatomy_pov": "Mainly works your upper chest, with help from your front shoulders and triceps. Helps make your upper body look fuller.",
+                "form": "Set the bench around 30-45 degrees. Keep your chest up and shoulders back. Lower the dumbbells slowly toward your upper chest, then press them up.",
+                "machine_alternative": "Pec Deck Machine"
+              },
+              {
+                "name": "Dumbbell Shoulder Press",
+                "sets": 3,
+                "reps": "8-12",
+                "rest_seconds": 75,
+                "anatomy_pov": "Works your shoulders, mainly the front and side parts. Helps build bigger shoulders and improve your V-taper.",
+                "form": "Sit with your back supported. Start the dumbbells around shoulder level. Press them straight up without leaning back or shrugging.",
+                "machine_alternative": "Dumbbell Arnold Press"
+              },
+              {
+                "name": "Dumbbell Lateral Raises",
+                "sets": 3,
+                "reps": "12-15",
+                "rest_seconds": 45,
+                "anatomy_pov": "Mainly works the side of your shoulders. This is very important for making your shoulders look wider.",
+                "form": "Keep a small bend in your elbows. Raise the dumbbells out to the sides until around shoulder height. Don't swing or shrug. Lower slowly.",
+                "machine_alternative": "Dumbbell Lean-Away Lateral Raise"
+              }
+            ],
+            "optional_exercises": [],
+            "finisher": {
               "name": "Reverse Crunches",
               "sets": 3,
               "reps": "12-15",
               "rest_seconds": 30,
-              "anatomy_pov": "Controlled abdominal movement emphasizing posterior pelvic movement and lower abdominal strength.",
-              "machine_alternative": "Captain's Chair Knee Raises"
-            },
-            {
-              "name": "Plank",
+              "anatomy_pov": "Works your abs and helps improve control of your lower stomach area.",
+              "form": "Lie on your back with knees bent. Bring your knees toward your chest and gently lift your hips. Don't swing your legs. Lower slowly.",
+              "machine_alternative": "Plank"
+            }
+          },
+          {
+            "day_of_week": "Tuesday",
+            "focus": "Pull + Core",
+            "is_rest_day": false,
+            "exercises": [
+              {
+                "name": "Lat Pulldown",
+                "sets": 3,
+                "reps": "8-12",
+                "rest_seconds": 75,
+                "anatomy_pov": "Main lat exercise. Bigger lats make your back wider and are one of the most important parts of your V-taper.",
+                "form": "Use a medium to wide overhand grip. Keep your chest up and shoulders down. Pull the bar toward your upper chest by driving your elbows down. Don't swing.",
+                "machine_alternative": "Pull-Up Machine"
+              },
+              {
+                "name": "Seated Row Machine",
+                "sets": 3,
+                "reps": "8-12",
+                "rest_seconds": 75,
+                "anatomy_pov": "Works your middle back, lats and traps. Helps build back thickness and gives your V-taper more shape.",
+                "form": "Sit upright with your chest up. Pull the handles toward your lower ribs and drive your elbows back. Squeeze your back, then slowly return.",
+                "machine_alternative": "Chest-Supported Dumbbell Row"
+              },
+              {
+                "name": "Pull-Up Machine",
+                "sets": 2,
+                "reps": "8-12",
+                "rest_seconds": 75,
+                "anatomy_pov": "Works your lats and upper back while also training your biceps. Great for building back width.",
+                "form": "Choose enough assistance to get clean reps. Pull your chest toward the handles while driving your elbows down. Control yourself on the way back.",
+                "machine_alternative": "Single-Arm Dumbbell Lat Pullover"
+              },
+              {
+                "name": "Dumbbell Bicep Curls",
+                "sets": 3,
+                "reps": "8-12",
+                "rest_seconds": 45,
+                "anatomy_pov": "Directly works your biceps and helps make your arms bigger and more defined.",
+                "form": "Keep your elbows close to your body. Curl without swinging your back. Squeeze your biceps at the top and lower slowly.",
+                "machine_alternative": "Incline Dumbbell Curl"
+              }
+            ],
+            "optional_exercises": [],
+            "finisher": {
+              "name": "Russian Twists",
               "sets": 3,
+              "reps": "12-20 per side",
+              "rest_seconds": 30,
+              "anatomy_pov": "Works your side abs and helps improve core strength and control.",
+              "form": "Sit with knees bent and lean back slightly. Keep your back straight and rotate your upper body from side to side.",
+              "machine_alternative": "Reverse Crunches"
+            }
+          },
+          {
+            "day_of_week": "Wednesday",
+            "focus": "Rest / Active Recovery",
+            "is_rest_day": true,
+            "notes": "Full recovery day. You can do 30-45 minutes of easy walking or some light stretching. No weight training today."
+          },
+          {
+            "day_of_week": "Thursday",
+            "focus": "Legs + Core",
+            "is_rest_day": false,
+            "exercises": [
+              {
+                "name": "Dumbbell Goblet Squat",
+                "sets": 3,
+                "reps": "8-12",
+                "rest_seconds": 75,
+                "anatomy_pov": "Mainly works your quads and glutes. Good for building overall leg strength.",
+                "form": "Hold one dumbbell close to your chest. Keep your feet around shoulder width and toes slightly out. Squat down under control and push through your full foot to stand.",
+                "machine_alternative": "Dumbbell Bulgarian Split Squat"
+              },
+              {
+                "name": "Dumbbell Romanian Deadlift",
+                "sets": 3,
+                "reps": "8-12",
+                "rest_seconds": 75,
+                "anatomy_pov": "Mainly works your hamstrings and glutes. Builds the back side of your legs.",
+                "form": "Hold the dumbbells close to your legs. Keep a small bend in your knees and push your hips backward. Lower until you feel a good hamstring stretch, then stand by driving your hips forward.",
+                "machine_alternative": "Single-Leg Dumbbell Romanian Deadlift"
+              },
+              {
+                "name": "Dumbbell Bulgarian Split Squat",
+                "sets": 2,
+                "reps": "8-12 per leg",
+                "rest_seconds": 60,
+                "anatomy_pov": "Works your quads and glutes one leg at a time. Helps build stronger and more balanced legs.",
+                "form": "Place one foot behind you on the bench. Keep your front foot stable and lower your body slowly. Push through your front foot to stand.",
+                "machine_alternative": "Dumbbell Reverse Lunge"
+              },
+              {
+                "name": "Dumbbell Standing Calf Raise",
+                "sets": 3,
+                "reps": "12-15",
+                "rest_seconds": 45,
+                "anatomy_pov": "Works your calf muscles and helps build stronger, fuller lower legs.",
+                "form": "Hold dumbbells at your sides. Raise your heels as high as possible, pause, then lower slowly for a good stretch.",
+                "machine_alternative": "Single-Leg Bodyweight Calf Raise"
+              }
+            ],
+            "optional_exercises": [],
+            "finisher": {
+              "name": "Reverse Crunches",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_seconds": 30,
+              "anatomy_pov": "Works your abs and improves control of your lower stomach area.",
+              "form": "Lie on your back with knees bent. Bring your knees toward your chest and gently curl your hips up. Don't use momentum.",
+              "machine_alternative": "Plank"
+            }
+          },
+          {
+            "day_of_week": "Friday",
+            "focus": "Upper Body / V-Taper",
+            "is_rest_day": false,
+            "exercises": [
+              {
+                "name": "Wide-Grip Lat Pulldown",
+                "sets": 3,
+                "reps": "8-12",
+                "rest_seconds": 75,
+                "anatomy_pov": "Gives your lats another workout during the week. Bigger lats make your upper body look wider.",
+                "form": "Use a comfortable wide overhand grip. Keep your chest up and shoulders down. Pull the bar toward your upper chest by driving your elbows down.",
+                "machine_alternative": "Pull-Up Machine"
+              },
+              {
+                "name": "Incline Dumbbell Press",
+                "sets": 3,
+                "reps": "8-12",
+                "rest_seconds": 75,
+                "anatomy_pov": "Works your upper chest and front shoulders. Helps make your upper body look fuller and broader.",
+                "form": "Use a 30-45 degree bench. Keep your shoulder blades back and feet planted. Lower the dumbbells slowly toward your upper chest and press them back up.",
+                "machine_alternative": "Pec Deck Machine"
+              },
+              {
+                "name": "Reverse Pec Deck",
+                "sets": 3,
+                "reps": "12-15",
+                "rest_seconds": 45,
+                "anatomy_pov": "Works the back of your shoulders. Bigger rear delts make your shoulders look wider from the side and back.",
+                "form": "Sit facing the machine with your chest against the pad. Keep a small bend in your elbows and move your arms backward. Focus on your rear shoulders.",
+                "machine_alternative": "Dumbbell Rear Delt Fly"
+              },
+              {
+                "name": "Dumbbell Lateral Raises",
+                "sets": 3,
+                "reps": "12-15",
+                "rest_seconds": 45,
+                "anatomy_pov": "Mainly builds your side shoulders. This is one of the highest-priority exercises for your V-taper.",
+                "form": "Keep your body still and elbows slightly bent. Raise the dumbbells out to the sides until around shoulder height. Don't swing or shrug.",
+                "machine_alternative": "Dumbbell Lean-Away Lateral Raise"
+              }
+            ],
+            "optional_exercises": [],
+            "finisher": {
+              "name": "Cable Triceps Pushdown",
+              "sets": 3,
+              "reps": "10-15",
+              "rest_seconds": 45,
+              "anatomy_pov": "Works the triceps at the back of your upper arm. Bigger triceps make your arms look thicker.",
+              "form": "Keep your elbows close to your body. Push the handle down until your arms are straight. Squeeze your triceps and slowly let the handle come back up.",
+              "machine_alternative": "Dumbbell Overhead Triceps Extension"
+            }
+          },
+          {
+            "day_of_week": "Saturday",
+            "focus": "Optional Cardio + Core",
+            "is_rest_day": false,
+            "exercises": [
+              {
+                "name": "Incline Treadmill Walk",
+                "sets": 1,
+                "reps": "30-40 minutes",
+                "rest_seconds": 0,
+                "anatomy_pov": "Helps burn extra calories and supports fat loss without adding much muscle fatigue.",
+                "form": "Walk upright with a natural stride. Don't hold the treadmill handles. Use a pace that feels challenging but sustainable.",
+                "machine_alternative": "Brisk Outdoor Walk"
+              }
+            ],
+            "optional_exercises": [],
+            "finisher": {
+              "name": "Plank",
+              "sets": 2,
               "reps": "45-60 seconds",
               "rest_seconds": 30,
-              "anatomy_pov": "Builds core endurance through isometric stabilization of the trunk and pelvis.",
-              "machine_alternative": "Dead Bug"
+              "anatomy_pov": "Builds core strength and helps keep your body stable during your other exercises.",
+              "form": "Keep your elbows under your shoulders and your body in a straight line. Tighten your stomach and glutes. Don't let your hips drop.",
+              "machine_alternative": "Reverse Crunches"
             }
-          ],
-          "finisher": {
-            "name": "Easy Cooldown Walk",
-            "sets": 1,
-            "reps": "5-10 minutes",
-            "rest_seconds": 0,
-            "anatomy_pov": "Low-intensity movement used to gradually reduce exercise intensity.",
-            "machine_alternative": "Easy Outdoor Walk"
+          },
+          {
+            "day_of_week": "Sunday",
+            "focus": "Complete Rest",
+            "is_rest_day": true,
+            "notes": "Complete rest day. Focus on sleep, hydration, protein and meal preparation."
           }
-        },
-        {
-          "day_of_week": "Sunday",
-          "focus": "Complete Rest",
-          "is_rest_day": true,
-          "notes": "Complete rest day. No scheduled workout or cardio. Focus on recovery, sleep, hydration, protein intake and meal preparation for the upcoming week."
-        }
-      ]
+        ]
 }

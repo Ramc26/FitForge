@@ -1,0 +1,13 @@
+.git
+.venv
+.pytest_cache
+__pycache__
+*.pyc
+.env
+backend/.env
+sam-agent-*.json
+*service-account*.json
+tests
+.python-version
+Dockerfile
+.dockerignore

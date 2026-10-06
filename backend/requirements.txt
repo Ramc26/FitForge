@@ -1,0 +1,10 @@
+# Same runtime list as ../requirements.txt. Vercel and Docker install the root file.
+# Local development uses pyproject.toml (uv sync), which also installs pytest.
+fastapi>=0.142.2
+uvicorn[standard]>=0.54.0
+pydantic>=2
+python-dotenv>=1.2.4
+google-api-python-client>=2.201.0
+google-auth>=2.60.0
+langgraph>=1.2.13
+openai>=3.24.0
