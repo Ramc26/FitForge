@@ -63,9 +63,10 @@ def _sheets(action):
 def _require_sheets(action, detail: str):
     try:
         return action()
-    except sheets.SheetsError:
+    except sheets.SheetsError as exc:
         log.warning("Sheets request failed", exc_info=True)
-        raise HTTPException(status_code=503, detail=detail) from None
+        reason = str(exc).strip()
+        raise HTTPException(status_code=503, detail=reason or detail) from None
 
 
 def _equipment(user_id: str) -> list[str]:

@@ -153,7 +153,7 @@ Set these environment variables on the project (Production, and Preview if you u
 
 | Variable | Required |
 | --- | --- |
-| `GOOGLE_SERVICE_ACCOUNT_JSON` | Yes. The raw key JSON, one value. Do not upload the key file. |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | Yes. Paste the whole service-account JSON. A filename such as `SERVICE_ACCOUNT_FILE` is not on the server, so logging fails without this. |
 | `OPENAI_API_KEY` | Yes, for open-ended Hanu replies. Swaps and logged weights work without it. |
 | `OPENAI_MODEL` | No. Defaults to `gpt-4.1-mini`. |
 | `GOOGLE_SPREADSHEET_ID` | No, unless the sheet is not the one in `backend/config.py`. |

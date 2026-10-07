@@ -6,10 +6,12 @@ Auth matches the working service-account client from the original test script.
 from __future__ import annotations
 
 import json
+import re
 import threading
 import time
 import uuid
 from datetime import datetime, timezone
+from pathlib import Path
 
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
@@ -88,23 +90,49 @@ def _now() -> str:
 
 
 def _account_info(raw: str) -> dict:
-    info = json.loads(raw.strip())
+    text = raw.strip().lstrip("\ufeff")
+    if len(text) >= 2 and text[0] == text[-1] and text[0] in {"'", '"'}:
+        inner = text[1:-1].strip()
+        if inner.startswith("{"):
+            text = inner
+    try:
+        info = json.loads(text)
+    except json.JSONDecodeError:
+        repaired = re.sub(
+            r'("private_key"\s*:\s*")(.*?)(")',
+            lambda match: (
+                match.group(1)
+                + match.group(2).replace("\r", "").replace("\n", "\\n")
+                + match.group(3)
+            ),
+            text,
+            count=1,
+            flags=re.S,
+        )
+        info = json.loads(repaired)
     if isinstance(info, str):
-        info = json.loads(info)
+        info = _account_info(info)
     key = info.get("private_key") or ""
     if "\\n" in key:
         info["private_key"] = key.replace("\\n", "\n")
+    if "private_key" not in info or "client_email" not in info:
+        raise SheetsError("The Google key is missing private_key or client_email.")
     return info
 
 
 def _credentials() -> Credentials:
     if config.GOOGLE_SERVICE_ACCOUNT_JSON.strip():
-        info = _account_info(config.GOOGLE_SERVICE_ACCOUNT_JSON)
+        try:
+            info = _account_info(config.GOOGLE_SERVICE_ACCOUNT_JSON)
+        except json.JSONDecodeError as exc:
+            raise SheetsError("The Google key in the server settings isn't valid JSON.") from exc
         return Credentials.from_service_account_info(info, scopes=SCOPES)
-    return Credentials.from_service_account_file(
-        config.GOOGLE_SERVICE_ACCOUNT_FILE,
-        scopes=SCOPES,
-    )
+    path = Path(config.GOOGLE_SERVICE_ACCOUNT_FILE)
+    if not path.is_file():
+        raise SheetsError(
+            "Google Sheets isn't connected. In Vercel, set GOOGLE_SERVICE_ACCOUNT_JSON to the contents of the service-account key."
+        )
+    return Credentials.from_service_account_file(path, scopes=SCOPES)
 
 
 def service():
@@ -117,6 +145,8 @@ def service():
                 credentials=_credentials(),
                 cache_discovery=False,
             )
+        except SheetsError:
+            raise
         except Exception as exc:
             raise SheetsError("Google Sheets credentials are missing or invalid") from exc
         _local.service = client
