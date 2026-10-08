@@ -11,6 +11,7 @@ class Exercise(BaseModel):
     name: str
     sets: int | None = None
     reps: str | None = None
+    log: str | None = None
     rest_seconds: int | None = None
     anatomy_pov: str | None = None
     form: str | None = None

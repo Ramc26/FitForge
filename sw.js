@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fitforge-v13';
+const CACHE_NAME = 'fitforge-v15';
 const ASSETS = [
     '/',
     '/index.html',

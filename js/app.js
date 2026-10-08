@@ -120,6 +120,18 @@ function isBodyweight(exercise) {
     return /crunch|twist|plank|walk|push-up|pushup/i.test(exercise.name || '');
 }
 
+function logKind(exercise) {
+    const kind = exercise?.log;
+    if (kind === 'weight' || kind === 'reps' || kind === 'time') return kind;
+    if (/minute|second/i.test(exercise?.reps || '') || exercise?.duration_minutes) return 'time';
+    if (isBodyweight(exercise)) return 'reps';
+    return 'weight';
+}
+
+function timeUnit(exercise) {
+    return /second/i.test(exercise?.reps || '') ? 'sec' : 'min';
+}
+
 function schedule() {
     if (!state.data) return [];
     return state.data[state.plan] || state.data.schedule || [];
@@ -252,7 +264,7 @@ function readStoredInput(exercise, setIndex) {
     const previous = lastSession(exercise.name);
     const prior = previous?.sets?.[setIndex] || previous?.sets?.[0];
     return {
-        weight: prior && prior.weight_kg != null ? prior.weight_kg : (isBodyweight(exercise) ? 0 : ''),
+        weight: logKind(exercise) === 'weight' && prior && prior.weight_kg != null ? prior.weight_kg : '',
         reps: prior && prior.reps != null ? prior.reps : midpointReps(exercise.reps),
         rpe: '',
         note: '',
@@ -262,9 +274,10 @@ function readStoredInput(exercise, setIndex) {
 function rememberInputs(exercise) {
     const weight = document.getElementById('weightInput');
     const reps = document.getElementById('repsInput');
-    if (!weight || !exercise) return;
+    if (!exercise || (!weight && !reps)) return;
+    const current = dayProgress().inputs[inputKey(exercise, state.setIndex)] || {};
     dayProgress().inputs[inputKey(exercise, state.setIndex)] = {
-        weight: weight.value,
+        weight: weight ? weight.value : (current.weight || ''),
         reps: reps ? reps.value : '',
         rpe: document.getElementById('rpeInput')?.value || '',
         note: document.getElementById('noteInput')?.value || '',
@@ -431,9 +444,15 @@ function renderWorkout() {
     const exercise = currentExercise();
     const values = readStoredInput(exercise, state.setIndex);
     const previous = lastSession(exercise.name);
+    const kind = logKind(exercise);
+    const unit = timeUnit(exercise);
     const previousText = previous
-        ? `${previous.sets.map((set) => set.weight_kg != null ? `${set.weight_kg}kg × ${set.reps}` : `${set.reps} reps`).join(' · ')}`
-        : 'No previous weight recorded yet.';
+        ? previous.sets.map((set) => {
+            if (kind === 'time') return `${set.reps} ${unit}`;
+            if (kind === 'reps' || set.weight_kg == null) return `${set.reps} reps`;
+            return `${set.weight_kg}kg × ${set.reps}`;
+        }).join(' · ')
+        : (kind === 'time' ? 'No time logged yet.' : kind === 'reps' ? 'No reps logged yet.' : 'No previous weight recorded yet.');
     const pips = Array.from({ length: exercise.sets || 1 }, (_, index) => {
         const classes = ['set-pip'];
         if (isSetDone(exercise.id, index)) classes.push('is-done');
@@ -448,32 +467,35 @@ function renderWorkout() {
         ? `<button class="disclosure" type="button" data-panel="details">Form & tips</button><div class="panel" id="panel-details" hidden>${science}${form}${alt}</div>`
         : '';
     const score = totals(day);
-    const timed = /minute/i.test(exercise.reps || '') || exercise.duration_minutes;
     const target = exercise.reps || (exercise.duration_minutes ? `${exercise.duration_minutes} min` : '');
-    if (state.logging && !timed) {
+    if (state.logging) {
+        const step = kind === 'time' ? (unit === 'sec' ? 5 : 1) : 1;
+        const measure = kind === 'time'
+            ? `<div class="stepper-wrap"><label for="repsInput">${unit === 'sec' ? 'Seconds' : 'Minutes'}</label>
+                <div class="stepper">
+                    <button type="button" data-step="reps" data-by="-${step}" aria-label="Less time">−</button>
+                    <input id="repsInput" inputmode="numeric" value="${escapeHtml(values.reps)}">
+                    <button type="button" data-step="reps" data-by="${step}" aria-label="More time">+</button>
+                </div></div>`
+            : `${kind === 'weight' ? `<div class="stepper-wrap"><label for="weightInput">Weight · kg</label>
+                <div class="stepper">
+                    <button type="button" data-step="weight" data-by="-2.5" aria-label="Less weight">−</button>
+                    <input id="weightInput" inputmode="decimal" placeholder="0" value="${escapeHtml(values.weight)}">
+                    <button type="button" data-step="weight" data-by="2.5" aria-label="More weight">+</button>
+                </div></div>` : ''}
+                <div class="stepper-wrap"><label for="repsInput">Reps</label>
+                <div class="stepper">
+                    <button type="button" data-step="reps" data-by="-1" aria-label="Fewer reps">−</button>
+                    <input id="repsInput" inputmode="numeric" value="${escapeHtml(values.reps)}">
+                    <button type="button" data-step="reps" data-by="1" aria-label="More reps">+</button>
+                </div></div>`;
+        const prompt = kind === 'time' ? 'How long?' : kind === 'reps' ? 'How many reps?' : 'What did you lift?';
         root.innerHTML = `
             <article class="card log-card lift-card" style="margin-top:4px">
                 <p class="kicker">Set ${state.setIndex + 1} of ${exercise.sets || 1} · target ${escapeHtml(target)}</p>
                 <h2 class="lift-name">${escapeHtml(exercise.name)}</h2>
-                <p class="quiet" style="margin:0">What did you lift?</p>
-                <div class="steppers">
-                    <div class="stepper-wrap">
-                        <label for="weightInput">Weight · kg</label>
-                        <div class="stepper">
-                            <button type="button" data-step="weight" data-by="-2.5" aria-label="Less weight">−</button>
-                            <input id="weightInput" inputmode="decimal" placeholder="0" value="${escapeHtml(values.weight)}">
-                            <button type="button" data-step="weight" data-by="2.5" aria-label="More weight">+</button>
-                        </div>
-                    </div>
-                    <div class="stepper-wrap">
-                        <label for="repsInput">Reps</label>
-                        <div class="stepper">
-                            <button type="button" data-step="reps" data-by="-1" aria-label="Fewer reps">−</button>
-                            <input id="repsInput" inputmode="numeric" value="${escapeHtml(values.reps)}">
-                            <button type="button" data-step="reps" data-by="1" aria-label="More reps">+</button>
-                        </div>
-                    </div>
-                </div>
+                <p class="quiet" style="margin:0">${prompt}</p>
+                <div class="steppers">${measure}</div>
                 <p class="quiet" style="margin:4px 0 16px">Last time · ${escapeHtml(previousText)}</p>
                 <button class="btn" type="button" data-action="save-log">Log set ✓</button>
                 <button class="linkish" type="button" data-action="cancel-log">Back to exercise</button>
@@ -499,7 +521,6 @@ function renderWorkout() {
             <h2 class="lift-name">${escapeHtml(exercise.name)}</h2>
             <div class="tags">
                 <span class="tag">${exercise.sets || 1} × ${escapeHtml(target)}</span>
-                ${exercise.rest_seconds ? `<span class="tag">⏱ ${exercise.rest_seconds}s rest</span>` : ''}
             </div>
             <div class="last-time"><span>📈</span><div><b>Last time</b>${escapeHtml(previousText)}</div></div>
             <div class="set-pips">${pips}</div>
@@ -820,26 +841,28 @@ async function completeSet() {
     const exercise = currentExercise();
     if (!exercise) return;
     rememberInputs(exercise);
-    const timed = /minute/i.test(exercise.reps || '') || exercise.duration_minutes;
+    const kind = logKind(exercise);
     const values = dayProgress().inputs[inputKey(exercise, state.setIndex)] || {
         weight: '', reps: '', rpe: '', note: '',
     };
-    if (!timed && values.weight === '' && values.reps === '') {
-        toast('Add the weight or the reps for this set.');
+    const missing = kind === 'weight'
+        ? values.weight === '' && values.reps === ''
+        : values.reps === '';
+    if (missing) {
+        toast(kind === 'time' ? 'Add how long this set was.' : kind === 'reps' ? 'Add the reps for this set.' : 'Add the weight or the reps for this set.');
         state.logging = true;
         renderWorkout();
         return;
     }
     const progress = dayProgress();
     const done = new Set(progress.checkedSets[exercise.id] || []);
-    const fresh = !done.has(state.setIndex);
     done.add(state.setIndex);
     progress.checkedSets[exercise.id] = [...done].sort((a, b) => a - b);
     if (exercise.id === 'finisher') {
         progress.finisherDone = progress.checkedSets.finisher.length >= (exercise.sets || 1);
     }
     saveSession();
-    const weight = values.weight === '' ? null : Number(values.weight);
+    const weight = kind === 'weight' && values.weight !== '' ? Number(values.weight) : null;
     const reps = values.reps === '' ? null : Number(values.reps);
     const payload = {
         exercise_name: exercise.name,
@@ -857,7 +880,6 @@ async function completeSet() {
     if (navigator.vibrate) navigator.vibrate(18);
     const day = currentDay();
     const score = totals(day);
-    if (fresh && score.pct < 100 && (exercise.rest_seconds || 0) > 0) startRest(exercise.rest_seconds);
     if (state.setIndex < (exercise.sets || 1) - 1) {
         state.setIndex += 1;
     } else {
@@ -1142,13 +1164,8 @@ function onClick(event) {
     } else if (action.dataset.action === 'ask') {
         showScreen('hanu');
     } else if (action.dataset.action === 'complete') {
-        const exercise = currentExercise();
-        const timed = exercise && (/minute/i.test(exercise.reps || '') || exercise.duration_minutes);
-        if (timed) completeSet();
-        else {
-            state.logging = true;
-            renderWorkout();
-        }
+        state.logging = true;
+        renderWorkout();
     } else if (action.dataset.action === 'cancel-log') {
         rememberInputs(currentExercise());
         state.logging = false;

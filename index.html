@@ -51,19 +51,19 @@
             <button class="nav-btn" type="button" data-screen="workout">
                 <svg viewBox="0 0 24 24"><path d="M6 9v6M18 9v6M3 10v4M21 10v4M6 12h12"/></svg>
                 <span>Workout</span>
-            </button>
+                                </button>
             <button class="nav-btn" type="button" data-screen="progress">
                 <svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 3 5-7"/></svg>
                 <span>Progress</span>
-            </button>
+                            </button>
             <button class="nav-btn" type="button" data-screen="hanu">
                 <svg viewBox="0 0 24 24"><path d="M6 17.5C6 14 8.5 12 12 12s6 2 6 5.5V19H6z"/><circle cx="12" cy="8" r="3"/></svg>
                 <span>Hanu</span>
-            </button>
+                            </button>
             <button class="nav-btn" type="button" data-screen="profile">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 19c1.5-3 3.8-4.5 7-4.5S17.5 16 19 19"/></svg>
                 <span>Profile</span>
-            </button>
+                            </button>
         </nav>
 
         <div class="app">
@@ -76,7 +76,7 @@
                     </span>
                 </a>
                 <button class="icon-btn" type="button" id="spotifyBtn" aria-label="Spotify">♫</button>
-            </header>
+        </header>
 
             <main>
                 <section id="screen-home" class="screen is-on"></section>
@@ -89,13 +89,13 @@
                             <div>
                                 <h2>Hanu</h2>
                                 <p class="online">Knows your logs</p>
-                            </div>
-                        </div>
+                </div>
+            </div>
                         <div class="row">
                             <button class="pill" type="button" id="newHanu">＋ New</button>
                             <button class="icon-btn" type="button" id="closeHanu" hidden aria-label="Close Hanu">✕</button>
-                        </div>
-                    </div>
+            </div>
+        </div>
                     <div id="hanuContext" class="context-chip" hidden></div>
                     <div id="hanuThread" class="thread"></div>
                     <div class="suggestions" id="hanuSuggestions"></div>
@@ -106,8 +106,8 @@
                 </section>
                 <section id="screen-profile" class="screen"></section>
             </main>
+            </div>
         </div>
-    </div>
 
     <div id="backdrop" class="backdrop" hidden></div>
     <button class="float-hanu" type="button" id="floatHanu" hidden aria-label="Ask Hanu">
@@ -123,12 +123,12 @@
                     <circle id="restRing" class="ring" cx="60" cy="60" r="52"></circle>
                 </svg>
                 <div id="restReadout" class="timer-readout">01:00</div>
-            </div>
+        </div>
             <div class="timer-actions">
                 <button type="button" data-rest="15">+15s</button>
                 <button type="button" data-rest="30">+30s</button>
                 <button type="button" data-rest="dismiss">Dismiss</button>
-            </div>
+    </div>
         </div>
     </div>
 
@@ -137,7 +137,7 @@
             <div class="chat-head">
                 <h2 style="margin:0">Spotify</h2>
                 <button class="icon-btn" type="button" id="closeSpotify" aria-label="Close">✕</button>
-            </div>
+                </div>
             <div class="pills" id="devicePills" style="margin:12px 0"></div>
             <div id="spotifyList"></div>
         </div>

@@ -210,6 +210,7 @@ def _exercise_payload(raw: dict | None) -> dict | None:
         "name": raw.get("name") or "Exercise",
         "sets": raw.get("sets"),
         "reps": raw.get("reps"),
+        "log": raw.get("log"),
         "rest_seconds": raw.get("rest_seconds"),
         "anatomy_pov": raw.get("anatomy_pov"),
         "form": raw.get("form"),
